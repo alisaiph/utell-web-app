@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 
 // GET
@@ -16,6 +17,22 @@ export async function getUserById(id: number) {
 
   return user;
 }
+
+export async function getUserByEmail(email: string) {
+  let { data: user, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Failed to fetch user");
+  }
+
+  return user;
+}
+
 export async function getUserByusername(username: string) {
   let { data: user, error } = await supabase
     .from("profiles")
@@ -24,8 +41,7 @@ export async function getUserByusername(username: string) {
     .single();
 
   if (error) {
-    console.error("Error fetching user:", error);
-    throw new Error("Failed to fetch user");
+    notFound();
   }
 
   return user;
@@ -50,8 +66,7 @@ export async function getRoom(id: number) {
     .single();
 
   if (error) {
-    console.error("Error fetching room:", error);
-    throw new Error("Failed to fetch room");
+    notFound();
   }
 
   return room;
@@ -79,8 +94,7 @@ export async function getProperty(id: number) {
     .single();
 
   if (error) {
-    console.error("Error fetching property:", error);
-    throw new Error("Failed to fetch property");
+    notFound();
   }
 
   return property;
@@ -98,4 +112,20 @@ export async function getPropertiesByUserId(id: number) {
   }
 
   return properties;
+}
+
+// INSERT
+
+export async function createUser(newUser: {}) {
+  const { data, error } = await supabase
+    .from("users")
+    .insert([newUser])
+    .select();
+
+  if (error) {
+    console.error("Error inserting user:", error);
+    throw new Error("Failed to insert user");
+  }
+
+  return data;
 }
