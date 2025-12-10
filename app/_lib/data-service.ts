@@ -1,6 +1,63 @@
 import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 
+const adjectives = [
+  "cozy",
+  "brave",
+  "quiet",
+  "sunny",
+  "mellow",
+  "swift",
+  "urban",
+  "rustic",
+  "golden",
+  "cheerful",
+  "adorable",
+  "angry",
+  "annoying",
+  "bright",
+  "calm",
+  "clumsy",
+  "gifted",
+  "gleaming",
+  "foolish",
+  "lucky",
+];
+
+const nouns = [
+  "bunny",
+  "rooster",
+  "bird",
+  "deer",
+  "kitty",
+  "goose",
+  "fox",
+  "lion",
+  "rhino",
+  "shark",
+  "tuna",
+  "owl",
+  "duck",
+  "puppy",
+  "chipmunk",
+  "snail",
+  "lizard",
+  "chicken",
+  "crab",
+  "frog",
+];
+
+// fn to pick random element from array
+const rand = <T>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+
+export function generateUsername() {
+  // reddit-like pattern: adjective + noun + 3-4 base36 chars (eg: cozycabinx7g)
+  const suffix = Math.floor(Math.random() * 36 ** 3)
+    .toString(36)
+    .padStart(3, "0");
+  return `${rand(adjectives)}${rand(nouns)}${suffix}`;
+}
+
 // GET
 
 export async function getUserById(id: number) {

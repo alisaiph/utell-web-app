@@ -17,7 +17,9 @@ export default async function SideNav() {
           </li>
 
           <li className="p-1 rounded-lg hover:bg-background-secondary transition-colors">
-            <Link href={!session ? "/login" : `/user/${session?.user.name}`}>
+            <Link
+              href={!session ? "/login" : `/user/${session?.user.username}`}
+            >
               <CircleUser color="#FCBF49" size={45} />
             </Link>
           </li>
