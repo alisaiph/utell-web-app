@@ -1,19 +1,19 @@
 import { ArrowRight, Mail, Smartphone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getUserById } from "../_lib/data-service";
+import { getUser } from "../_lib/data-service";
 
 export default async function UserCard({
   owner,
   contactPhone,
   contactEmail,
 }: {
-  owner: number;
-  contactPhone: number;
-  contactEmail: string;
+  owner: string;
+  contactPhone?: number;
+  contactEmail?: string;
 }) {
-  const user = await getUserById(owner);
-  const { username, display_name } = user;
+  const user = await getUser(owner);
+  const { displayUsername, username } = user;
 
   return (
     <div className="flex flex-col gap-5">
@@ -29,26 +29,35 @@ export default async function UserCard({
           </div>
 
           <div className="text-md w-70">
-            <p className="font-bold mb-1">{`Managed by ${display_name}`}</p>
-            <div className="flex items-center gap-3">
-              <p>View profile</p>
-              <ArrowRight color="#fcbf49" size={25} />
-            </div>
+            <p className="font-semibold">{`${
+              contactPhone || contactEmail ? "Managed by " : ""
+            } ${displayUsername || username}`}</p>
+
+            <p className="font-semibold text-utell-daccent mb-1">{`${username}`}</p>
+
+            {(contactPhone || contactEmail) && (
+              <div className="flex items-center gap-3">
+                <p>View profile</p>
+                <ArrowRight color="#fcbf49" size={25} />
+              </div>
+            )}
           </div>
         </div>
       </Link>
 
-      <div className="flex items-center justify-between bg-white rounded-2xl py-5 px-12 shadow-lg">
-        <div className="flex items-center gap-3 text-md">
-          <Smartphone size={20} />
-          <p>{contactPhone}</p>
-        </div>
+      {(contactPhone || contactEmail) && (
+        <div className="flex items-center justify-between bg-white rounded-2xl py-5 px-12 shadow-lg">
+          <div className="flex items-center gap-3 text-md">
+            <Smartphone size={20} />
+            <p>{contactPhone}</p>
+          </div>
 
-        <div className="flex items-center gap-3 text-md">
-          <Mail size={20} />
-          <p>{contactEmail}</p>
+          <div className="flex items-center gap-3 text-md">
+            <Mail size={20} />
+            <p>{contactEmail}</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function SocialLoginBtn({
 }) {
   return (
     <button
-      className="bg-white hover:bg-background-secondary border border-utell-laccent transition-colors rounded-lg w-full py-4 px-20 text-md font-bold cursor-pointer"
+      className="bg-white hover:bg-background-secondary border border-utell-laccent transition-colors rounded-lg w-full py-4 px-20 text-md font-semibold cursor-pointer"
       onClick={handleClick}
     >
       {children}

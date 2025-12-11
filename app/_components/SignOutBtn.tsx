@@ -2,13 +2,13 @@
 
 import { LogOut } from "lucide-react";
 import signOut from "../_lib/auth-client";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function SignOutBtn() {
   const router = useRouter();
 
-  function handleSignOut() {
-    signOut();
+  async function handleSignOut() {
+    await signOut();
     router.refresh(); // so the session state is updated on the client
   }
   return (

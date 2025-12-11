@@ -24,7 +24,7 @@ const adjectives = [
   "lucky",
 ];
 
-const nouns = [
+const animals = [
   "bunny",
   "rooster",
   "bird",
@@ -51,48 +51,32 @@ const nouns = [
 const rand = <T>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
 
 export function generateUsername() {
-  // reddit-like pattern: adjective + noun + 3-4 base36 chars (eg: cozycabinx7g)
+  // reddit-like pattern: adjective + noun + 3-4 base36 chars (eg: cozykittyx7g)
   const suffix = Math.floor(Math.random() * 36 ** 3)
     .toString(36)
     .padStart(3, "0");
-  return `${rand(adjectives)}${rand(nouns)}${suffix}`;
+  return `${rand(adjectives)}${rand(animals)}${suffix}`;
 }
 
 // GET
 
-export async function getUserById(id: number) {
+export async function getUser(id: string) {
   let { data: user, error } = await supabase
-    .from("profiles")
+    .from("user")
     .select("*")
-    .eq("user_id", id)
+    .eq("id", id)
     .single();
 
   if (error) {
-    console.error("Error fetching user:", error);
-    throw new Error("Failed to fetch user");
+    notFound();
   }
 
   return user;
 }
 
-export async function getUserByEmail(email: string) {
+export async function getUserByUsername(username: string) {
   let { data: user, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("email", email)
-    .single();
-
-  if (error) {
-    console.error("Error fetching user:", error);
-    throw new Error("Failed to fetch user");
-  }
-
-  return user;
-}
-
-export async function getUserByusername(username: string) {
-  let { data: user, error } = await supabase
-    .from("profiles")
+    .from("user")
     .select("*")
     .eq("username", username)
     .single();
@@ -133,7 +117,7 @@ export async function getRoomsByPropertyId(id: number) {
   let { data: room, error } = await supabase
     .from("rooms")
     .select("*")
-    .eq("property_id", id);
+    .eq("propertyId", id);
 
   if (error) {
     console.error("Error fetching rooms:", error);
@@ -157,11 +141,11 @@ export async function getProperty(id: number) {
   return property;
 }
 
-export async function getPropertiesByUserId(id: number) {
+export async function getPropertiesByUserId(id: string) {
   let { data: properties, error } = await supabase
     .from("properties")
     .select("*")
-    .eq("user_id", id);
+    .eq("owner", id);
 
   if (error) {
     console.error("Error fetching properties:", error);
@@ -173,16 +157,16 @@ export async function getPropertiesByUserId(id: number) {
 
 // INSERT
 
-export async function createUser(newUser: {}) {
-  const { data, error } = await supabase
-    .from("users")
-    .insert([newUser])
-    .select();
+// export async function createUser(newUser: {}) {
+//   const { data, error } = await supabase
+//     .from("users")
+//     .insert([newUser])
+//     .select();
 
-  if (error) {
-    console.error("Error inserting user:", error);
-    throw new Error("Failed to insert user");
-  }
+//   if (error) {
+//     console.error("Error inserting user:", error);
+//     throw new Error("Failed to insert user");
+//   }
 
-  return data;
-}
+//   return data;
+// }

@@ -13,13 +13,13 @@ export default async function page({
   const property = await getProperty(Number(propertyId));
 
   const {
-    user_id,
+    owner,
     name: propertyName,
     city,
     area,
     type,
-    contact_phone,
-    contact_email,
+    contactPhone,
+    contactEmail,
   } = property;
 
   const rooms = await getRoomsByPropertyId(Number(propertyId));
@@ -33,13 +33,13 @@ export default async function page({
 
         {/* PROPERTY DETAILS */}
         <div className="text-center">
-          <h1 className="font-bold text-3xl mb-3">{propertyName}</h1>
+          <h1 className="font-semibold text-3xl mb-3">{propertyName}</h1>
 
           <div className="flex items-center text-xl text-utell-text-lgray gap-1">
             <MapPin color="#848484" size={22} />
             <h2>
               {`${city}, ${area} | `}
-              <span className="font-bold">{type}</span>
+              <span className="font-semibold">{type}</span>
             </h2>
           </div>
         </div>
@@ -47,9 +47,9 @@ export default async function page({
         {/* CONTACT & DESCRIPTION */}
         <div className="flex gap-10 w-[70%]">
           <UserCard
-            owner={user_id}
-            contactPhone={contact_phone}
-            contactEmail={contact_email}
+            owner={owner}
+            contactPhone={contactPhone}
+            contactEmail={contactEmail}
           />
 
           <p className="text-lg">
@@ -62,7 +62,7 @@ export default async function page({
 
         {/* ALL ROOMS */}
         <div className="w-full">
-          <h2 className="text-2xl font-bold mb-8">All rooms</h2>
+          <h2 className="text-2xl font-semibold mb-8">All rooms</h2>
           <div className="flex flex-wrap gap-8 w-full">
             {rooms?.map((room) => (
               <RoomCard room={room} key={room.id} />

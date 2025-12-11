@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { username } from "better-auth/plugins";
 import { Pool } from "pg";
 import { generateUsername } from "./data-service";
+import { redirect } from "next/navigation";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -50,6 +51,16 @@ export const auth = betterAuth({
           const fallback = `user${Date.now().toString(36).slice(-6)}`;
           return { data: { ...user, username: fallback } };
         },
+      },
+    },
+  },
+
+  user: {
+    additionalFields: {
+      onboardCompleted: {
+        type: "boolean",
+        defaultValue: false,
+        required: false,
       },
     },
   },

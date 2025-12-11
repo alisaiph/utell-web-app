@@ -3,7 +3,7 @@ import UserCard from "@/app/_components/UserCard";
 import PropertyCard from "@/app/_components/PropertyCard";
 import {
   getPropertiesByUserId,
-  getUserByusername,
+  getUserByUsername,
 } from "@/app/_lib/data-service";
 
 export default async function page({
@@ -12,21 +12,16 @@ export default async function page({
   params: { username: string };
 }) {
   const { username } = await params;
-  const user = await getUserByusername(username);
+  const user = await getUserByUsername(username);
+  const { id } = user;
 
-  const { user_id } = user;
-
-  const properties = await getPropertiesByUserId(user_id);
+  const properties = await getPropertiesByUserId(id);
 
   return (
     <div className="flex flex-col gap-15 mb-20">
       <header className="flex flex-col w-full items-center gap-15">
         <div className="w-150 ">
-          <UserCard
-            owner={user_id}
-            contactPhone={7777}
-            contactEmail="email@email.com"
-          />
+          <UserCard owner={id} />
         </div>
 
         {/* STATS */}
@@ -50,7 +45,7 @@ export default async function page({
 
       {/* REVIEWS */}
       <section className="flex flex-col gap-8 w-fullrounded-lg">
-        <h2 className="text-2xl font-bold">Reviews</h2>
+        <h2 className="text-2xl font-semibold">Reviews</h2>
 
         <div className="flex gap-8">
           <ReviewCard />
@@ -58,7 +53,7 @@ export default async function page({
           <ReviewCard />
         </div>
 
-        <h2 className="text-2xl font-bold mt-20">Properties</h2>
+        <h2 className="text-2xl font-semibold mt-20">Properties</h2>
 
         <div className="flex justify-start w-full flex-wrap gap-8">
           {properties?.map((property) => (

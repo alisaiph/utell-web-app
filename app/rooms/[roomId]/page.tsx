@@ -13,22 +13,22 @@ export default async function page({ params }: { params: { roomId: string } }) {
     name: roomName,
     description,
     facilities,
-    max_capacity,
+    maxCapacity,
     price,
     discount,
     images,
-    property_id,
+    propertyId,
   } = room;
 
-  const property = await getProperty(property_id);
+  const property = await getProperty(propertyId);
   const {
     name: propertyName,
     area,
     city,
     type,
-    contact_phone,
-    contact_email,
-    user_id,
+    contactPhone,
+    contactEmail,
+    owner,
   } = property;
 
   return (
@@ -38,7 +38,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
 
         {/* ROOM DETAILS */}
         <div>
-          <h1 className="font-bold text-3xl mb-3">
+          <h1 className="font-semibold text-3xl mb-3">
             {`${propertyName} | `}
             <span className="font-normal">{roomName}</span>
           </h1>
@@ -47,7 +47,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
             <MapPin color="#848484" size={22} />
             <h2>
               {`${city}, ${area} | `}
-              <span className="font-bold">{type}</span>
+              <span className="font-semibold">{type}</span>
             </h2>
           </div>
         </div>
@@ -55,9 +55,9 @@ export default async function page({ params }: { params: { roomId: string } }) {
         {/* CONTACT & DESCRIPTION */}
         <div className="flex gap-10">
           <UserCard
-            owner={user_id}
-            contactPhone={contact_phone}
-            contactEmail={contact_email}
+            owner={owner}
+            contactPhone={contactPhone}
+            contactEmail={contactEmail}
           />
 
           <p className="text-lg">{description}</p>
@@ -65,7 +65,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
 
         {/* ALL ROOMS */}
         <div className="my-8">
-          <h2 className="text-2xl font-bold">{`More rooms from ${propertyName}`}</h2>
+          <h2 className="text-2xl font-semibold">{`More rooms from ${propertyName}`}</h2>
         </div>
       </section>
 

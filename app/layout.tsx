@@ -6,6 +6,7 @@ import "react-day-picker/style.css";
 
 const roboto = Roboto({
   variable: "--font-roboto",
+  weight: ["400", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} antialiased`}>
+      <body className={`${roboto.variable} font-sans antialiased`}>
         <main className="min-h-screen grid grid-cols-[80px_80px_1fr_80px] bg-background-secondary text-utell-text-dgray">
           <SideNav />
 

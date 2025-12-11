@@ -18,7 +18,7 @@ export default function PropertyCard({ property }: { property: Property }) {
           />
         </div>
 
-        <h2 className="text-md font-bold">{name}</h2>
+        <h2 className="text-md font-semibold">{name}</h2>
 
         <div className="text-sm text-utell-text-lgray">
           <div className="flex items-center gap-1">
@@ -27,7 +27,7 @@ export default function PropertyCard({ property }: { property: Property }) {
           </div>
 
           <div className="flex justify-between items-center mt-1">
-            <p className="font-bold">{type}</p>
+            <p className="font-semibold">{type}</p>
             <ArrowRight color="#fcbf49" size={30} />
           </div>
         </div>

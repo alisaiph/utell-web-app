@@ -1,31 +1,31 @@
 export interface Property {
   id: number;
+  owner: string;
   name: string;
   area: string;
   city: string;
   type: string;
   description: string;
-  contact_phone: number;
-  contact_email: string;
-  user_id: number;
+  contactPhone: number;
+  contactEmail: string;
   images: string[];
 }
 
 export interface Room {
   id: number;
+  propertyId: number;
   name: string;
   description: string;
   facilities: string;
-  max_capacity: number;
+  maxCapacity: number;
   price: number;
   discount: number;
   images: string[];
-  property_id: number;
 }
 
-export interface User {
-  id: number;
-  username: string;
-  display_name: string;
-  bio: string;
-}
+// export interface User {
+//   id: number;
+//   username: string;
+//   display_name: string;
+//   bio: string;
+// }

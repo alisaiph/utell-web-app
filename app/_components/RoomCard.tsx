@@ -5,9 +5,9 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { getProperty } from "../_lib/data-service";
 
 export default async function RoomCard({ room }: { room: Room }) {
-  const { id, name: roomName, price, property_id } = room;
+  const { id, name: roomName, price, propertyId } = room;
 
-  const property = await getProperty(property_id);
+  const property = await getProperty(propertyId);
   const { name: propertyName, area, city } = property;
 
   return (
@@ -22,7 +22,7 @@ export default async function RoomCard({ room }: { room: Room }) {
           />
         </div>
 
-        <h2 className="text-md font-bold">
+        <h2 className="text-md font-semibold">
           {`${propertyName} | `}
           <span className="font-normal">{roomName}</span>
         </h2>

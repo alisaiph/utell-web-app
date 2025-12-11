@@ -1,5 +1,6 @@
 "use client";
 
+import { updateUsernameAction } from "@/app/_lib/actions";
 import { useState } from "react";
 
 export default function page() {
@@ -10,7 +11,10 @@ export default function page() {
       <h2 className="font-bold text-3xl">Let's set a username</h2>
       <p>Set a username so people can identify you in the app!</p>
 
-      <form action="" className="flex flex-col gap-5 w-100 mt-2">
+      <form
+        action={updateUsernameAction}
+        className="flex flex-col gap-5 w-100 mt-2"
+      >
         <div>
           <label htmlFor="username" className="w-full">
             Username
