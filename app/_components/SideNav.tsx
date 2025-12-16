@@ -2,6 +2,7 @@ import { CircleUser, Heart, Home, LogOut, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import getServerSession from "../_lib/get-session";
 import SignOutBtn from "./SignOutBtn";
+import Image from "next/image";
 
 export default async function SideNav() {
   const session = await getServerSession();
@@ -17,9 +18,7 @@ export default async function SideNav() {
           </li>
 
           <li className="p-1 rounded-lg hover:bg-background-secondary transition-colors">
-            <Link
-              href={!session ? "/login" : `/user/${session?.user.username}`}
-            >
+            <Link href={!session ? "/login" : `/profile`}>
               <CircleUser color="#FCBF49" size={45} />
             </Link>
           </li>
@@ -39,9 +38,22 @@ export default async function SideNav() {
 
         <ul className="mb-20">
           {session?.user && (
-            <li className="p-1 rounded-lg hover:bg-background-secondary transition-colors">
-              <SignOutBtn />
-            </li>
+            <>
+              <li className="mb-4">
+                <div className="relative rounded-full w-13 aspect-square overflow-hidden">
+                  <Image
+                    src={session?.user.image}
+                    fill
+                    alt="avatar"
+                    className="object-cover"
+                  ></Image>
+                </div>
+              </li>
+
+              <li className="p-1 rounded-lg hover:bg-background-secondary transition-colors">
+                <SignOutBtn />
+              </li>
+            </>
           )}
         </ul>
       </div>

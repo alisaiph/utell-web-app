@@ -53,7 +53,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
         </div>
 
         {/* CONTACT & DESCRIPTION */}
-        <div className="flex gap-10">
+        <div className="flex flex-col gap-10">
           <UserCard
             owner={owner}
             contactPhone={contactPhone}

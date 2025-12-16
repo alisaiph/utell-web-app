@@ -20,5 +20,5 @@ export async function updateUsernameAction(formData) {
     throw new Error("Username could not be updated, try again.");
   }
 
-  redirect("/");
+  redirect("/profile");
 }
