@@ -7,7 +7,7 @@ export default function BookForm({ price }: { price: number }) {
   const defaultClassNames = getDefaultClassNames();
 
   return (
-    <aside className="flex flex-col bg-white rounded-3xl flex-2 min-w-90 p-15 gap-7">
+    <aside className="flex flex-col bg-white rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-5 gap-5">
       <h2 className="text-4xl font-semibold">
         <span className="font-normal">MVR</span>
         {` ${price}`}
