@@ -23,9 +23,14 @@ export interface Room {
   images: string[];
 }
 
-// export interface User {
-//   id: number;
-//   username: string;
-//   display_name: string;
-//   bio: string;
-// }
+export interface Booking {
+  id: number;
+  userId: string;
+  roomId: number;
+  checkinDate: string;
+  checkoutDate: string;
+  numGuests: number;
+  extrasPrice: number;
+  totalPrice: number;
+  status: string;
+}

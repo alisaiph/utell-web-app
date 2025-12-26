@@ -155,6 +155,20 @@ export async function getPropertiesByUserId(id: string) {
   return properties;
 }
 
+export async function getBookingsByUserId(id: number) {
+  let { data: bookings, error } = await supabase
+    .from("bookings")
+    .select("*")
+    .eq("userId", id);
+
+  if (error) {
+    console.error("Error fetching bookings:", error);
+    throw new Error("Failed to fetch bookings");
+  }
+
+  return bookings;
+}
+
 // INSERT
 
 // export async function createUser(newUser: {}) {

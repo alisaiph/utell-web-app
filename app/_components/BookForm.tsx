@@ -7,8 +7,8 @@ export default function BookForm({ price }: { price: number }) {
   const defaultClassNames = getDefaultClassNames();
 
   return (
-    <aside className="flex flex-col bg-white rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-5 gap-5">
-      <h2 className="text-4xl font-semibold">
+    <aside className="flex flex-col bg-white rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-5">
+      <h2 className="text-3xl font-semibold">
         <span className="font-normal">MVR</span>
         {` ${price}`}
         <span className="font-normal text-2xl">/night</span>
@@ -66,6 +66,10 @@ export default function BookForm({ price }: { price: number }) {
           }}
         />
       </div>
+
+      <button className="bg-utell-yellow rounded-lg p-5 cursor-pointer font-semibold text-xl hover:bg-utell-yellow/80 transition-colors">
+        Book Now
+      </button>
     </aside>
   );
 }
