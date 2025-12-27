@@ -10,7 +10,7 @@ export default async function page() {
   const allBookings = await getBookingsByUserId(id);
 
   return (
-    <>
+    <div className="bg-white flex flex-col gap-5 p-8 rounded-2xl">
       <h2 className="text-xl font-semibold">Your bookings</h2>
 
       <table className="text-left border-collapse">
@@ -31,6 +31,6 @@ export default async function page() {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }

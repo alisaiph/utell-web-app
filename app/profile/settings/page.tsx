@@ -1,3 +1,5 @@
 export default function page() {
-  return <div>settings</div>;
+  return (
+    <div className="bg-white flex flex-col gap-5 p-8 rounded-2xl">settings</div>
+  );
 }
