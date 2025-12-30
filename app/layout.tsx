@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import SideNav from "./_components/SideNav";
 import "react-day-picker/style.css";
+import ThemeProvider from "./_components/ThemeProvider";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -21,13 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.variable} font-sans antialiased`}>
-        <main className="min-h-screen grid grid-cols-[80px_80px_1fr_80px] bg-background-secondary text-utell-text-dgray">
-          <SideNav />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <main className="min-h-screen grid grid-cols-[80px_80px_1fr_80px] bg-background-secondary text-utell-text-dgray">
+            <SideNav />
 
-          <div className="col-start-3 col-end-4 my-15">{children}</div>
-        </main>
+            <div className="col-start-3 col-end-4 my-15">{children}</div>
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
