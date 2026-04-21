@@ -13,13 +13,13 @@ export default function PropertyNav() {
         <li className="flex flex-col items-center gap-2 w-[18%]">
           <Building color="#BEBEBE" size={40} />
           <h2 className="font-bold text-[#BEBEBE]">Apartments</h2>
-          <span className="inline-block w-full h-1 bg-[#BEBEBE] mt-3"></span>
+          <span className="inline-block w-full h-1 bg-background-accent-light mt-3"></span>
         </li>
 
         <li className="flex flex-col items-center gap-2 w-[18%]">
           <Hotel color="#BEBEBE" size={40} />
           <h2 className="font-bold text-[#BEBEBE]">Hotels</h2>
-          <span className="inline-block w-full h-1 bg-[#BEBEBE] mt-3"></span>
+          <span className="inline-block w-full h-1 bg-background-accent-light mt-3"></span>
         </li>
       </ul>
     </div>

@@ -75,7 +75,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
         <BookForm price={price} />
       </div>
 
-      <div className="bg-white flex flex-col gap-5 p-8 rounded-2xl">
+      <div className="bg-background-accent-dark flex flex-col gap-5 p-8 rounded-2xl">
         {/* ALL ROOMS */}
         <h2 className="text-xl font-semibold">{`All rooms from ${propertyName}`}</h2>
 

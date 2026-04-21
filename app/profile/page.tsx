@@ -1,6 +1,6 @@
 export default function page() {
   return (
-    <div className="bg-white flex flex-col gap-5 p-8 rounded-2xl">
+    <div className="bg-background-accent-dark flex flex-col gap-5 p-8 rounded-2xl">
       profile page
     </div>
   );

@@ -8,7 +8,7 @@ export default function PropertyCard({ property }: { property: Property }) {
 
   return (
     <Link href={`/properties/${id}`}>
-      <div className="flex flex-col bg-white w-98 h-120 rounded-3xl p-6 gap-2">
+      <div className="flex flex-col bg-background-accent-dark w-98 h-120 rounded-3xl p-6 gap-2">
         <div className="relative w-full rounded-xl h-100 overflow-hidden mb-3">
           <Image
             src={"/images/property-card-img.webp"}

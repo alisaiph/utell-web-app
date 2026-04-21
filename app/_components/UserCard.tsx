@@ -18,7 +18,7 @@ export default async function UserCard({
   return (
     <div className="flex  gap-5">
       <Link href={`/user/${username}`}>
-        <div className="flex items-center justify-center gap-4 bg-white rounded-2xl px-6 py-3">
+        <div className="flex items-center justify-center gap-4 bg-background-accent-dark rounded-2xl px-6 py-3">
           <div className="relative rounded-xl w-15 aspect-square overflow-hidden">
             <Image
               src={image}
@@ -39,7 +39,7 @@ export default async function UserCard({
       </Link>
 
       {(contactPhone || contactEmail) && (
-        <div className="flex items-center justify-between gap-5 bg-white rounded-2xl px-6 py-3">
+        <div className="flex items-center justify-between gap-5 bg-background-accent-dark rounded-2xl px-6 py-3">
           <div className="flex items-center gap-2 text-md">
             <Smartphone size={20} />
             <p>{contactPhone}</p>

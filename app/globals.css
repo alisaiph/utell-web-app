@@ -1,12 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #edddd6;
+  --background: #f6f6f6;
+  --background-accent-dark: #ffffff;
+  --background-accent-light: #f6f6f6;
+  --foreground: #1c1c1c;
+}
+
+.dark {
+  --background: #18191d;
+  --background-accent-dark: #1e202c;
+  --background-accent-light: #333742;
+  --foreground: #e0e0e0;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-accent-dark: var(--background-accent-dark);
+  --color-background-accent-light: var(--background-accent-light);
   --color-foreground: var(--foreground);
   --color-background-secondary: #f6f6f6;
   --color-utell-yellow: #fcbf49;
@@ -18,12 +29,15 @@
   --font-sans: var(--font-roboto);
 }
 
-@media (prefers-color-scheme: dark) {
+/* This tells Tailwind v4 to use the .dark class for the dark: variant */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #1c1c1c;
     --foreground: #ffffff;
   }
-}
+} */
 
 body {
   background: var(--background);
