@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ReviewCard() {
   return (
-    <div className="flex flex-col bg-background-accent-dark rounded-xl p-10 gap-5">
+    <div className="flex flex-col bg-bg-light rounded-xl p-10 gap-5">
       <div className="flex gap-4 items-center">
         <div className="relative rounded-xl w-15 aspect-square overflow-hidden">
           <Image

@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          <main className="min-h-screen grid grid-cols-[80px_80px_1fr_80px] bg-background text-foreground">
+          <main className="min-h-screen grid grid-cols-[80px_80px_1fr_80px] bg-bg text-text">
             <SideNav />
 
             <div className="col-start-3 col-end-4 my-15">{children}</div>

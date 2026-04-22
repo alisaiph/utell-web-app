@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RoomList({ room }: { room: Room }) {
   return (
-    <tr className="border-b-2 border-background-secondary last:border-b-0">
+    <tr className="border-b-2 border-bg-dark last:border-b-0">
       <td className="py-5">
         <div className="relative w-35 h-25 rounded-xl overflow-hidden">
           <Link href={`/rooms/${room.id}`}>

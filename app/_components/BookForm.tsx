@@ -7,14 +7,14 @@ export default function BookForm({ price }: { price: number }) {
   const defaultClassNames = getDefaultClassNames();
 
   return (
-    <aside className="flex flex-col bg-background-accent-dark rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-5">
+    <aside className="flex flex-col bg-bg-light rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-5">
       <h2 className="text-3xl font-semibold">
         <span className="font-normal">MVR</span>
         {` ${price}`}
         <span className="font-normal text-2xl">/night</span>
       </h2>
 
-      <hr className="border border-background-secondary w-full" />
+      <hr className="border border-bg w-full" />
 
       <div className="flex justify-between text-lg">
         <p>Check In</p>
@@ -31,7 +31,7 @@ export default function BookForm({ price }: { price: number }) {
         <p className="font-semibold">03</p>
       </div>
 
-      <hr className="border border-background-secondary w-full" />
+      <hr className="border border-bg w-full" />
 
       <h2 className="font-semibold text-lg">Extra Service</h2>
       <div className="flex justify-between text-lg">
@@ -39,14 +39,14 @@ export default function BookForm({ price }: { price: number }) {
         <p className="font-semibold">MVR 200</p>
       </div>
 
-      <hr className="border border-background-secondary w-full" />
+      <hr className="border border-bg w-full" />
 
       <div className="flex justify-between font-semibold text-lg">
         <p>Total cost:</p>
         <p>MVR 200.00</p>
       </div>
 
-      <hr className="border border-background-secondary w-full" />
+      <hr className="border border-bg w-full" />
 
       <div className="flex justify-center mt-5 h-95">
         <DayPicker
@@ -55,7 +55,7 @@ export default function BookForm({ price }: { price: number }) {
           disabled={(curDate) => isPast(curDate)}
           classNames={{
             today: "bg-utell-laccent font-bold",
-            selected: "bg-background-secondary font-bold",
+            selected: "bg-bg font-bold",
             chevron: "fill-utell-yellow",
             caption_label: "font-semibold",
             day: "text-center rounded-full hover:bg-utell-yellow transition-colors",
@@ -67,7 +67,7 @@ export default function BookForm({ price }: { price: number }) {
         />
       </div>
 
-      <button className="bg-utell-yellow rounded-lg p-5 cursor-pointer font-semibold text-xl hover:bg-utell-yellow/80 transition-colors">
+      <button className="bg-utell-yellow rounded-lg p-5 cursor-pointer font-semibold text-xl text-white hover:bg-utell-yellow/80 transition-colors">
         Book Now
       </button>
     </aside>

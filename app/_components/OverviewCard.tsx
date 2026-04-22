@@ -12,9 +12,7 @@ export default function OverviewCard({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className={`flex flex-col border-3 border-background-secondary gap-2 p-5 rounded-xl`}
-    >
+    <div className={`flex flex-col border-3 border-bg gap-2 p-5 rounded-xl`}>
       <div className="flex items-center gap-2">
         {children}
         <h3>{text}</h3>

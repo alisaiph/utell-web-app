@@ -8,28 +8,28 @@ export default async function SideNav() {
   const session = await getServerSession();
 
   return (
-    <nav className="col-start-1 col-end-2 bg-background-accent-dark h-full w-20 fixed flex justify-center">
+    <nav className="col-start-1 col-end-2 bg-bg-light h-full w-20 fixed flex justify-center">
       <div className="flex flex-col justify-between">
         <ul className="flex flex-col gap-8 mt-20">
-          <li className="p-1 rounded-lg hover:bg-background transition-colors">
+          <li className="p-1 rounded-lg hover:bg-bg-dark transition-colors">
             <Link href={"/"}>
               <Home color="#FCBF49" size={45} />
             </Link>
           </li>
 
-          <li className="p-1 rounded-lg hover:bg-background transition-colors">
+          <li className="p-1 rounded-lg hover:bg-bg-dark transition-colors">
             <Link href={!session ? "/login" : `/profile`}>
               <CircleUser color="#FCBF49" size={45} />
             </Link>
           </li>
 
-          <li className="p-1 rounded-lg hover:bg-background transition-colors">
+          <li className="p-1 rounded-lg hover:bg-bg-dark transition-colors">
             <Link href={"/"}>
               <Heart color="#FCBF49" size={45} />
             </Link>
           </li>
 
-          <li className="p-1 rounded-lg hover:bg-background transition-colors">
+          <li className="p-1 rounded-lg hover:bg-bg-dark transition-colors">
             <Link href={"/"}>
               <MessageSquare color="#FCBF49" size={45} />
             </Link>
@@ -50,7 +50,7 @@ export default async function SideNav() {
                 </div>
               </li>
 
-              <li className="p-1 rounded-lg hover:bg-background transition-colors">
+              <li className="p-1 rounded-lg hover:bg-bg-dark transition-colors">
                 <SignOutBtn />
               </li>
             </>

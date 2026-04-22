@@ -16,7 +16,7 @@ export default function page() {
     <div className="flex flex-col gap-2">
       <p>Theme</p>
       <select
-        className="p-2 border-2 border-background-accent-light rounded-lg"
+        className="p-2 border-2 border-bg-dark rounded-lg"
         value={theme}
         onChange={handleThemeChange}
       >
@@ -24,7 +24,6 @@ export default function page() {
         <option value="dark">Dark</option>
         <option value="system">System</option>
       </select>
-      <hr className="border-0 h-0.5 bg-background-accent-light" />
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function page() {
   return (
     <div className="flex gap-10">
       <div className="flex flex-col gap-5">
-        <div className="bg-background-accent-dark flex flex-col gap-5 p-8 rounded-2xl">
+        <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
           <h2 className="text-xl font-semibold">Overview</h2>
 
           {/* OVERVIEW CARDS */}
@@ -35,7 +35,7 @@ export default function page() {
         </div>
 
         {/* GUESTS */}
-        <div className="bg-background-accent-dark flex flex-col gap-5 p-8 rounded-2xl">
+        <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
           <h2 className="text-xl font-semibold">Guests</h2>
 
           <p>
@@ -45,7 +45,7 @@ export default function page() {
         </div>
       </div>
 
-      <aside className="bg-background-accent-dark flex flex-1 flex-col gap-5 p-8 rounded-2xl">
+      <aside className="bg-bg-light flex flex-1 flex-col gap-5 p-8 rounded-2xl">
         <h2 className="text-xl font-semibold">Actions</h2>
       </aside>
     </div>
