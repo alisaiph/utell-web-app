@@ -13,7 +13,7 @@ export default async function RoomCard({ room }: { room: Room }) {
   return (
     <Link href={`/rooms/${id}`}>
       <div className="flex flex-col bg-bg-light w-98 h-120 rounded-3xl p-6 gap-2">
-        <div className="relative w-full  rounded-xl h-100 overflow-hidden mb-3">
+        <div className="relative w-full rounded-xl h-100 overflow-hidden mb-3">
           <Image
             src={"/images/property-card-img.webp"}
             fill
