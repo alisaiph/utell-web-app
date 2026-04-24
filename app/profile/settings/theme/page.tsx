@@ -12,7 +12,7 @@ export default function page() {
 
   return (
     <div className="flex flex-col gap-2">
-      <p>Theme</p>
+      <p className="font-semibold">Theme</p>
 
       <div
         className="flex justify-between border-2 rounded-md p-4 border-bg hover:bg-bg max-w-56 transition-all cursor-pointer"

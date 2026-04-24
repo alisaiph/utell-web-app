@@ -18,7 +18,7 @@ export default async function page({
   const properties = await getPropertiesByUserId(id);
 
   return (
-    <div className="flex flex-col gap-15 mb-20">
+    <div className="flex flex-col gap-15 my-15">
       <header className="flex flex-col w-full items-center gap-15">
         <UserCard owner={id} />
 

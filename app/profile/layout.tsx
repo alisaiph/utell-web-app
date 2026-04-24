@@ -1,8 +1,18 @@
+import { redirect } from "next/navigation";
 import ProfileNav from "../_components/ProfileNav";
+import getServerSession from "../_lib/get-session";
 
-export default function layout({ children }: { children: React.ReactNode }) {
+export default async function layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    redirect("/login");
+  }
   return (
-    <div className="flex flex-col gap-15 mb-20">
+    <div className="flex flex-col gap-15 my-15">
       <ProfileNav />
 
       {/* REVIEWS (move this to property manage dashboard)*/}

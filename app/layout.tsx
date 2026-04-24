@@ -28,7 +28,7 @@ export default function RootLayout({
           <main className="min-h-screen grid grid-cols-[80px_80px_1fr_80px] bg-bg text-text">
             <SideNav />
 
-            <div className="col-start-3 col-end-4 my-15">{children}</div>
+            <div className="col-start-3 col-end-4">{children}</div>
           </main>
         </ThemeProvider>
       </body>

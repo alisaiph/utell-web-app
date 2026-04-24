@@ -7,7 +7,7 @@ export default function page() {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5 mt-20">
+    <div className="flex flex-col items-center justify-center gap-5 my-20">
       <h2 className="font-bold text-3xl">Let's set a username</h2>
       <p>Set a username so people can identify you in the app!</p>
 

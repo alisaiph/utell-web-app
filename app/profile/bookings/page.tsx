@@ -1,4 +1,3 @@
-import React from "react";
 import { getBookingsByUserId } from "../../_lib/data-service";
 import BookingList from "../../_components/BookingList";
 import getServerSession from "../../_lib/get-session";

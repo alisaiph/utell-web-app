@@ -7,7 +7,7 @@ export default async function Home() {
   const rooms = await getRooms();
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col my-15 gap-10">
       <PropertyNav />
 
       <PropertyFilter />

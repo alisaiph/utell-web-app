@@ -3,7 +3,7 @@ import { PlusIcon } from "lucide-react";
 
 export default function page() {
   return (
-    <div className="flex flex-col gap-8 mb-15">
+    <div className="flex flex-col gap-8 my-15">
       <h2 className="text-2xl font-bold mb-6">Manage Properties</h2>
 
       <div className="flex flex-wrap flex-start gap-6">

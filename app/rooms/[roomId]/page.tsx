@@ -39,7 +39,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
   const allRooms = await getRoomsByPropertyId(propertyId);
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 my-15">
       <div className="flex w-full gap-15">
         <section className="flex flex-col flex-5 gap-15">
           <PropertyPics />

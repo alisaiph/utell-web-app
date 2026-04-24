@@ -1,3 +1,7 @@
 export default function page() {
-  return <div>account settings</div>;
+  return (
+    <div>
+      <p className="font-semibold">Account settings</p>
+    </div>
+  );
 }
