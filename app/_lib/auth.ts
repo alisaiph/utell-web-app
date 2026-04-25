@@ -1,15 +1,18 @@
 import { betterAuth } from "better-auth";
 import { username } from "better-auth/plugins";
-import { Pool } from "pg";
+import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+import { db } from "@/db";
+import { user as userTable } from "@/auth-schema";
 import { generateUsername } from "./data-service";
 import { redirect } from "next/navigation";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+import { eq } from "drizzle-orm";
+import * as authSchema from "@/auth-schema";
 
 export const auth = betterAuth({
-  database: pool,
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    schema: authSchema,
+  }),
   secret: process.env.BETTER_AUTH_SECRET as string,
 
   emailAndPassword: {
@@ -33,13 +36,14 @@ export const auth = betterAuth({
           for (let i = 0; i < 12; i++) {
             const newUsername = generateUsername();
             try {
-              const { rowCount } = await pool.query(
-                'SELECT 1 FROM "user" WHERE username = $1 LIMIT 1',
-                [newUsername]
-              );
+              const existingUser = await db
+                .select()
+                .from(userTable)
+                .where(eq(userTable.username, newUsername))
+                .limit(1);
 
               // if unique
-              if (rowCount === 0) {
+              if (existingUser.length === 0) {
                 return { data: { ...user, username: newUsername } };
               }
             } catch (error) {

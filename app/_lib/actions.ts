@@ -2,21 +2,24 @@
 
 import { redirect } from "next/navigation";
 import getServerSession from "./get-session";
-import { supabase } from "./supabase";
+import { db } from "@/db";
+import { user as userTable } from "@/auth-schema";
+import { eq } from "drizzle-orm";
 
 export async function updateUsernameAction(formData) {
   const session = await getServerSession();
   if (!session) throw new Error("You must be logged in."); // security check
 
   const username = formData.get("username");
+  const userId = session?.user.id;
 
-  // update in supabase
-  const { error, data, count } = await supabase
-    .from("user")
-    .update({ username: username, onboardCompleted: true })
-    .eq("id", session?.user.id);
-
-  if (error) {
+  try {
+    await db
+      .update(userTable)
+      .set({ username, onboardCompleted: true })
+      .where(eq(userTable.id, userId));
+  } catch (error) {
+    console.error("Error updating username:", error);
     throw new Error("Username could not be updated, try again.");
   }
 

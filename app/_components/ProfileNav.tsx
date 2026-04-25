@@ -7,8 +7,13 @@ import { getPropertiesByUserId } from "../_lib/data-service";
 
 export default async function ProfileNav() {
   const session = await getServerSession();
-  const { id, username, displayUsername, image } = session?.user;
-  const properties = await getPropertiesByUserId(id);
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  const userId = parseInt(session.user.id as string);
+  const { username, displayUsername, image } = session.user;
+  const properties = await getPropertiesByUserId(userId);
 
   // if default username is not changed, redirect
   if (session?.user.onboardCompleted === false) {
@@ -36,9 +41,16 @@ export default async function ProfileNav() {
       </ul>
 
       <div className="flex gap-4 items-center justify-center">
-        <div className="relative rounded-full w-10 aspect-square overflow-hidden">
-          <Image src={image} fill alt="avatar" className="object-cover"></Image>
-        </div>
+        {image && (
+          <div className="relative rounded-full w-10 aspect-square overflow-hidden">
+            <Image
+              src={image}
+              fill
+              alt="avatar"
+              className="object-cover"
+            ></Image>
+          </div>
+        )}
 
         <div className="text-md">
           <p className="font-semibold">

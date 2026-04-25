@@ -1,5 +1,7 @@
-import { notFound } from "next/navigation";
-import { supabase } from "./supabase";
+import { db } from "@/db";
+import { roomsTable, propertiesTable, bookingsTable } from "@/schema";
+import { user as userTable } from "@/auth-schema";
+import { eq } from "drizzle-orm";
 
 const adjectives = [
   "cozy",
@@ -60,127 +62,91 @@ export function generateUsername() {
 
 // GET
 
-export async function getUser(id: string) {
-  let { data: user, error } = await supabase
-    .from("user")
-    .select("*")
-    .eq("id", id)
-    .single();
+export async function getUser(id: number) {
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.id, id))
+    .then((result) => result[0]);
 
-  if (error) {
-    notFound();
-  }
-
-  return user;
+  return user ?? null;
 }
 
 export async function getUserByUsername(username: string) {
-  let { data: user, error } = await supabase
-    .from("user")
-    .select("*")
-    .eq("username", username)
-    .single();
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.username, username))
+    .then((result) => result[0]);
 
-  if (error) {
-    notFound();
-  }
-
-  return user;
+  return user ?? null;
 }
 
 export async function getRooms() {
-  let { data: rooms, error } = await supabase.from("rooms").select("*");
-
-  if (error) {
+  try {
+    const rooms = await db.select().from(roomsTable);
+    return rooms ?? null;
+  } catch (error) {
     console.error("Error fetching rooms:", error);
     throw new Error("Failed to fetch rooms");
   }
-
-  return rooms;
 }
 
 export async function getRoom(id: number) {
-  let { data: room, error } = await supabase
-    .from("rooms")
-    .select("*")
-    .eq("id", id)
-    .single();
+  const room = await db
+    .select()
+    .from(roomsTable)
+    .where(eq(roomsTable.id, id))
+    .then((result) => result[0]);
 
-  if (error) {
-    notFound();
-  }
-
-  return room;
+  return room ?? null;
 }
 
-export async function getRoomsByPropertyId(id: number) {
-  let { data: room, error } = await supabase
-    .from("rooms")
-    .select("*")
-    .eq("propertyId", id);
-
-  if (error) {
+export async function getRoomsByPropertyId(propertyId: number) {
+  try {
+    const rooms = await db
+      .select()
+      .from(roomsTable)
+      .where(eq(roomsTable.propertyId, propertyId));
+    return rooms ?? null;
+  } catch (error) {
     console.error("Error fetching rooms:", error);
     throw new Error("Failed to fetch rooms");
   }
-
-  return room;
 }
 
 export async function getProperty(id: number) {
-  let { data: property, error } = await supabase
-    .from("properties")
-    .select("*")
-    .eq("id", id)
-    .single();
+  const property = await db
+    .select()
+    .from(propertiesTable)
+    .where(eq(propertiesTable.id, id))
+    .then((result) => result[0]);
 
-  if (error) {
-    notFound();
-  }
-
-  return property;
+  return property ?? null;
 }
 
-export async function getPropertiesByUserId(id: string) {
-  let { data: properties, error } = await supabase
-    .from("properties")
-    .select("*")
-    .eq("owner", id);
-
-  if (error) {
+export async function getPropertiesByUserId(userId: string) {
+  try {
+    const properties = await db
+      .select()
+      .from(propertiesTable)
+      .where(eq(propertiesTable.ownerId, userId));
+    return properties ?? null;
+  } catch (error) {
     console.error("Error fetching properties:", error);
     throw new Error("Failed to fetch properties");
   }
-
-  return properties;
 }
 
-export async function getBookingsByUserId(id: number) {
-  let { data: bookings, error } = await supabase
-    .from("bookings")
-    .select("*")
-    .eq("userId", id);
-
-  if (error) {
+export async function getBookingsByUserId(guestId: string) {
+  try {
+    const bookings = await db
+      .select()
+      .from(bookingsTable)
+      .where(eq(bookingsTable.guestId, guestId));
+    return bookings ?? null;
+  } catch (error) {
     console.error("Error fetching bookings:", error);
     throw new Error("Failed to fetch bookings");
   }
-
-  return bookings;
 }
-
-// INSERT
-
-// export async function createUser(newUser: {}) {
-//   const { data, error } = await supabase
-//     .from("users")
-//     .insert([newUser])
-//     .select();
-
-//   if (error) {
-//     console.error("Error inserting user:", error);
-//     throw new Error("Failed to insert user");
-//   }
-
-//   return data;
-// }

@@ -4,32 +4,39 @@ import getServerSession from "../../_lib/get-session";
 
 export default async function page() {
   const session = await getServerSession();
-  const { id } = session?.user;
+  if (!session?.user?.id) {
+    throw new Error("User not authenticated");
+  }
 
-  const allBookings = await getBookingsByUserId(id);
+  const userId = session.user.id;
+  const allBookings = await getBookingsByUserId(userId);
 
   return (
     <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
       <h2 className="text-xl font-semibold">Your bookings</h2>
 
-      <table className="text-left border-collapse">
-        <tbody>
-          <tr>
-            <th></th>
-            <th>Room</th>
-            <th>Check-In</th>
-            <th>Check-Out</th>
-            <th>Guests</th>
-            <th>Extras Price</th>
-            <th>Total Price</th>
-            <th>Status</th>
-          </tr>
+      {allBookings.length > 0 ? (
+        <table className="text-left border-collapse">
+          <tbody>
+            <tr>
+              <th></th>
+              <th>Room</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Guests</th>
+              <th>Extras Price</th>
+              <th>Total Price</th>
+              <th>Status</th>
+            </tr>
 
-          {allBookings?.map((booking) => (
-            <BookingList booking={booking} key={booking.id} />
-          ))}
-        </tbody>
-      </table>
+            {allBookings?.map((booking) => (
+              <BookingList booking={booking} key={booking.id} />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>You have no bookings yet 🥲</p>
+      )}
     </div>
   );
 }
