@@ -32,10 +32,10 @@ export default async function ProfileNav() {
         </li>
         <li>
           <Link
-            href="/profile/manage"
+            href="/profile/properties"
             className="bg-utell-yellow text-white hover:bg-bg-dark rounded-lg px-3 py-2 transition-colors"
           >
-            Manage
+            Properties
           </Link>
         </li>
       </ul>

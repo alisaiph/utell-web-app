@@ -16,9 +16,10 @@ export const propertiesTable = pgTable("properties", {
   area: text("area").notNull(),
   city: text("city").notNull(),
   type: text("type").notNull(),
-  description: text("description"),
+  description: text("description").notNull(),
+  location: text("location").notNull(),
   imageUrl: text("image_url"),
-  contactPhone: text("contact_phone"),
+  contactPhone: text("contact_phone").notNull(),
   contactEmail: text("contact_email"),
   ownerId: text("owner_id")
     .notNull()

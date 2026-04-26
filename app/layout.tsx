@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
 import SideNav from "./_components/SideNav";
 import "react-day-picker/style.css";
 import ThemeProvider from "./_components/ThemeProvider";

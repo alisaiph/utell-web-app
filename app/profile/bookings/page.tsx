@@ -35,7 +35,7 @@ export default async function page() {
           </tbody>
         </table>
       ) : (
-        <p>You have no bookings yet 🥲</p>
+        <p className="text-text-muted">You have no bookings yet 🥲</p>
       )}
     </div>
   );

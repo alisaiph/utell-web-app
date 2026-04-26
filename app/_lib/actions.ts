@@ -6,7 +6,7 @@ import { db } from "@/db";
 import { user as userTable } from "@/auth-schema";
 import { eq } from "drizzle-orm";
 
-export async function updateUsernameAction(formData) {
+export async function updateUsernameAction(formData: FormData) {
   const session = await getServerSession();
   if (!session) throw new Error("You must be logged in."); // security check
 
@@ -24,4 +24,33 @@ export async function updateUsernameAction(formData) {
   }
 
   redirect("/profile");
+}
+
+export async function addPropertyAction(formData: FormData) {
+  const session = await getServerSession();
+  if (!session) throw new Error("You must be logged in."); // security check
+
+  const type = formData.get("type");
+  const name = formData.get("name");
+  const description = formData.get("description");
+  const city = formData.get("city");
+  const area = formData.get("area");
+  const address = formData.get("address");
+  const location = formData.get("location");
+  const contactPhone = formData.get("contactPhone");
+  const contactEmail = formData.get("contactEmail");
+  const ownerId = session?.user.id;
+
+  console.log({
+    type,
+    name,
+    description,
+    address,
+    city,
+    area,
+    location,
+    contactPhone,
+    contactEmail,
+    ownerId,
+  });
 }
