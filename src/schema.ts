@@ -31,6 +31,20 @@ export const propertiesTable = pgTable("properties", {
 export type Property = typeof propertiesTable.$inferSelect;
 export type NewProperty = typeof propertiesTable.$inferInsert;
 
+// Property Images table
+export const propertyImagesTable = pgTable("property_images", {
+  id: text("id").primaryKey(),
+  propertyId: text("property_id")
+    .notNull()
+    .references(() => propertiesTable.id, { onDelete: "cascade" }),
+  imageUrl: text("image_url").notNull(),
+  displayOrder: integer("display_order").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type PropertyImage = typeof propertyImagesTable.$inferSelect;
+export type NewPropertyImage = typeof propertyImagesTable.$inferInsert;
+
 // Rooms table
 export const roomsTable = pgTable("rooms", {
   id: text("id").primaryKey(),

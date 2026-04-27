@@ -2,13 +2,14 @@ import PropertyTypeCard from "@/app/_components/PropertyTypeCard";
 import { addPropertyAction } from "@/app/_lib/actions";
 import { Image } from "lucide-react";
 import MapPickerWrapper from "@/app/_components/MapPickerWrapper";
+import PhotoUpload from "@/app/_components/PhotoUpload";
 
 export default function page() {
   return (
     <div className="bg-bg-light flex flex-col gap-10 p-8 rounded-2xl">
       <h2 className="text-xl font-semibold">Add Property</h2>
 
-      <form action={addPropertyAction} className="flex gap-20">
+      <form action={addPropertyAction} className="flex gap-10">
         <div className="flex flex-col gap-10">
           {/* TYPE */}
           <div>
@@ -107,7 +108,7 @@ export default function page() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-10 border-l-2 border-bg pl-20">
+        <div className="flex flex-col gap-10 border-l-2 border-bg pl-10 w-full">
           {/* LOCATION */}
           <div>
             <label
@@ -145,25 +146,15 @@ export default function page() {
               />
             </div>
           </div>
+        </div>
 
+        <div className="flex flex-col gap-10 border-l-2 border-bg pl-10 w-full">
           {/* PHOTOS */}
-          <div>
-            <label
-              htmlFor="photos"
-              className="font-semibold text-lg mb-3 block"
-            >
-              Photos
-            </label>
-
-            <div className="flex flex-col items-center justify-center gap-2 bg-bg border-3 border-dashed border-bg-dark rounded-md w-full px-5 py-15">
-              <Image color="var(--bg-dark)" size={50} />
-              <p className="text-text-muted">Drag and drop photos here</p>
-            </div>
-          </div>
+          <PhotoUpload />
 
           <button
             type="submit"
-            className="bg-utell-yellow text-white font-bold py-4 px-6 rounded-lg :outline-none focus:ring-2 focus:ring-utell-yellow cursor-pointer"
+            className="bg-utell-yellow hover:bg-utell-yellow/80 transition-colors text-white font-bold py-4 px-6 rounded-lg :outline-none focus:ring-2 focus:ring-utell-yellow cursor-pointer"
           >
             Add Property
           </button>

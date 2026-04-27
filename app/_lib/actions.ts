@@ -41,6 +41,21 @@ export async function addPropertyAction(formData: FormData) {
   const contactEmail = formData.get("contactEmail");
   const ownerId = session?.user.id;
 
+  // Collect uploaded URLs from hidden inputs
+  const imageUrls: string[] = [];
+  let index = 0;
+  while (true) {
+    const url = formData.get(`imageUrl${index}`);
+    if (!url) break;
+    imageUrls.push(url as string);
+    index++;
+  }
+
+  // Validate
+  if (imageUrls.length === 0) throw new Error("At least 1 image required");
+  if (imageUrls.length > 3) throw new Error("Maximum 3 images allowed");
+
+  // Save property and images to database
   console.log({
     type,
     name,
@@ -52,5 +67,6 @@ export async function addPropertyAction(formData: FormData) {
     contactPhone,
     contactEmail,
     ownerId,
+    imageUrls,
   });
 }

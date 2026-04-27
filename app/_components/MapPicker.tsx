@@ -72,7 +72,7 @@ export default function MapPicker({
   };
 
   return (
-    <div className="h-60 w-full rounded-md overflow-hidden">
+    <div className="h-80 w-full rounded-md overflow-hidden">
       <MapContainer
         center={position}
         zoom={15}
