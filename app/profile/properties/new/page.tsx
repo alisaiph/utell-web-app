@@ -5,17 +5,45 @@ import { addPropertyAction } from "@/app/_lib/actions";
 import MapPickerWrapper from "@/app/_components/MapPickerWrapper";
 import PhotoUpload from "@/app/_components/PhotoUpload";
 import { propertySchema } from "@/app/_lib/validation";
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import FormSubmitButton from "@/app/_components/FormSubmitButton";
+
+type ActionResponse = {
+  success?: boolean;
+  errors?: Record<string, string[]>;
+};
 
 export default function page() {
   const [errors, setErrors] = useState<Record<string, string[]>>({});
+  const router = useRouter();
+
+  const initialState: ActionResponse = {
+    success: false,
+    errors: {},
+  };
+
+  const [state, formAction] = useActionState(addPropertyAction, initialState);
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Property added!");
+      router.push("/profile/properties");
+      router.refresh();
+    }
+
+    if (state?.errors && Object.keys(state.errors).length > 0) {
+      toast.error("Please fix the errors in the form");
+    }
+  }, [state]);
 
   return (
     <div className="bg-bg-light flex flex-col gap-10 p-8 rounded-2xl">
       <h2 className="text-xl font-semibold">Add Property</h2>
 
       <form
-        action={addPropertyAction}
+        action={formAction}
         noValidate
         onSubmit={(e) => {
           // Client-side validation
@@ -225,12 +253,7 @@ export default function page() {
           <PhotoUpload />
           <p className="text-red-600">{errors.images?.[0]}</p>
 
-          <button
-            type="submit"
-            className="bg-utell-yellow hover:bg-utell-yellow/80 transition-colors text-white font-bold py-4 px-6 rounded-lg :outline-none focus:ring-2 focus:ring-utell-yellow cursor-pointer"
-          >
-            Add Property
-          </button>
+          <FormSubmitButton />
         </div>
       </form>
     </div>

@@ -8,6 +8,11 @@ import { eq } from "drizzle-orm";
 import { propertySchema } from "./validation";
 import { propertiesTable, propertyImagesTable } from "@/src/schema";
 
+type ActionResponse = {
+  success?: boolean;
+  errors?: Record<string, string[]>;
+};
+
 export async function updateUsernameAction(formData: FormData) {
   const session = await getServerSession();
   if (!session) throw new Error("You must be logged in."); // security check
@@ -28,7 +33,10 @@ export async function updateUsernameAction(formData: FormData) {
   redirect("/profile");
 }
 
-export async function addPropertyAction(formData: FormData) {
+export async function addPropertyAction(
+  prevState: ActionResponse,
+  formData: FormData,
+): Promise<ActionResponse> {
   const session = await getServerSession();
   if (!session) throw new Error("You must be logged in."); // security check
 
@@ -65,8 +73,12 @@ export async function addPropertyAction(formData: FormData) {
   }
 
   // Validate
-  if (imageUrls.length === 0) throw new Error("At least 1 image required");
-  if (imageUrls.length > 3) throw new Error("Maximum 3 images allowed");
+  if (imageUrls.length === 0) {
+    return { errors: { images: ["At least 1 image required"] } };
+  }
+  if (imageUrls.length > 3) {
+    return { errors: { images: ["Maximum 3 images allowed"] } };
+  }
 
   await db.transaction(async (tx) => {
     const [property] = await tx
