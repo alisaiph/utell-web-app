@@ -7,23 +7,23 @@ import {
   boolean,
   decimal,
 } from "drizzle-orm/pg-core";
-import { user } from "@/auth-schema";
+import { user as userTable } from "@/auth-schema";
 
 // Properties table
 export const propertiesTable = pgTable("properties", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  description: text("description").notNull(),
+  address: text("address").notNull(),
   area: text("area").notNull(),
   city: text("city").notNull(),
   type: text("type").notNull(),
-  description: text("description").notNull(),
   location: text("location").notNull(),
-  imageUrl: text("image_url"),
   contactPhone: text("contact_phone").notNull(),
   contactEmail: text("contact_email"),
   ownerId: text("owner_id")
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -74,7 +74,7 @@ export const bookingsTable = pgTable("bookings", {
   status: text("status").default("pending").notNull(),
   guestId: text("guest_id")
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   roomId: text("room_id")
     .notNull()
     .references(() => roomsTable.id, { onDelete: "cascade" }),
