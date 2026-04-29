@@ -41,7 +41,7 @@ export default async function page() {
         {allProperties.length > 0 ? (
           allProperties?.map((property) => (
             <div
-              className="bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors cursor-pointer rounded-2xl p-4"
+              className="bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors rounded-2xl p-4"
               key={property.id}
             >
               <PropertyList property={property} key={property.id} />
