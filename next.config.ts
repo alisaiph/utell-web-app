@@ -6,7 +6,13 @@ const nextConfig: NextConfig = {
 
 module.exports = {
   images: {
-    remotePatterns: [new URL("https://lh3.googleusercontent.com/**")],
+    remotePatterns: [
+      new URL("https://lh3.googleusercontent.com/**"),
+      {
+        protocol: "https",
+        hostname: "pub-9cdf424a2c454f8db7fa1712ca9d6b43.r2.dev",
+      },
+    ],
   },
 };
 

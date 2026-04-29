@@ -25,59 +25,44 @@ export default async function page() {
       <div className="flex flex-col gap-5 basis-2/3">
         <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
           <h2 className="text-xl font-semibold">Your Properties</h2>
-
-          {allProperties.length > 0 ? (
-            <table className="text-left border-collapse">
-              <tbody>
-                <tr>
-                  <th></th>
-                  <th>Property</th>
-                  <th>Area</th>
-                  <th>City</th>
-                  <th>Type</th>
-                </tr>
-
-                {allProperties?.map((property) => (
-                  <PropertyList property={property} key={property.id} />
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p className="text-text-muted">You have no properties yet 🥲</p>
-          )}
-
-          {/* OVERVIEW CARDS */}
-          {/* <div className="flex gap-5 flex-wrap">
-            <OverviewCard text="Bookings" amount={5} bg="bg-sky-200">
-              <CalendarPlus2 />
-            </OverviewCard>
-            <OverviewCard text="Rooms Available" amount={10} bg="bg-orange-200">
-              <BedDouble />
-            </OverviewCard>
-            <OverviewCard
-              text="Today's Check-Ins"
-              amount={3}
-              bg="bg-emerald-200"
-            >
-              <CalendarCheck />
-            </OverviewCard>
-            <OverviewCard text="Today's Check-Outs" amount={1} bg="bg-red-200">
-              <CalendarX />
-            </OverviewCard>
-          </div> */}
         </div>
 
+        <div className="bg-bg-light/50 flex flex-col gap-5 px-4 py-2 rounded-2xl">
+          <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center font-semibold">
+            <p></p>
+            <p className="ml-5">Name</p>
+            <p>Type</p>
+            <p>City</p>
+            <p>Area</p>
+            <p>Action</p>
+          </div>
+        </div>
+
+        {allProperties.length > 0 ? (
+          allProperties?.map((property) => (
+            <div
+              className="bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors cursor-pointer rounded-2xl p-4"
+              key={property.id}
+            >
+              <PropertyList property={property} key={property.id} />
+            </div>
+          ))
+        ) : (
+          <p className="text-text-muted">You have no properties yet 🥲</p>
+        )}
+
         {/* GUESTS */}
-        <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
+        {/* <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
           <h2 className="text-xl font-semibold">Guests</h2>
 
           <p>
             All the bookings for the properties owned by this user here, or
             specific property bookings can be displayed here.
           </p>
-        </div>
+        </div> */}
       </div>
 
+      {/* SIDE MENU */}
       <aside className="bg-bg-light flex flex-1 flex-col gap-5 p-8 rounded-2xl">
         <h2 className="text-xl font-semibold">Actions</h2>
         <div className="flex gap-2">
@@ -100,4 +85,28 @@ export default async function page() {
       </aside>
     </div>
   );
+}
+
+{
+  /* OVERVIEW CARDS */
+}
+{
+  /* <div className="flex gap-5 flex-wrap">
+            <OverviewCard text="Bookings" amount={5} bg="bg-sky-200">
+              <CalendarPlus2 />
+            </OverviewCard>
+            <OverviewCard text="Rooms Available" amount={10} bg="bg-orange-200">
+              <BedDouble />
+            </OverviewCard>
+            <OverviewCard
+              text="Today's Check-Ins"
+              amount={3}
+              bg="bg-emerald-200"
+            >
+              <CalendarCheck />
+            </OverviewCard>
+            <OverviewCard text="Today's Check-Outs" amount={1} bg="bg-red-200">
+              <CalendarX />
+            </OverviewCard>
+          </div> */
 }

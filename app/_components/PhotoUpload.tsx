@@ -74,7 +74,7 @@ export default function PhotoUpload() {
           throw new Error(`Upload failed for ${file.name}`);
 
         // Return the public URL (construct from bucket and filename)
-        return `https://${process.env.NEXT_PUBLIC_R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${filenames[index]}`;
+        return `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/${filenames[index]}`;
       });
 
       const publicUrls = await Promise.all(uploadPromises);

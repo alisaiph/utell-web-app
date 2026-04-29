@@ -1,5 +1,10 @@
 import { db } from "@/db";
-import { roomsTable, propertiesTable, bookingsTable } from "@/schema";
+import {
+  roomsTable,
+  propertiesTable,
+  bookingsTable,
+  propertyImagesTable,
+} from "@/schema";
 import { user as userTable } from "@/auth-schema";
 import { eq } from "drizzle-orm";
 
@@ -115,7 +120,7 @@ export async function getRoomsByPropertyId(propertyId: number) {
   }
 }
 
-export async function getProperty(id: number) {
+export async function getProperty(id: string) {
   const property = await db
     .select()
     .from(propertiesTable)
@@ -135,6 +140,19 @@ export async function getPropertiesByUserId(userId: string) {
   } catch (error) {
     console.error("Error fetching properties:", error);
     throw new Error("Failed to fetch properties");
+  }
+}
+
+export async function getImagesByPropertyId(propertyId: string) {
+  try {
+    const propertyImages = await db
+      .select()
+      .from(propertyImagesTable)
+      .where(eq(propertyImagesTable.propertyId, propertyId));
+    return propertyImages ?? null;
+  } catch (error) {
+    console.error("Error fetching property images:", error);
+    throw new Error("Failed to fetch property images");
   }
 }
 

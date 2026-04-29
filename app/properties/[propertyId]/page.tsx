@@ -1,7 +1,11 @@
 import PropertyPics from "@/app/_components/PropertyPics";
 import RoomCard from "@/app/_components/RoomCard";
 import UserCard from "@/app/_components/UserCard";
-import { getProperty, getRoomsByPropertyId } from "@/app/_lib/data-service";
+import {
+  getImagesByPropertyId,
+  getProperty,
+  getRoomsByPropertyId,
+} from "@/app/_lib/data-service";
 import { MapPin } from "lucide-react";
 
 export default async function page({
@@ -10,30 +14,34 @@ export default async function page({
   params: { propertyId: string };
 }) {
   const { propertyId } = await params;
-  const property = await getProperty(Number(propertyId));
+  const property = await getProperty(propertyId);
 
   const {
-    owner,
-    name: propertyName,
+    ownerId,
+    name,
     city,
     area,
     type,
+    description,
     contactPhone,
     contactEmail,
   } = property;
 
   const rooms = await getRoomsByPropertyId(Number(propertyId));
 
+  const image = await getImagesByPropertyId(propertyId);
+  const imageUrl = image?.[0]?.imageUrl || "/placeholder.jpg";
+
   return (
     <div className="flex w-full gap-15 my-15">
       <section className="flex items-center justify-center flex-col flex-5 gap-15">
         <div className="w-[70%]">
-          <PropertyPics />
+          <PropertyPics images={[{ imageUrl }]} />
         </div>
 
         {/* PROPERTY DETAILS */}
         <div className="text-center">
-          <h1 className="font-semibold text-3xl mb-3">{propertyName}</h1>
+          <h1 className="font-semibold text-3xl mb-3">{name}</h1>
 
           <div className="flex items-center text-xl text-utell-text-lgray gap-1">
             <MapPin color="#848484" size={22} />
@@ -46,18 +54,13 @@ export default async function page({
 
         {/* CONTACT & DESCRIPTION */}
         <div className="flex gap-10 w-[70%]">
-          <UserCard
-            owner={owner}
+          {/* <UserCard
+            owner={ownerId}
             contactPhone={contactPhone}
             contactEmail={contactEmail}
-          />
+          /> */}
 
-          <p className="text-lg">
-            Hotel Canary is a modern hotel located in Male', Maldives which was
-            founded in 2010 and we have three hundred thousand customers. Hotel
-            Canary is a modern hotel located in Male', Maldives which was
-            founded in 2010 and we have three hundred thousand customers.
-          </p>
+          <p className="text-lg">{description}</p>
         </div>
 
         {/* ALL ROOMS */}

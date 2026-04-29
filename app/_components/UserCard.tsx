@@ -9,7 +9,7 @@ export default async function UserCard({
   contactEmail,
 }: {
   owner: string;
-  contactPhone?: number;
+  contactPhone?: string;
   contactEmail?: string;
 }) {
   const user = await getUser(owner);

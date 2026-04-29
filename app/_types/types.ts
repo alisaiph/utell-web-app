@@ -1,5 +1,5 @@
 export interface Property {
-  id: number;
+  id: string;
   owner: string;
   name: string;
   area: string;
@@ -12,7 +12,7 @@ export interface Property {
 }
 
 export interface Room {
-  id: number;
+  id: string;
   propertyId: number;
   name: string;
   description: string;
@@ -24,7 +24,7 @@ export interface Room {
 }
 
 export interface Booking {
-  id: number;
+  id: string;
   userId: string;
   roomId: number;
   checkinDate: string;
