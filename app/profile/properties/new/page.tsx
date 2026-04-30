@@ -18,6 +18,14 @@ type ActionResponse = {
 export default function page() {
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const router = useRouter();
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+
+  const subOptions = {
+    Male: ["Henveyru", "Galolhu", "Mahchangoalhi", "Maafannu"],
+    Hulhumale: ["Phase 1", "Phase 2"],
+    Vilimale: ["Vilimale"],
+  };
 
   const initialState: ActionResponse = {
     success: false,
@@ -176,26 +184,35 @@ export default function page() {
             <div className="flex gap-2">
               <select
                 name="city"
-                required
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  setSubCategory("");
+                }}
                 className="border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow"
               >
-                <option value="male" defaultChecked>
-                  Male
-                </option>
-                <option value="hulhumale">Hulhumale</option>
-                <option value="vilingili">Vilingili</option>
+                <option value="">City</option>
+                <option value="Male">Male</option>
+                <option value="Hulhumale">Hulhumale</option>
+                <option value="Vilimale">Vilimale</option>
               </select>
+
               <select
                 name="area"
-                required
+                value={subCategory}
+                onChange={(e) => {
+                  setSubCategory(e.target.value);
+                }}
+                disabled={!category}
                 className="border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow"
               >
-                <option value="henveyru" defaultChecked>
-                  Henveyru
-                </option>
-                <option value="galolhu">Galolhu</option>
-                <option value="mahchangoalhi">Mahchangoalhi</option>
-                <option value="maafannu">Maafannu</option>
+                <option value="">Area</option>
+                {category &&
+                  subOptions[category]?.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

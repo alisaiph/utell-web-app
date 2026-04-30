@@ -27,16 +27,15 @@ export default async function page({
     contactEmail,
   } = property;
 
-  const rooms = await getRoomsByPropertyId(Number(propertyId));
+  const rooms = await getRoomsByPropertyId(propertyId);
 
-  const image = await getImagesByPropertyId(propertyId);
-  const imageUrl = image?.[0]?.imageUrl || "/placeholder.jpg";
+  const images = await getImagesByPropertyId(propertyId);
 
   return (
     <div className="flex w-full gap-15 my-15">
       <section className="flex items-center justify-center flex-col flex-5 gap-15">
         <div className="w-[70%]">
-          <PropertyPics images={[{ imageUrl }]} />
+          <PropertyPics images={images} />
         </div>
 
         {/* PROPERTY DETAILS */}
@@ -54,11 +53,11 @@ export default async function page({
 
         {/* CONTACT & DESCRIPTION */}
         <div className="flex gap-10 w-[70%]">
-          {/* <UserCard
+          <UserCard
             owner={ownerId}
             contactPhone={contactPhone}
             contactEmail={contactEmail}
-          /> */}
+          />
 
           <p className="text-lg">{description}</p>
         </div>

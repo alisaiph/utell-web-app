@@ -67,7 +67,7 @@ export function generateUsername() {
 
 // GET
 
-export async function getUser(id: number) {
+export async function getUser(id: string) {
   const user = await db
     .select()
     .from(userTable)
@@ -97,7 +97,7 @@ export async function getRooms() {
   }
 }
 
-export async function getRoom(id: number) {
+export async function getRoom(id: string) {
   const room = await db
     .select()
     .from(roomsTable)
@@ -107,7 +107,7 @@ export async function getRoom(id: number) {
   return room ?? null;
 }
 
-export async function getRoomsByPropertyId(propertyId: number) {
+export async function getRoomsByPropertyId(propertyId: string) {
   try {
     const rooms = await db
       .select()

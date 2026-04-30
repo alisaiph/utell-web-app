@@ -12,7 +12,7 @@ export default async function layout({
     redirect("/login");
   }
   return (
-    <div className="flex flex-col gap-15 my-15">
+    <div className="flex flex-col gap-10 my-15">
       <ProfileNav />
 
       {/* REVIEWS (move this to property manage dashboard)*/}

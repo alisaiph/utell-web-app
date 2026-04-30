@@ -9,7 +9,7 @@ export default async function UserCard({
   contactEmail,
 }: {
   owner: string;
-  contactPhone?: string;
+  contactPhone: string;
   contactEmail?: string;
 }) {
   const user = await getUser(owner);
@@ -45,10 +45,12 @@ export default async function UserCard({
             <p>{contactPhone}</p>
           </div>
 
-          <div className="flex items-center gap-2 text-md">
-            <Mail size={20} />
-            <p>{contactEmail}</p>
-          </div>
+          {contactEmail && (
+            <div className="flex items-center gap-2 text-md">
+              <Mail size={20} />
+              <p>{contactEmail}</p>
+            </div>
+          )}
         </div>
       )}
     </div>

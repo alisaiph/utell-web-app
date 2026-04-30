@@ -20,12 +20,12 @@ export default async function ProfileNav() {
     redirect("/onboarding/username");
   }
   return (
-    <nav className="flex items-center justify-between gap-5 bg-bg-light rounded-xl px-6 py-3">
+    <nav className="flex items-center justify-between gap-5 bg-bg-light rounded-xl px-4 py-3">
       <ul className="flex gap-5 font-semibold">
         <li>
           <Link
             href="/profile/bookings"
-            className="hover:bg-bg-dark rounded-lg px-3 py-2 transition-colors"
+            className="hover:bg-bg-dark rounded-md px-3 py-2 transition-colors"
           >
             Bookings
           </Link>
@@ -33,7 +33,7 @@ export default async function ProfileNav() {
         <li>
           <Link
             href="/profile/properties"
-            className="bg-utell-yellow text-white hover:bg-bg-dark rounded-lg px-3 py-2 transition-colors"
+            className="bg-utell-yellow text-white hover:bg-bg-dark rounded-md px-3 py-2 transition-colors"
           >
             Properties
           </Link>
@@ -61,7 +61,7 @@ export default async function ProfileNav() {
 
         <Link
           href="/profile/settings"
-          className="cursor-pointer hover:bg-bg-dark rounded-lg p-2 transition-colors"
+          className="cursor-pointer hover:bg-bg-dark rounded-md p-2 transition-colors"
         >
           <Settings />
         </Link>

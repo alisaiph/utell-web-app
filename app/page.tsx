@@ -4,7 +4,7 @@ import PropertyNav from "./_components/PropertyNav";
 import { getRooms } from "./_lib/data-service";
 
 export default async function Home() {
-  const rooms = await getRooms();
+  // const rooms = await getRooms();
 
   return (
     <div className="flex flex-col my-15 gap-10">
@@ -13,9 +13,9 @@ export default async function Home() {
       <PropertyFilter />
 
       <div className="flex justify-start w-full flex-wrap gap-8">
-        {rooms?.map((room) => (
+        {/* {rooms?.map((room) => (
           <RoomCard room={room} key={room.id} />
-        ))}
+        ))} */}
       </div>
     </div>
   );

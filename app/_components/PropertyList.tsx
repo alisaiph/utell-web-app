@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Property } from "../_types/types";
 import Link from "next/link";
 import { getImagesByPropertyId } from "../_lib/data-service";
-import { EllipsisVertical } from "lucide-react";
 import FormActionButton from "./FormActionButton";
 
 export default async function PropertyList({
@@ -17,7 +16,7 @@ export default async function PropertyList({
 
   return (
     <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center">
-      <Link href={`/properties/${id}`}>
+      <Link href={`/profile/properties/manage/${id}`}>
         <div className=" relative w-35 h-25 rounded-md overflow-hidden">
           <Image
             src={imageUrl}
@@ -32,7 +31,7 @@ export default async function PropertyList({
       <p>{type}</p>
       <p className="truncate">{city}</p>
       <p className="truncate">{area}</p>
-      <FormActionButton />
+      <FormActionButton propertyId={id} />
     </div>
   );
 }
