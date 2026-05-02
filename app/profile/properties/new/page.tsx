@@ -270,7 +270,7 @@ export default function page() {
           <PhotoUpload />
           <p className="text-red-600">{errors.images?.[0]}</p>
 
-          <FormSubmitButton />
+          <FormSubmitButton>Add Property</FormSubmitButton>
         </div>
       </form>
     </div>

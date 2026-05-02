@@ -1,6 +1,10 @@
 import { useFormStatus } from "react-dom";
 
-export default function FormSubmitButton() {
+export default function FormSubmitButton({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { pending } = useFormStatus();
 
   return (
@@ -9,7 +13,7 @@ export default function FormSubmitButton() {
       disabled={pending}
       className="bg-utell-yellow hover:bg-utell-yellow/80 transition-colors text-white font-bold py-4 px-6 rounded-lg :outline-none focus:ring-2 focus:ring-utell-yellow cursor-pointer"
     >
-      {pending ? "Adding..." : "Add Property"}
+      {pending ? "Adding..." : children}
     </button>
   );
 }

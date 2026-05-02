@@ -1,3 +1,4 @@
+import AddRoomDialog from "@/app/_components/AddRoomDialog";
 import OverviewCard from "@/app/_components/OverviewCard";
 import PropertyList from "@/app/_components/PropertyList";
 import RoomList from "@/app/_components/RoomList";
@@ -89,14 +90,7 @@ export default async function page({
       <aside className="bg-bg-light flex flex-1 flex-col gap-5 p-8 rounded-2xl">
         <h2 className="text-xl font-semibold">Actions</h2>
         <div className="flex gap-2">
-          <Link href={"/profile/properties/new"}>
-            <button className="flex flex-col gap-1 items-center justify-center border-3 border-dashed border-bg-dark hover:bg-bg transition-colors text-text-muted rounded-xl px-5 py-8 cursor-pointer">
-              <span>
-                <Plus size={20} />
-              </span>
-              Add Room
-            </button>
-          </Link>
+          <AddRoomDialog />
 
           <button className="flex flex-col gap-2 items-center justify-center border-3 border-dashed border-bg-dark hover:bg-bg transition-colors text-text-muted rounded-xl px-5 py-8 cursor-pointer">
             <span>
