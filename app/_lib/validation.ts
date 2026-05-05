@@ -44,7 +44,6 @@ export const roomSchema = z.object({
     .min(3, "Discount must be at least 2 digits")
     .max(4, "Discount must be at most 4 digits")
     .regex(/^\d+$/, "Discount must contain only digits"),
-  facilities: z.string().min(3).max(30),
   guests: z
     .string()
     .min(1, "Guests must be at least 1 digits")

@@ -4,6 +4,8 @@ import {
   propertiesTable,
   bookingsTable,
   propertyImagesTable,
+  roomImagesTable,
+  roomAmenitiesTable,
 } from "@/schema";
 import { user as userTable } from "@/auth-schema";
 import { eq } from "drizzle-orm";
@@ -117,6 +119,32 @@ export async function getRoomsByPropertyId(propertyId: string) {
   } catch (error) {
     console.error("Error fetching rooms:", error);
     throw new Error("Failed to fetch rooms");
+  }
+}
+
+export async function getImagesByRoomId(roomId: string) {
+  try {
+    const roomImages = await db
+      .select()
+      .from(roomImagesTable)
+      .where(eq(roomImagesTable.roomId, roomId));
+    return roomImages ?? null;
+  } catch (error) {
+    console.error("Error fetching room images:", error);
+    throw new Error("Failed to fetch room images");
+  }
+}
+
+export async function getAmenitiesByRoomId(roomId: string) {
+  try {
+    const amenities = await db
+      .select()
+      .from(roomAmenitiesTable)
+      .where(eq(roomAmenitiesTable.roomId, roomId));
+    return amenities ?? null;
+  } catch (error) {
+    console.error("Error fetching amenities:", error);
+    throw new Error("Failed to fetch amenities");
   }
 }
 

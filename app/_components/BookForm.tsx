@@ -3,7 +3,7 @@
 import { isPast } from "date-fns";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 
-export default function BookForm({ price }: { price: number }) {
+export default function BookForm({ price }: { price: string }) {
   const defaultClassNames = getDefaultClassNames();
 
   return (

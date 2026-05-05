@@ -1,6 +1,6 @@
 import { Wifi, AirVent, Tv, WashingMachine, Utensils } from "lucide-react";
 
-export default function PropertyTypeCard({
+export default function AmenityTypeCard({
   children,
   icon,
   name,

@@ -265,7 +265,7 @@ export default function page() {
 
         <div className="flex flex-col gap-10 border-l-2 border-bg pl-10 w-full">
           {/* PHOTOS */}
-          <PhotoUpload propertyId={propertyId} />
+          <PhotoUpload prefix={`property-images/${propertyId}`} />
           <p className="text-red-600">{errors.images?.[0]}</p>
 
           <FormSubmitButton>Add Property</FormSubmitButton>

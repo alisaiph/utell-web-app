@@ -13,10 +13,9 @@ export interface Property {
 
 export interface Room {
   id: string;
-  propertyId: number;
   name: string;
   description: string;
-  facilities: string;
+  amenities: string;
   guests: number;
   bedrooms: number;
   beds: number;
@@ -24,6 +23,7 @@ export interface Room {
   price: number;
   discount: number;
   images: string[];
+  propertyId: string;
 }
 
 export interface Booking {

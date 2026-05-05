@@ -12,15 +12,18 @@ import {
 } from "@/components/ui/dialog";
 
 import { Plus } from "lucide-react";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import FormSubmitButton from "./FormSubmitButton";
 import PhotoUpload from "./PhotoUpload";
-import FacilityTypeCard from "./FacilityTypeCard";
+import FacilityTypeCard from "./AmenityTypeCard";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { roomSchema } from "../_lib/validation";
+import { addRoomAction } from "../_lib/actions";
+import AmenityTypeCard from "./AmenityTypeCard";
 
-export default function AddRoomDialog() {
+export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
+  const roomId = useMemo(() => crypto.randomUUID(), []); // creating roomId here, so we can use in r2 url
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const router = useRouter();
 
@@ -29,12 +32,12 @@ export default function AddRoomDialog() {
     errors: {},
   };
 
-  const [state, formAction] = useActionState(addPropertyAction, initialState);
+  const [state, formAction] = useActionState(addRoomAction, initialState);
 
   useEffect(() => {
     if (state?.success) {
-      toast.success("Property added!");
-      router.push("/profile/properties");
+      toast.success("Room added!");
+      router.push(`/profile/properties/manage/${propertyId}`);
       router.refresh();
     }
 
@@ -183,7 +186,7 @@ export default function AddRoomDialog() {
                   <p className="text-red-600">{errors.discount?.[0]}</p>
                 </div>
 
-                {/* FACILITIES */}
+                {/* AMENITIES */}
                 <div>
                   <label
                     htmlFor=""
@@ -193,29 +196,29 @@ export default function AddRoomDialog() {
                   </label>
 
                   <div className="flex gap-3">
-                    <FacilityTypeCard icon="Wifi" name="type" value="wifi">
+                    <AmenityTypeCard icon="Wifi" name="amenities" value="wifi">
                       Wifi
-                    </FacilityTypeCard>
-                    <FacilityTypeCard icon="AC" name="type" value="ac">
+                    </AmenityTypeCard>
+                    <AmenityTypeCard icon="AC" name="amenities" value="ac">
                       AC
-                    </FacilityTypeCard>
-                    <FacilityTypeCard icon="TV" name="type" value="tv">
+                    </AmenityTypeCard>
+                    <AmenityTypeCard icon="TV" name="amenities" value="tv">
                       TV
-                    </FacilityTypeCard>
-                    <FacilityTypeCard
+                    </AmenityTypeCard>
+                    <AmenityTypeCard
                       icon="Laundry"
-                      name="type"
+                      name="amenities"
                       value="laundry"
                     >
                       Laundry
-                    </FacilityTypeCard>
-                    <FacilityTypeCard
+                    </AmenityTypeCard>
+                    <AmenityTypeCard
                       icon="Kitchen"
-                      name="type"
+                      name="amenities"
                       value="kitchen"
                     >
                       Kitchen
-                    </FacilityTypeCard>
+                    </AmenityTypeCard>
                   </div>
                 </div>
               </div>
@@ -299,11 +302,16 @@ export default function AddRoomDialog() {
                     />
                     <p className="text-red-600">{errors.baths?.[0]}</p>
                   </div>
+
+                  <input type="hidden" name="propertyId" value={propertyId} />
+                  <input type="hidden" name="roomId" value={roomId} />
                 </div>
 
                 {/* PHOTOS */}
                 <div>
-                  <PhotoUpload />
+                  <PhotoUpload
+                    prefix={`property-images/${propertyId}/room-images/${roomId}`}
+                  />
                   <p className="text-red-600">{errors.images?.[0]}</p>
                 </div>
 

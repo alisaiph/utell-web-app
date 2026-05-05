@@ -8,7 +8,7 @@ export default async function RoomCard({ room }: { room: Room }) {
   const { id, name: roomName, price, propertyId } = room;
 
   const property = await getProperty(propertyId);
-  const { name: propertyName, location } = property;
+  const { name: propertyName, city, area } = property;
 
   return (
     <Link href={`/rooms/${id}`}>

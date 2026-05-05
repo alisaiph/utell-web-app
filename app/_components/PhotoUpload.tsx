@@ -5,9 +5,9 @@ import { useImageUpload } from "../_hooks/useImageUpload";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-export default function PhotoUpload({ propertyId }: { propertyId: string }) {
+export default function PhotoUpload({ prefix }: { prefix: string }) {
   const { selectedFiles, uploadedFiles, uploading, upload, deleteImage } =
-    useImageUpload(propertyId);
+    useImageUpload(prefix);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,

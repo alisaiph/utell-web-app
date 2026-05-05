@@ -11,8 +11,8 @@ export default async function PropertyList({
 }) {
   const { id, name, type, city, area } = property;
 
-  const image = await getImagesByPropertyId(id);
-  const imageUrl = image?.[0]?.imageUrl || "/placeholder.jpg";
+  const images = await getImagesByPropertyId(id);
+  const imageUrl = images?.[0]?.imageUrl || "/placeholder.jpg";
 
   return (
     <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center">

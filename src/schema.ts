@@ -50,14 +50,12 @@ export const roomsTable = pgTable("rooms", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   description: text("description"),
-  facilities: text("facilities"),
   price: decimal("price", { precision: 10, scale: 2 }),
   discount: decimal("discount", { precision: 5, scale: 2 }),
   guests: integer("guests").default(1),
   bedrooms: integer("bedrooms").default(1),
   beds: integer("beds").default(1),
   baths: integer("baths").default(1),
-  imageUrl: text("image_url"),
   propertyId: text("property_id")
     .notNull()
     .references(() => propertiesTable.id, { onDelete: "cascade" }),
@@ -67,6 +65,31 @@ export const roomsTable = pgTable("rooms", {
 
 export type Room = typeof roomsTable.$inferSelect;
 export type NewRoom = typeof roomsTable.$inferInsert;
+
+// Room Images table
+export const roomImagesTable = pgTable("room_images", {
+  id: text("id").primaryKey(),
+  roomId: text("room_id")
+    .notNull()
+    .references(() => roomsTable.id, { onDelete: "cascade" }),
+  imageUrl: text("image_url").notNull(),
+  displayOrder: integer("display_order").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type RoomImage = typeof roomImagesTable.$inferSelect;
+export type NewRoomImage = typeof roomImagesTable.$inferInsert;
+
+export const amenitiesTable = pgTable("amenities", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(), // wifi, ac, tv
+});
+
+export const roomAmenitiesTable = pgTable("room_amenities", {
+  id: text("id").primaryKey(),
+  roomId: text("room_id").notNull(),
+  amenityId: text("amenity_id").notNull(),
+});
 
 // Bookings table
 export const bookingsTable = pgTable("bookings", {

@@ -8,7 +8,7 @@ type UploadedFile = {
   key: string;
 };
 
-export function useImageUpload(propertyId: string) {
+export function useImageUpload(prefix: string) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -22,8 +22,9 @@ export function useImageUpload(propertyId: string) {
       const optimizedFiles = await Promise.all(files.map(optimizeImage));
 
       // 2. Create unique R2 filenames
+
       const filenames = optimizedFiles.map(
-        () => `property-images/${propertyId}/${crypto.randomUUID()}`,
+        (file) => `${prefix}/${crypto.randomUUID()}-${file.name}`,
       );
 
       const fileSizes = optimizedFiles.map((f) => f.size);
