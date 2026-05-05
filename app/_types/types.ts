@@ -17,7 +17,10 @@ export interface Room {
   name: string;
   description: string;
   facilities: string;
-  maxCapacity: number;
+  guests: number;
+  bedrooms: number;
+  beds: number;
+  baths: number;
   price: number;
   discount: number;
   images: string[];

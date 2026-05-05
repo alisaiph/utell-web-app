@@ -53,7 +53,10 @@ export const roomsTable = pgTable("rooms", {
   facilities: text("facilities"),
   price: decimal("price", { precision: 10, scale: 2 }),
   discount: decimal("discount", { precision: 5, scale: 2 }),
-  capacity: integer("capacity").default(1),
+  guests: integer("guests").default(1),
+  bedrooms: integer("bedrooms").default(1),
+  beds: integer("beds").default(1),
+  baths: integer("baths").default(1),
   imageUrl: text("image_url"),
   propertyId: text("property_id")
     .notNull()

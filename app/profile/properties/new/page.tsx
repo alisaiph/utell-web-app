@@ -5,7 +5,7 @@ import { addPropertyAction } from "@/app/_lib/actions";
 import MapPickerWrapper from "@/app/_components/MapPickerWrapper";
 import PhotoUpload from "@/app/_components/PhotoUpload";
 import { propertySchema } from "@/app/_lib/validation";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import FormSubmitButton from "@/app/_components/FormSubmitButton";
@@ -16,6 +16,7 @@ type ActionResponse = {
 };
 
 export default function page() {
+  const propertyId = useMemo(() => crypto.randomUUID(), []);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const router = useRouter();
   const [category, setCategory] = useState("");
@@ -69,15 +70,10 @@ export default function page() {
             location: formData.get("location"),
           };
 
-          // Collect uploaded URLs from hidden inputs
-          const imageUrls: string[] = [];
-          let index = 0;
-          while (true) {
-            const url = formData.get(`imageUrl${index}`);
-            if (!url) break;
-            imageUrls.push(url as string);
-            index++;
-          }
+          const uploadedRaw = formData.get("uploadedImages");
+          const uploadedFiles: { url: string; key: string }[] = uploadedRaw
+            ? JSON.parse(uploadedRaw as string)
+            : [];
 
           // Run validation
           const result = propertySchema.safeParse(data);
@@ -90,7 +86,7 @@ export default function page() {
           }
 
           // Image validation
-          if (imageUrls.length === 0 || imageUrls.length > 3) {
+          if (uploadedFiles.length === 0 || uploadedFiles.length > 3) {
             newErrors.images = ["You must upload between 1 and 3 images"];
           }
 
@@ -261,13 +257,15 @@ export default function page() {
                 />
                 <p className="text-red-600">{errors.contactEmail?.[0]}</p>
               </div>
+
+              <input type="hidden" name="propertyId" value={propertyId} />
             </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-10 border-l-2 border-bg pl-10 w-full">
           {/* PHOTOS */}
-          <PhotoUpload />
+          <PhotoUpload propertyId={propertyId} />
           <p className="text-red-600">{errors.images?.[0]}</p>
 
           <FormSubmitButton>Add Property</FormSubmitButton>

@@ -1,5 +1,10 @@
 "use server";
 
+import {
+  S3Client,
+  CopyObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 import { redirect } from "next/navigation";
 import getServerSession from "./get-session";
 import { db } from "@/db";
@@ -51,6 +56,7 @@ export async function addPropertyAction(
     contactPhone: formData.get("contactPhone"),
     contactEmail: formData.get("contactEmail"),
   };
+  const propertyId = formData.get("propertyId") as string;
 
   const result = propertySchema.safeParse(data);
 
@@ -63,20 +69,17 @@ export async function addPropertyAction(
   const validated = result.data;
 
   // Collect uploaded URLs from hidden inputs
-  const imageUrls: string[] = [];
-  let index = 0;
-  while (true) {
-    const url = formData.get(`imageUrl${index}`);
-    if (!url) break;
-    imageUrls.push(url as string);
-    index++;
-  }
+  const uploadedRaw = formData.get("uploadedImages");
+
+  const uploadedImages: { url: string; key: string }[] = uploadedRaw
+    ? JSON.parse(uploadedRaw as string)
+    : [];
 
   // Validate
-  if (imageUrls.length === 0) {
+  if (uploadedImages.length === 0) {
     return { errors: { images: ["At least 1 image required"] } };
   }
-  if (imageUrls.length > 3) {
+  if (uploadedImages.length > 3) {
     return { errors: { images: ["Maximum 3 images allowed"] } };
   }
 
@@ -84,7 +87,7 @@ export async function addPropertyAction(
     const [property] = await tx
       .insert(propertiesTable)
       .values({
-        id: crypto.randomUUID(),
+        id: propertyId,
         name: validated.name,
         description: validated.description,
         address: validated.address,
@@ -98,11 +101,12 @@ export async function addPropertyAction(
       })
       .returning({ id: propertiesTable.id });
 
+    // Save final URLs
     await tx.insert(propertyImagesTable).values(
-      imageUrls.map((url, i) => ({
+      uploadedImages.map((img, i) => ({
         id: crypto.randomUUID(),
         propertyId: property.id,
-        imageUrl: url,
+        imageUrl: img.url,
         displayOrder: i,
       })),
     );

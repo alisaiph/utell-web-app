@@ -1,13 +1,4 @@
-import {
-  House,
-  Building,
-  Hotel,
-  Wifi,
-  AirVent,
-  Tv,
-  WashingMachine,
-  Utensils,
-} from "lucide-react";
+import { Wifi, AirVent, Tv, WashingMachine, Utensils } from "lucide-react";
 
 export default function PropertyTypeCard({
   children,

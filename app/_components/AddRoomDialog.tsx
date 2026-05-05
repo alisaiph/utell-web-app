@@ -33,7 +33,7 @@ export default function AddRoomDialog() {
             </button>
           }
         />
-        <DialogContent className="sm:w-4xl">
+        <DialogContent className="w-6xl">
           <div className="bg-bg-light flex flex-col gap-10 p-8 rounded-2xl">
             <h2 className="text-xl font-semibold">Add Room</h2>
             <form action="" className="flex gap-10" noValidate>
@@ -151,23 +151,91 @@ export default function AddRoomDialog() {
               </div>
 
               <div className="flex flex-col gap-5 border-l-2 border-bg pl-10 w-full">
-                {/* CAPACITY */}
-                <div>
-                  <label
-                    htmlFor="capacity"
-                    className="font-semibold text-lg mb-3 block"
-                  >
-                    Capacity
-                  </label>
+                <div className="flex gap-2">
+                  <div>
+                    <div>
+                      <label
+                        htmlFor="guests"
+                        className="font-semibold text-lg mb-3 block"
+                      >
+                        Guests
+                      </label>
 
-                  <input
-                    type="text"
-                    placeholder="Room capacity"
-                    name="capacity"
-                    required
-                    className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.capacity ? "border-red-600" : ""}`}
-                  />
-                  <p className="text-red-600">{errors.capacity?.[0]}</p>
+                      <input
+                        type="number"
+                        placeholder="Number of guests"
+                        name="guests"
+                        required
+                        className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.guests ? "border-red-600" : ""}`}
+                      />
+                      <p className="text-red-600">{errors.guests?.[0]}</p>
+                    </div>
+                  </div>
+
+                  {/* BEDROOMS */}
+                  <div>
+                    <div>
+                      <label
+                        htmlFor="bedrooms"
+                        className="font-semibold text-lg mb-3 block"
+                      >
+                        Bedrooms
+                      </label>
+
+                      <input
+                        type="number"
+                        placeholder="Number of bedrooms"
+                        name="bedrooms"
+                        required
+                        className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.bedrooms ? "border-red-600" : ""}`}
+                      />
+                      <p className="text-red-600">{errors.bedrooms?.[0]}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  {/* BEDS */}
+                  <div>
+                    <div>
+                      <label
+                        htmlFor="beds"
+                        className="font-semibold text-lg mb-3 block"
+                      >
+                        Beds
+                      </label>
+
+                      <input
+                        type="number"
+                        placeholder="Number of beds"
+                        name="beds"
+                        required
+                        className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.beds ? "border-red-600" : ""}`}
+                      />
+                      <p className="text-red-600">{errors.beds?.[0]}</p>
+                    </div>
+                  </div>
+
+                  {/* BATHS */}
+                  <div>
+                    <div>
+                      <label
+                        htmlFor="baths"
+                        className="font-semibold text-lg mb-3 block"
+                      >
+                        Baths
+                      </label>
+
+                      <input
+                        type="number"
+                        placeholder="Number of baths"
+                        name="baths"
+                        required
+                        className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.baths ? "border-red-600" : ""}`}
+                      />
+                      <p className="text-red-600">{errors.baths?.[0]}</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* PHOTOS */}
