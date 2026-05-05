@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
-
-const client = new S3Client({
-  region: "auto",
-  endpoint: process.env.R2_ENDPOINT,
-  credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-  },
-});
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { r2client } from "@/app/_lib/r2-upload";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,7 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing key" }, { status: 400 });
     }
 
-    await client.send(
+    await r2client.send(
       new DeleteObjectCommand({
         Bucket: process.env.R2_BUCKET_NAME!,
         Key: key,

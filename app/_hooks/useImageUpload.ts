@@ -21,14 +21,14 @@ export function useImageUpload(propertyId: string) {
       // 1. Optimize images
       const optimizedFiles = await Promise.all(files.map(optimizeImage));
 
-      // 2. Create unique R2 keys
+      // 2. Create unique R2 filenames
       const filenames = optimizedFiles.map(
         () => `property-images/${propertyId}/${crypto.randomUUID()}`,
       );
 
       const fileSizes = optimizedFiles.map((f) => f.size);
 
-      // 3. Get presigned URLs
+      // 3. Get presigned URLs, so we can upload directly
       const res = await fetch("/api/generate-presigned-url", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,7 +42,7 @@ export function useImageUpload(propertyId: string) {
 
       const { urls } = await res.json();
 
-      // 4. Upload to R2 (PUT happens here)
+      // 4. Upload to R2
       const uploaded = await Promise.all(
         optimizedFiles.map(async (file, index) => {
           const url = urls[index];

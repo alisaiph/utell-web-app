@@ -16,7 +16,7 @@ type ActionResponse = {
 };
 
 export default function page() {
-  const propertyId = useMemo(() => crypto.randomUUID(), []);
+  const propertyId = useMemo(() => crypto.randomUUID(), []); // creating propertyId here, so we can use in r2 url
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const router = useRouter();
   const [category, setCategory] = useState("");

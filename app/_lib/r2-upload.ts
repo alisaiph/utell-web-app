@@ -1,7 +1,7 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-const client = new S3Client({
+export const r2client = new S3Client({
   region: "auto",
   credentials: {
     accessKeyId: process.env.R2_ACCESS_KEY_ID!,
@@ -16,7 +16,7 @@ export async function generatePresignedUrl(filename: string) {
     Key: filename,
   });
 
-  const url = await getSignedUrl(client, command, { expiresIn: 3600 });
+  const url = await getSignedUrl(r2client, command, { expiresIn: 3600 });
   return url;
 }
 
@@ -31,7 +31,7 @@ export async function uploadToR2(file: File, path: string) {
     ContentType: file.type,
   });
 
-  await client.send(command);
+  await r2client.send(command);
 
   return `https://${process.env.NEXT_PUBLIC_R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${path}`;
 }

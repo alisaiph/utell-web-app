@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  S3Client,
-  CopyObjectCommand,
-  DeleteObjectCommand,
-} from "@aws-sdk/client-s3";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { redirect } from "next/navigation";
 import getServerSession from "./get-session";
 import { db } from "@/db";
@@ -12,6 +8,7 @@ import { user as userTable } from "@/auth-schema";
 import { eq } from "drizzle-orm";
 import { propertySchema } from "./validation";
 import { propertiesTable, propertyImagesTable } from "@/src/schema";
+import { r2client } from "./r2-upload";
 
 type ActionResponse = {
   success?: boolean;
@@ -83,34 +80,53 @@ export async function addPropertyAction(
     return { errors: { images: ["Maximum 3 images allowed"] } };
   }
 
-  await db.transaction(async (tx) => {
-    const [property] = await tx
-      .insert(propertiesTable)
-      .values({
-        id: propertyId,
-        name: validated.name,
-        description: validated.description,
-        address: validated.address,
-        area: validated.area,
-        city: validated.city,
-        type: validated.type,
-        location: validated.location,
-        contactPhone: validated.contactPhone,
-        contactEmail: validated.contactEmail || null,
-        ownerId: session.user.id,
-      })
-      .returning({ id: propertiesTable.id });
+  try {
+    await db.transaction(async (tx) => {
+      const [property] = await tx
+        .insert(propertiesTable)
+        .values({
+          id: propertyId,
+          name: validated.name,
+          description: validated.description,
+          address: validated.address,
+          area: validated.area,
+          city: validated.city,
+          type: validated.type,
+          location: validated.location,
+          contactPhone: validated.contactPhone,
+          contactEmail: validated.contactEmail || null,
+          ownerId: session.user.id,
+        })
+        .returning({ id: propertiesTable.id });
 
-    // Save final URLs
-    await tx.insert(propertyImagesTable).values(
-      uploadedImages.map((img, i) => ({
-        id: crypto.randomUUID(),
-        propertyId: property.id,
-        imageUrl: img.url,
-        displayOrder: i,
-      })),
+      // Save final URLs
+      await tx.insert(propertyImagesTable).values(
+        uploadedImages.map((img, i) => ({
+          id: crypto.randomUUID(),
+          propertyId: property.id,
+          imageUrl: img.url,
+          displayOrder: i,
+        })),
+      );
+    });
+
+    return { success: true };
+  } catch (err) {
+    console.error("Uploading to db failed, cleaning up R2...", err);
+
+    await Promise.all(
+      uploadedImages.map((img) =>
+        r2client.send(
+          new DeleteObjectCommand({
+            Bucket: process.env.R2_BUCKET_NAME!,
+            Key: img.key,
+          }),
+        ),
+      ),
     );
-  });
 
-  return { success: true };
+    return {
+      errors: { general: ["Uploading image to db failed, try again."] },
+    };
+  }
 }

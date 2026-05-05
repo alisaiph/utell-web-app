@@ -1,21 +1,13 @@
 "use client";
 
 import { Image, X } from "lucide-react";
-import { optimizeImage } from "../_lib/image-optimize";
 import { useImageUpload } from "../_hooks/useImageUpload";
-import { useMemo } from "react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export default function PhotoUpload({ propertyId }: { propertyId: string }) {
-  const {
-    selectedFiles,
-    setSelectedFiles,
-    uploadedFiles,
-    uploading,
-    upload,
-    deleteImage,
-  } = useImageUpload(propertyId);
+  const { selectedFiles, uploadedFiles, uploading, upload, deleteImage } =
+    useImageUpload(propertyId);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -44,6 +36,7 @@ export default function PhotoUpload({ propertyId }: { propertyId: string }) {
         Photos
       </label>
 
+      {/* PHOTO UPLOAD AREA */}
       <input
         type="file"
         name="photos"
