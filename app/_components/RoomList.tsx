@@ -32,7 +32,7 @@ export default async function RoomList({ room }: { room: Room }) {
       </div>
       <p>{price}</p>
       <p>{guests}</p>
-      <FormActionButton />
+      <FormActionButton room={room} />
     </div>
   );
 }

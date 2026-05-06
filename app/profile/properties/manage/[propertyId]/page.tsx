@@ -35,7 +35,7 @@ export default async function page({
   return (
     <div className="flex gap-10">
       <div className="flex flex-col gap-5 basis-2/3">
-        <h2 className="text-xl font-semibold">Rooms of {propertyName}</h2>
+        <h2 className="text-xl font-semibold">{propertyName} Rooms</h2>
 
         <div className="bg-bg-light/50 flex flex-col gap-5 px-4 py-2 rounded-2xl">
           <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center font-semibold">

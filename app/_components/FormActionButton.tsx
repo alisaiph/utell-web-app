@@ -10,13 +10,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, HousePlus, SquarePen, Trash } from "lucide-react";
 import Link from "next/link";
+import EditRoomDialog from "./EditRoomDialog";
+import { Room } from "../_types/types";
+import { useState } from "react";
 
 export default function FormActionButton({
   propertyId,
+  room,
 }: {
   propertyId?: string;
-  roomId?: string;
+  room?: Room;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -29,9 +35,13 @@ export default function FormActionButton({
       <DropdownMenuContent className="w-40" align="start">
         <DropdownMenuGroup>
           <DropdownMenuLabel>Property</DropdownMenuLabel>
-          <DropdownMenuItem>
-            <SquarePen />
-            Edit
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              setOpen(true);
+            }}
+          >
+            <EditRoomDialog room={room} open={open} setOpen={setOpen} />
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Trash />

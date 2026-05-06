@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Room } from "../_types/types";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
-import { getProperty } from "../_lib/data-service";
+import { getImagesByRoomId, getProperty } from "../_lib/data-service";
 
 export default async function RoomCard({ room }: { room: Room }) {
   const { id, name: roomName, price, propertyId } = room;
@@ -10,12 +10,15 @@ export default async function RoomCard({ room }: { room: Room }) {
   const property = await getProperty(propertyId);
   const { name: propertyName, city, area } = property;
 
+  const images = await getImagesByRoomId(id);
+  const imageUrl = images?.[0]?.imageUrl || "/placeholder.jpg";
+
   return (
     <Link href={`/rooms/${id}`}>
-      <div className="flex flex-col bg-bg-light w-98 h-120 rounded-3xl p-6 gap-2">
+      <div className="flex flex-col bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors w-98 h-120 rounded-3xl p-6 gap-2">
         <div className="relative w-full rounded-xl h-100 overflow-hidden mb-3">
           <Image
-            src={"/images/property-card-img.webp"}
+            src={imageUrl}
             fill
             alt="Property image"
             className="object-cover"
