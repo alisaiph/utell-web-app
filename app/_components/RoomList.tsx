@@ -2,9 +2,15 @@ import Image from "next/image";
 import { Room } from "../_types/types";
 import Link from "next/link";
 import { getAmenitiesByRoomId, getImagesByRoomId } from "../_lib/data-service";
-import FormActionButton from "./FormActionButton";
+import RoomActionButton from "./RoomActionButton";
 
-export default async function RoomList({ room }: { room: Room }) {
+export default async function RoomList({
+  room,
+  propertyId,
+}: {
+  room: Room;
+  propertyId: string;
+}) {
   const { id, name, price, guests } = room;
 
   const amenities = await getAmenitiesByRoomId(id);
@@ -32,7 +38,7 @@ export default async function RoomList({ room }: { room: Room }) {
       </div>
       <p>{price}</p>
       <p>{guests}</p>
-      <FormActionButton room={room} />
+      <RoomActionButton room={room} propertyId={propertyId} images={images} />
     </div>
   );
 }

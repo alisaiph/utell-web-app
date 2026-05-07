@@ -53,7 +53,7 @@ export default async function page({
               className="bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors rounded-2xl p-4"
               key={room.name}
             >
-              <RoomList room={room} key={room.name} />
+              <RoomList room={room} propertyId={propertyId} key={room.name} />
             </div>
           ))
         ) : (

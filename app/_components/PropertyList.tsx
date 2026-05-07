@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Property } from "../_types/types";
 import Link from "next/link";
 import { getImagesByPropertyId } from "../_lib/data-service";
-import FormActionButton from "./FormActionButton";
+import PropertyActionButton from "./PropertyActionButton";
 
 export default async function PropertyList({
   property,
@@ -31,7 +31,7 @@ export default async function PropertyList({
       <p>{type}</p>
       <p className="truncate">{city}</p>
       <p className="truncate">{area}</p>
-      <FormActionButton propertyId={id} />
+      <PropertyActionButton propertyId={id} />
     </div>
   );
 }
