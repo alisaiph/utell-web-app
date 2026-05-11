@@ -9,6 +9,8 @@ import {
 } from "@/schema";
 import { user as userTable } from "@/auth-schema";
 import { eq } from "drizzle-orm";
+import { r2client } from "./r2-upload";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const adjectives = [
   "cozy",
@@ -124,10 +126,19 @@ export async function getRoomsByPropertyId(propertyId: string) {
 
 export async function getImagesByRoomId(roomId: string) {
   try {
-    const roomImages = await db
+    const images = await db
       .select()
       .from(roomImagesTable)
       .where(eq(roomImagesTable.roomId, roomId));
+
+    const roomImages = images.map((img) => ({
+      url: img.imageUrl,
+      key: img.imageUrl.replace(
+        `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/`,
+        "",
+      ),
+    }));
+
     return roomImages ?? null;
   } catch (error) {
     console.error("Error fetching room images:", error);

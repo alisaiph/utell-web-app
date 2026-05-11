@@ -15,6 +15,7 @@ import {
   roomsTable,
 } from "@/src/schema";
 import { r2client } from "./r2-upload";
+import { getImagesByRoomId } from "./data-service";
 
 type ActionResponse = {
   success?: boolean;
@@ -289,10 +290,9 @@ export async function updateRoomAction(
 
   try {
     await db.transaction(async (tx) => {
-      const [room] = await tx
-        .insert(roomsTable)
-        .values({
-          id: roomId,
+      await tx
+        .update(roomsTable)
+        .set({
           name: validated.name,
           description: validated.description,
           price: validated.price,
@@ -301,23 +301,33 @@ export async function updateRoomAction(
           bedrooms: validated.bedrooms,
           beds: validated.beds,
           baths: validated.baths,
-          propertyId: propertyId,
         })
-        .returning({ id: roomsTable.id });
+        .where(eq(roomsTable.id, roomId));
 
-      await tx.insert(roomAmenitiesTable).values(
-        amenities.map((amenityId) => ({
-          id: crypto.randomUUID(),
-          roomId,
-          amenityId,
-        })),
-      );
+      // Delete old, insert new amenities
+      await tx
+        .delete(roomAmenitiesTable)
+        .where(eq(roomAmenitiesTable.roomId, roomId));
 
-      // Save final URLs
+      if (amenities.length > 0) {
+        await tx.insert(roomAmenitiesTable).values(
+          amenities.map((amenityId) => ({
+            id: crypto.randomUUID(),
+            roomId,
+            amenityId,
+          })),
+        );
+      }
+
+      // Delete old, insert new images
+      await tx
+        .delete(roomImagesTable)
+        .where(eq(roomImagesTable.roomId, roomId));
+
       await tx.insert(roomImagesTable).values(
         uploadedImages.map((img, i) => ({
           id: crypto.randomUUID(),
-          roomId: room.id,
+          roomId,
           imageUrl: img.url,
           displayOrder: i,
         })),
@@ -328,8 +338,15 @@ export async function updateRoomAction(
   } catch (err) {
     console.error("Uploading to db failed, cleaning up R2...", err);
 
+    // Get existing image keys from DB to know which ones are new
+    const existingImages = await getImagesByRoomId(roomId);
+    const existingKeys = new Set(existingImages.map((img) => img.key));
+    const newImages = uploadedImages.filter(
+      (img) => !existingKeys.has(img.key),
+    );
+
     await Promise.all(
-      uploadedImages.map((img) =>
+      newImages.map((img) =>
         r2client.send(
           new DeleteObjectCommand({
             Bucket: process.env.R2_BUCKET_NAME!,
@@ -342,5 +359,29 @@ export async function updateRoomAction(
     return {
       errors: { general: ["Uploading image to db failed, try again."] },
     };
+  }
+}
+
+export async function deleteRoomAction(roomId: string) {
+  try {
+    // Delete room images from r2
+    const images = await getImagesByRoomId(roomId);
+
+    await Promise.all(
+      images.map((img) =>
+        r2client.send(
+          new DeleteObjectCommand({
+            Bucket: process.env.R2_BUCKET_NAME!,
+            Key: img.key,
+          }),
+        ),
+      ),
+    );
+
+    // Delete room from db
+    await db.delete(roomsTable).where(eq(roomsTable.id, roomId));
+  } catch (error) {
+    console.error("Error deleting room:", error);
+    throw new Error("Failed to delete room");
   }
 }

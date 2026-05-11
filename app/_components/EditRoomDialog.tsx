@@ -15,14 +15,20 @@ import { Room } from "../_types/types";
 export default function EditRoomDialog({
   room,
   propertyId,
-  images,
+  currImages,
+  amenities,
+  onSuccess,
 }: {
   room: Room;
   propertyId: string;
-  images: string[];
+  currImages: { url: string; key: string }[];
+  amenities: { id: string; roomId: string; amenityId: string }[];
+  onSuccess?: () => void;
 }) {
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const router = useRouter();
+  const allAmenities = amenities.map((a) => a.amenityId);
+
   const initialState: ActionResponse = {
     success: false,
     errors: {},
@@ -32,7 +38,7 @@ export default function EditRoomDialog({
   useEffect(() => {
     if (state?.success) {
       toast.success("Room updated!");
-      // router.push(`/profile/properties/manage/${propertyId}`);
+      onSuccess();
       router.refresh();
     }
 
@@ -145,7 +151,7 @@ export default function EditRoomDialog({
                 type="text"
                 placeholder="Room price"
                 name="price"
-                defaultValue={room.price}
+                defaultValue={Number(room.price)}
                 className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.price ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.price?.[0]}</p>
@@ -164,7 +170,7 @@ export default function EditRoomDialog({
                 type="text"
                 placeholder="Room discount"
                 name="discount"
-                defaultValue={room.discount}
+                defaultValue={Number(room.discount)}
                 className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.discount ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.discount?.[0]}</p>
@@ -173,23 +179,39 @@ export default function EditRoomDialog({
             {/* AMENITIES */}
             <div>
               <label htmlFor="" className="font-semibold text-lg mb-3 block">
-                Facilties
+                Amenities
               </label>
 
               <div className="flex gap-3">
-                <AmenityTypeCard icon="Wifi" name="amenities" value="wifi">
+                <AmenityTypeCard
+                  icon="Wifi"
+                  name="amenities"
+                  value="wifi"
+                  defaultChecked={allAmenities.includes("wifi")}
+                >
                   Wifi
                 </AmenityTypeCard>
-                <AmenityTypeCard icon="AC" name="amenities" value="ac">
+                <AmenityTypeCard
+                  icon="AC"
+                  name="amenities"
+                  value="ac"
+                  defaultChecked={allAmenities.includes("ac")}
+                >
                   AC
                 </AmenityTypeCard>
-                <AmenityTypeCard icon="TV" name="amenities" value="tv">
+                <AmenityTypeCard
+                  icon="TV"
+                  name="amenities"
+                  value="tv"
+                  defaultChecked={allAmenities.includes("tv")}
+                >
                   TV
                 </AmenityTypeCard>
                 <AmenityTypeCard
                   icon="Laundry"
                   name="amenities"
                   value="laundry"
+                  defaultChecked={allAmenities.includes("laundry")}
                 >
                   Laundry
                 </AmenityTypeCard>
@@ -197,6 +219,7 @@ export default function EditRoomDialog({
                   icon="Kitchen"
                   name="amenities"
                   value="kitchen"
+                  defaultChecked={allAmenities.includes("kitchen")}
                 >
                   Kitchen
                 </AmenityTypeCard>
@@ -292,7 +315,7 @@ export default function EditRoomDialog({
             <div>
               <PhotoUpload
                 prefix={`property-images/${propertyId}/room-images/${room.id}`}
-                currImages={images}
+                currImages={currImages}
               />
               <p className="text-red-600">{errors.images?.[0]}</p>
             </div>

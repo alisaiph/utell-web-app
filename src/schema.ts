@@ -87,7 +87,9 @@ export const amenitiesTable = pgTable("amenities", {
 
 export const roomAmenitiesTable = pgTable("room_amenities", {
   id: text("id").primaryKey(),
-  roomId: text("room_id").notNull(),
+  roomId: text("room_id")
+    .notNull()
+    .references(() => roomsTable.id, { onDelete: "cascade" }),
   amenityId: text("amenity_id").notNull(),
 });
 

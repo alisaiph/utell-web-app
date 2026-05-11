@@ -2,6 +2,7 @@
 
 import { Image, X } from "lucide-react";
 import { useImageUpload } from "../_hooks/useImageUpload";
+import { useEffect } from "react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -10,10 +11,24 @@ export default function PhotoUpload({
   currImages,
 }: {
   prefix: string;
-  currImages?: string[];
+  currImages?: { url: string; key: string }[]; // match UploadedFile type
 }) {
-  const { selectedFiles, uploadedFiles, uploading, upload, deleteImage } =
-    useImageUpload(prefix);
+  const {
+    selectedFiles,
+    uploadedFiles,
+    setUploadedFiles,
+    uploading,
+    upload,
+    deleteImage,
+  } = useImageUpload(prefix);
+
+  // Seed current images into the hook's state on mount
+  useEffect(() => {
+    if (currImages && currImages.length > 0) {
+      console.log(currImages);
+      setUploadedFiles(currImages);
+    }
+  }, []);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -58,50 +73,41 @@ export default function PhotoUpload({
         htmlFor="photo-input"
         className="flex flex-col items-center justify-center gap-2 bg-bg border-3 border-dashed border-bg-dark hover:bg-bg-dark/30 transition-colors rounded-md w-full px-10 py-10 cursor-pointer"
       >
-        {selectedFiles.length > 0 || currImages ? (
-          <div className="flex gap-4">
-            {/* CURRENT IMAGES */}
-            {currImages &&
-              currImages.map((url, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={url}
-                    className="w-full h-32 object-cover rounded-md border-4 border-bg-dark"
-                  />
+        {uploadedFiles.length > 0 || selectedFiles.length > 0 ? (
+          <div className="flex gap-4 flex-wrap">
+            {/* ALL images — existing and newly uploaded, unified in one list */}
+            {uploadedFiles.map((file, index) => (
+              <div key={file.key ?? index} className="relative">
+                <img
+                  src={file.url}
+                  className="w-full h-32 object-cover rounded-md border-4 border-bg-dark"
+                />
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteImage(index);
+                  }}
+                  className="absolute top-0 right-0 bg-red-700 text-white w-6 h-6 flex items-center justify-center text-xs rounded-sm cursor-pointer"
+                >
+                  <X size={15} />
+                </button>
+              </div>
+            ))}
 
-                  <button
-                    type="button"
-                    onClick={() => deleteImage(index)}
-                    className="absolute top-0 right-0 bg-red-700 text-white w-6 h-6 flex items-center justify-center text-xs rounded-sm cursor-pointer"
-                  >
-                    <X size={15} />
-                  </button>
-                </div>
-              ))}
-
-            {/* NEW IMAGES */}
-            {selectedFiles.length > 0 &&
-              selectedFiles.map((file, index) => (
+            {/* In-progress files (before upload finishes) */}
+            {selectedFiles
+              .filter((_, i) => i >= uploadedFiles.length) // only truly pending ones
+              .map((file, index) => (
                 <div key={index} className="relative">
                   <img
                     src={URL.createObjectURL(file)}
                     className="w-full h-32 object-cover rounded-md border-4 border-bg-dark"
                   />
-
                   {uploading && (
                     <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50 text-white">
                       <div className="animate-spin h-8 w-8 border-2 border-white border-t-transparent rounded-full" />
                     </div>
-                  )}
-
-                  {!uploading && (
-                    <button
-                      type="button"
-                      onClick={() => deleteImage(index)}
-                      className="absolute top-0 right-0 bg-red-700 text-white w-6 h-6 flex items-center justify-center text-xs rounded-sm cursor-pointer"
-                    >
-                      <X size={15} />
-                    </button>
                   )}
                 </div>
               ))}
@@ -116,7 +122,6 @@ export default function PhotoUpload({
         )}
       </label>
 
-      {/* ONLY ONE hidden input */}
       <input
         type="hidden"
         name="uploadedImages"

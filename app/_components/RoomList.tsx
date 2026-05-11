@@ -14,8 +14,8 @@ export default async function RoomList({
   const { id, name, price, guests } = room;
 
   const amenities = await getAmenitiesByRoomId(id);
-  const images = await getImagesByRoomId(id);
-  const imageUrl = images?.[0]?.imageUrl || "/placeholder.jpg";
+  const currImages = await getImagesByRoomId(id);
+  const imageUrl = currImages?.[0]?.url || "/placeholder.jpg";
 
   return (
     <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center">
@@ -38,7 +38,12 @@ export default async function RoomList({
       </div>
       <p>{price}</p>
       <p>{guests}</p>
-      <RoomActionButton room={room} propertyId={propertyId} images={images} />
+      <RoomActionButton
+        room={room}
+        propertyId={propertyId}
+        currImages={currImages}
+        amenities={amenities}
+      />
     </div>
   );
 }

@@ -12,18 +12,32 @@ import { EllipsisVertical, SquarePen, Trash } from "lucide-react";
 import EditRoomDialog from "./EditRoomDialog";
 import { Room } from "../_types/types";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
+import { deleteRoomAction } from "../_lib/actions";
+import { useRouter } from "next/navigation";
 
 export default function RoomActionButton({
   propertyId,
   room,
-  images,
+  currImages,
+  amenities,
 }: {
   propertyId: string;
   room: Room;
-  images: string[];
+  currImages: { url: string; key: string }[];
+  amenities: { id: string; roomId: string; amenityId: string }[];
 }) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const handleDelete = async () => {
+    if (!confirm("Are you sure?")) return;
+    await deleteRoomAction(room.id);
+    router.refresh();
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           render={
@@ -43,7 +57,7 @@ export default function RoomActionButton({
               </DropdownMenuItem>
             </DialogTrigger>
 
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>
               <Trash />
               Delete
             </DropdownMenuItem>
@@ -51,7 +65,13 @@ export default function RoomActionButton({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <EditRoomDialog room={room} propertyId={propertyId} images={images} />
+      <EditRoomDialog
+        room={room}
+        propertyId={propertyId}
+        currImages={currImages}
+        amenities={amenities}
+        onSuccess={() => setOpen(false)}
+      />
     </Dialog>
   );
 }
