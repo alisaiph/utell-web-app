@@ -5,6 +5,7 @@ import RoomList from "@/app/_components/RoomList";
 import {
   getPropertiesByUserId,
   getProperty,
+  getPropertyByOwner,
   getRoomsByPropertyId,
 } from "@/app/_lib/data-service";
 import getServerSession from "@/app/_lib/get-session";
@@ -32,12 +33,14 @@ export default async function page({
     throw new Error("User not authenticated");
   }
 
-  const { name: propertyName, ownerId } = await getProperty(propertyId);
+  const property = await getPropertyByOwner(propertyId, user.id);
 
-  // Authorization check
-  if (ownerId !== user.id) {
+  if (!property) {
     notFound();
   }
+
+  const { name: propertyName } = property;
+
   const allRooms = await getRoomsByPropertyId(propertyId);
 
   return (

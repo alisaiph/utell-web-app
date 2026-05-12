@@ -13,12 +13,12 @@ import Link from "next/link";
 
 export default async function page() {
   const session = await getServerSession();
-  if (!session?.user?.id) {
+  const user = session?.user;
+  if (!user?.id) {
     throw new Error("User not authenticated");
   }
 
-  const userId = session.user.id;
-  const allProperties = await getPropertiesByUserId(userId);
+  const allProperties = await getPropertiesByUserId(user.id);
 
   return (
     <div className="flex gap-10">

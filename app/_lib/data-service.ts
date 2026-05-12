@@ -8,9 +8,7 @@ import {
   roomAmenitiesTable,
 } from "@/schema";
 import { user as userTable } from "@/auth-schema";
-import { eq } from "drizzle-orm";
-import { r2client } from "./r2-upload";
-import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { and, eq } from "drizzle-orm";
 
 const adjectives = [
   "cozy",
@@ -164,6 +162,21 @@ export async function getProperty(id: string) {
     .select()
     .from(propertiesTable)
     .where(eq(propertiesTable.id, id))
+    .then((result) => result[0]);
+
+  return property ?? null;
+}
+
+export async function getPropertyByOwner(propertyId: string, ownerId: string) {
+  const property = await db
+    .select()
+    .from(propertiesTable)
+    .where(
+      and(
+        eq(propertiesTable.id, propertyId),
+        eq(propertiesTable.ownerId, ownerId),
+      ),
+    )
     .then((result) => result[0]);
 
   return property ?? null;
