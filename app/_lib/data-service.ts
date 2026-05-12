@@ -184,10 +184,19 @@ export async function getPropertiesByUserId(userId: string) {
 
 export async function getImagesByPropertyId(propertyId: string) {
   try {
-    const propertyImages = await db
+    const images = await db
       .select()
       .from(propertyImagesTable)
       .where(eq(propertyImagesTable.propertyId, propertyId));
+
+    const propertyImages = images.map((img) => ({
+      url: img.imageUrl,
+      key: img.imageUrl.replace(
+        `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/`,
+        "",
+      ),
+    }));
+
     return propertyImages ?? null;
   } catch (error) {
     console.error("Error fetching property images:", error);

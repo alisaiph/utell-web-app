@@ -5,13 +5,13 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { getImagesByRoomId, getProperty } from "../_lib/data-service";
 
 export default async function RoomCard({ room }: { room: Room }) {
-  const { id, name: roomName, price, propertyId } = room;
+  const { id, type, price, propertyId } = room;
 
   const property = await getProperty(propertyId);
   const { name: propertyName, city, area } = property;
 
   const images = await getImagesByRoomId(id);
-  const imageUrl = images?.[0]?.imageUrl || "/placeholder.jpg";
+  const imageUrl = images?.[0]?.url || "/placeholder.jpg";
 
   return (
     <Link href={`/rooms/${id}`}>
@@ -27,7 +27,7 @@ export default async function RoomCard({ room }: { room: Room }) {
 
         <h2 className="text-md font-semibold">
           {`${propertyName} | `}
-          <span className="font-normal">{roomName}</span>
+          <span className="font-normal">{type} Room</span>
         </h2>
 
         <div className="text-sm text-utell-text-lgray">

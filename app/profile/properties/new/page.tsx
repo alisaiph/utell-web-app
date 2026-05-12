@@ -111,15 +111,15 @@ export default function page() {
               <PropertyTypeCard
                 icon="House"
                 name="type"
-                value="guest-house"
+                value="Guest House"
                 defaultChecked={true}
               >
                 Guest House
               </PropertyTypeCard>
-              <PropertyTypeCard icon="Building" name="type" value="apartment">
+              <PropertyTypeCard icon="Building" name="type" value="Apartment">
                 Apartment
               </PropertyTypeCard>
-              <PropertyTypeCard icon="Hotel" name="type" value="hotel">
+              <PropertyTypeCard icon="Hotel" name="type" value="Hotel">
                 Hotel
               </PropertyTypeCard>
             </div>

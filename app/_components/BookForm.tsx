@@ -1,17 +1,14 @@
 "use client";
 
-import { isPast } from "date-fns";
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
+import { BookCalendar } from "./BookCalendar";
 
 export default function BookForm({ price }: { price: string }) {
-  const defaultClassNames = getDefaultClassNames();
-
   return (
     <aside className="flex flex-col bg-bg-light rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-5">
-      <h2 className="text-3xl font-semibold">
+      <h2 className="text-2xl font-semibold">
         <span className="font-normal">MVR</span>
         {` ${price}`}
-        <span className="font-normal text-2xl">/night</span>
+        <span className="font-normal text-xl">/night</span>
       </h2>
 
       <hr className="border border-bg w-full" />
@@ -48,23 +45,8 @@ export default function BookForm({ price }: { price: string }) {
 
       <hr className="border border-bg w-full" />
 
-      <div className="flex justify-center mt-5 h-95">
-        <DayPicker
-          mode="range"
-          navLayout="around"
-          disabled={(curDate) => isPast(curDate)}
-          classNames={{
-            today: "bg-utell-laccent font-bold",
-            selected: "bg-bg font-bold",
-            chevron: "fill-utell-yellow",
-            caption_label: "font-semibold",
-            day: "text-center rounded-full hover:bg-utell-yellow transition-colors",
-            day_button:
-              "px-4 py-3 text-center rounded-full hover:bg-utell-yellow transition-colors cursor-pointer",
-            range_start: "bg-utell-yellow font-bold",
-            range_end: "bg-utell-yellow font-bold",
-          }}
-        />
+      <div className="flex justify-center my-5 w-full">
+        <BookCalendar />
       </div>
 
       <button className="bg-utell-yellow rounded-lg p-5 cursor-pointer font-semibold text-xl text-white hover:bg-utell-yellow/80 transition-colors">

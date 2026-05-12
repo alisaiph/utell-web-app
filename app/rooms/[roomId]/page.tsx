@@ -1,5 +1,6 @@
 import BookForm from "@/app/_components/BookForm";
 import PropertyPics from "@/app/_components/PropertyPics";
+import RoomCard from "@/app/_components/RoomCard";
 import RoomList from "@/app/_components/RoomList";
 import UserCard from "@/app/_components/UserCard";
 import {
@@ -8,7 +9,7 @@ import {
   getRoom,
   getRoomsByPropertyId,
 } from "@/app/_lib/data-service";
-import { MapPin } from "lucide-react";
+import { Dot, MapPin } from "lucide-react";
 
 export default async function page({ params }: { params: { roomId: string } }) {
   const { roomId } = await params;
@@ -21,6 +22,9 @@ export default async function page({ params }: { params: { roomId: string } }) {
     price,
     discount,
     guests,
+    bedrooms,
+    beds,
+    baths,
     propertyId,
   } = room;
 
@@ -47,16 +51,23 @@ export default async function page({ params }: { params: { roomId: string } }) {
 
           {/* ROOM DETAILS */}
           <div>
-            <h1 className="font-semibold text-3xl mb-3">
+            <h1 className="font-semibold text-2xl mb-3">
               {`${propertyName} | `}
               <span className="font-normal">{roomName}</span>
             </h1>
 
-            <div className="flex items-center text-xl text-utell-text-lgray gap-1">
+            <div className="flex items-center text-lg text-utell-text-lgray gap-1">
               <MapPin color="#848484" size={22} />
-              <h2>
-                {`${city}, ${area} | `}
-                <span className="font-semibold">{type}</span>
+              <h2 className="flex items-center justify-center">
+                {`${city}, ${area}`}
+                <Dot />
+                <span>{type}</span>
+                <Dot />
+                <span>{bedrooms} Bedroom</span>
+                <Dot />
+                <span>{beds} Bed</span>
+                <Dot />
+                <span>{baths} Bath</span>
               </h2>
             </div>
           </div>
@@ -77,29 +88,12 @@ export default async function page({ params }: { params: { roomId: string } }) {
       </div>
 
       <div className="flex flex-col gap-5 basis-2/3">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-2xl font-semibold">
           More rooms from {propertyName}
         </h2>
 
-        <div className="bg-bg-light/50 flex flex-col gap-5 px-4 py-2 rounded-2xl">
-          <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center font-semibold">
-            <p></p>
-            <p className="ml-5">Name</p>
-            <p>Amenities</p>
-            <p>Price</p>
-            <p>Guests</p>
-          </div>
-        </div>
-
         {allRooms.length > 0 ? (
-          allRooms?.map((room) => (
-            <div
-              className="bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors rounded-2xl p-4"
-              key={room.name}
-            >
-              <RoomList room={room} key={room.name} />
-            </div>
-          ))
+          allRooms?.map((room) => <RoomCard room={room} key={room.name} />)
         ) : (
           <p className="text-text-muted">No rooms in this property yet 🥲</p>
         )}

@@ -11,13 +11,14 @@ export default async function PropertyCard({
 }) {
   const { id, name, city, area, type } = property;
   const images = await getImagesByPropertyId(id);
+  const imageUrl = images?.[0]?.url || "/placeholder.jpg";
 
   return (
     <Link href={`/properties/${id}`}>
       <div className="flex flex-col bg-bg-light border-2 border-bg-light hover:border-bg-dark w-98 h-120 rounded-3xl p-5 gap-2 transition-colors">
         <div className="relative w-full rounded-xl h-100 overflow-hidden mb-3">
           <Image
-            src={images?.[0]?.imageUrl || "/placeholder.jpg"}
+            src={imageUrl}
             fill
             alt="Property image"
             className="object-cover"

@@ -65,6 +65,7 @@ export default function EditRoomDialog({
               facilities: formData.get("facilities"),
               price: formData.get("price"),
               discount: formData.get("discount"),
+              type: formData.get("type"),
               guests: formData.get("guests"),
               bedrooms: formData.get("bedrooms"),
               beds: formData.get("beds"),
@@ -228,6 +229,30 @@ export default function EditRoomDialog({
           </div>
 
           <div className="flex flex-col gap-5 border-l-2 border-bg pl-10 w-full">
+            {/* TYPE */}
+            <div>
+              <label
+                htmlFor="type"
+                className="font-semibold text-lg mb-3 block"
+              >
+                Type
+              </label>
+
+              <select
+                name="type"
+                defaultValue={room.type}
+                className="border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow"
+              >
+                <option value="Single">Single</option>
+                <option value="Double">Double</option>
+                <option value="Deluxe">Deluxe</option>
+                <option value="Suite">Suite</option>
+                <option value="Family">Family</option>
+                <option value="Studio">Studio</option>
+              </select>
+              <p className="text-red-600">{errors.type?.[0]}</p>
+            </div>
+
             <div className="flex gap-2">
               {/* GUESTS */}
               <div>

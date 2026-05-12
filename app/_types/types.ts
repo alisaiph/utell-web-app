@@ -16,6 +16,7 @@ export interface Room {
   name: string;
   description: string;
   amenities: string;
+  type: string;
   guests: number;
   bedrooms: number;
   beds: number;

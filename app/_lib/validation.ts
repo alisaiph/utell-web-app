@@ -36,6 +36,7 @@ export const roomSchema = z.object({
     .max(500, "Description must be at most 500 characters"),
   price: z.coerce.number().min(1, "Price is required"),
   discount: z.coerce.number().min(0).max(100).optional(),
+  type: z.string().min(3).max(30),
   guests: z.coerce
     .number()
     .min(1, "Atleast 1 guest required")

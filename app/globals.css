@@ -152,13 +152,6 @@ body {
   /* font-family: Arial, Helvetica, sans-serif; */
 }
 
-.rdp-root {
-  --rdp-accent-color: #fcbf49;
-  --rdp-accent-background-color: #edddd6; /* Change the accent background color. */
-  --rdp-day-height: 60px;
-  --rdp-day-width: 60px;
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;

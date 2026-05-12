@@ -150,6 +150,7 @@ export async function addRoomAction(
     description: formData.get("description"),
     price: formData.get("price"),
     discount: formData.get("discount"),
+    type: formData.get("type"),
     guests: formData.get("guests"),
     bedrooms: formData.get("bedrooms"),
     beds: formData.get("beds"),
@@ -194,6 +195,7 @@ export async function addRoomAction(
           description: validated.description,
           price: validated.price,
           discount: validated.discount || null,
+          type: validated.type,
           guests: validated.guests,
           bedrooms: validated.bedrooms,
           beds: validated.beds,
@@ -202,13 +204,15 @@ export async function addRoomAction(
         })
         .returning({ id: roomsTable.id });
 
-      await tx.insert(roomAmenitiesTable).values(
-        amenities.map((amenityId) => ({
-          id: crypto.randomUUID(),
-          roomId,
-          amenityId,
-        })),
-      );
+      if (amenities.length > 0) {
+        await tx.insert(roomAmenitiesTable).values(
+          amenities.map((amenityId) => ({
+            id: crypto.randomUUID(),
+            roomId,
+            amenityId,
+          })),
+        );
+      }
 
       // Save final URLs
       await tx.insert(roomImagesTable).values(
@@ -254,6 +258,7 @@ export async function updateRoomAction(
     description: formData.get("description"),
     price: formData.get("price"),
     discount: formData.get("discount"),
+    type: formData.get("type"),
     guests: formData.get("guests"),
     bedrooms: formData.get("bedrooms"),
     beds: formData.get("beds"),
@@ -297,6 +302,7 @@ export async function updateRoomAction(
           description: validated.description,
           price: validated.price,
           discount: validated.discount || null,
+          type: validated.type,
           guests: validated.guests,
           bedrooms: validated.bedrooms,
           beds: validated.beds,

@@ -11,10 +11,10 @@ import {
 import { EllipsisVertical, SquarePen, Trash } from "lucide-react";
 import EditRoomDialog from "./EditRoomDialog";
 import { Room } from "../_types/types";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
-import { deleteRoomAction } from "../_lib/actions";
-import { useRouter } from "next/navigation";
+
+import DeleteDialog from "./DeleteDialog";
 
 export default function RoomActionButton({
   propertyId,
@@ -27,17 +27,11 @@ export default function RoomActionButton({
   currImages: { url: string; key: string }[];
   amenities: { id: string; roomId: string; amenityId: string }[];
 }) {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-
-  const handleDelete = async () => {
-    if (!confirm("Are you sure?")) return;
-    await deleteRoomAction(room.id);
-    router.refresh();
-  };
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           render={
@@ -50,14 +44,23 @@ export default function RoomActionButton({
           <DropdownMenuGroup>
             <DropdownMenuLabel>Room</DropdownMenuLabel>
 
-            <DialogTrigger className="w-full">
-              <DropdownMenuItem>
-                <SquarePen />
-                Edit
-              </DropdownMenuItem>
-            </DialogTrigger>
+            <DropdownMenuItem
+              onClick={() => {
+                console.log("edit clicked");
+                setEditOpen(true);
+              }}
+            >
+              <SquarePen />
+              Edit
+            </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={handleDelete}>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("Delete clicked");
+                setDeleteOpen(true);
+              }}
+            >
               <Trash />
               Delete
             </DropdownMenuItem>
@@ -65,13 +68,21 @@ export default function RoomActionButton({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <EditRoomDialog
-        room={room}
-        propertyId={propertyId}
-        currImages={currImages}
-        amenities={amenities}
-        onSuccess={() => setOpen(false)}
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <EditRoomDialog
+          room={room}
+          propertyId={propertyId}
+          currImages={currImages}
+          amenities={amenities}
+          onSuccess={() => setEditOpen(false)}
+        />
+      </Dialog>
+
+      <DeleteDialog
+        roomId={room.id}
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
       />
-    </Dialog>
+    </>
   );
 }
