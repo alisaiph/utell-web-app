@@ -16,6 +16,7 @@ import {
   Plus,
 } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function page({
   params,
@@ -25,11 +26,18 @@ export default async function page({
   const { propertyId } = await params;
 
   const session = await getServerSession();
-  if (!session?.user?.id) {
+  const user = session?.user;
+
+  if (!user?.id) {
     throw new Error("User not authenticated");
   }
 
-  const { name: propertyName } = await getProperty(propertyId);
+  const { name: propertyName, ownerId } = await getProperty(propertyId);
+
+  // Authorization check
+  if (ownerId !== user.id) {
+    notFound();
+  }
   const allRooms = await getRoomsByPropertyId(propertyId);
 
   return (

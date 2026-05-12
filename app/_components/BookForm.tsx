@@ -1,10 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { BookCalendar } from "./BookCalendar";
+import { DateRange } from "react-day-picker";
+import { addDays } from "date-fns";
 
 export default function BookForm({ price }: { price: string }) {
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+
+  const formatDate = (date: Date | undefined) =>
+    date ? date.toLocaleDateString("en-GB").replace(/\//g, ".") : "-";
+
   return (
-    <aside className="flex flex-col bg-bg-light rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-5">
+    <aside className="flex flex-col bg-bg-light rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-3">
       <h2 className="text-2xl font-semibold">
         <span className="font-normal">MVR</span>
         {` ${price}`}
@@ -15,17 +23,17 @@ export default function BookForm({ price }: { price: string }) {
 
       <div className="flex justify-between text-lg">
         <p>Check In</p>
-        <p className="font-semibold">19.11.2025</p>
+        <p>{formatDate(dateRange?.from)}</p>
       </div>
 
       <div className="flex justify-between text-lg">
         <p>Check Out</p>
-        <p className="font-semibold">25.11.2025</p>
+        <p>{formatDate(dateRange?.to)}</p>
       </div>
 
       <div className="flex justify-between text-lg">
         <p>Number of Guests</p>
-        <p className="font-semibold">03</p>
+        <p>03</p>
       </div>
 
       <hr className="border border-bg w-full" />
@@ -33,7 +41,7 @@ export default function BookForm({ price }: { price: string }) {
       <h2 className="font-semibold text-lg">Extra Service</h2>
       <div className="flex justify-between text-lg">
         <p>Breakfast</p>
-        <p className="font-semibold">MVR 200</p>
+        <p>MVR 200</p>
       </div>
 
       <hr className="border border-bg w-full" />
@@ -46,7 +54,7 @@ export default function BookForm({ price }: { price: string }) {
       <hr className="border border-bg w-full" />
 
       <div className="flex justify-center my-5 w-full">
-        <BookCalendar />
+        <BookCalendar dateRange={dateRange} onDateRangeChange={setDateRange} />
       </div>
 
       <button className="bg-utell-yellow rounded-lg p-5 cursor-pointer font-semibold text-xl text-white hover:bg-utell-yellow/80 transition-colors">

@@ -5,6 +5,7 @@ import RoomList from "@/app/_components/RoomList";
 import UserCard from "@/app/_components/UserCard";
 import {
   getImagesByPropertyId,
+  getImagesByRoomId,
   getProperty,
   getRoom,
   getRoomsByPropertyId,
@@ -16,7 +17,6 @@ export default async function page({ params }: { params: { roomId: string } }) {
   const room = await getRoom(roomId);
 
   const {
-    id,
     name: roomName,
     description,
     price,
@@ -41,7 +41,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
 
   const allRooms = await getRoomsByPropertyId(propertyId);
 
-  const images = await getImagesByPropertyId(propertyId);
+  const images = await getImagesByRoomId(roomId);
 
   return (
     <div className="flex flex-col gap-10 my-15">

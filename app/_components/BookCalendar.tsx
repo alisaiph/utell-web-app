@@ -5,21 +5,27 @@ import { addDays } from "date-fns";
 import { type DateRange } from "react-day-picker";
 
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent } from "@/components/ui/card";
 
-export function BookCalendar() {
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
-    from: new Date(new Date().getFullYear(), 0, 12),
-    to: addDays(new Date(new Date().getFullYear(), 0, 12), 30),
-  });
+interface BookCalendarProps {
+  dateRange: DateRange | undefined;
+  onDateRangeChange: (range: DateRange) => void;
+}
 
+export function BookCalendar({
+  dateRange,
+  onDateRangeChange,
+}: BookCalendarProps) {
   return (
     <Calendar
       mode="range"
-      defaultMonth={dateRange?.from}
       selected={dateRange}
-      onSelect={setDateRange}
+      onSelect={onDateRangeChange}
       numberOfMonths={1}
+      disabled={(date) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return date < today;
+      }}
       className="rounded-lg border w-full"
     />
   );
