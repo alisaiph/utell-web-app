@@ -150,6 +150,7 @@ export default function EditRoomDialog({
 
               <input
                 type="text"
+                inputMode="numeric"
                 placeholder="Room price"
                 name="price"
                 defaultValue={Number(room.price)}
@@ -169,6 +170,7 @@ export default function EditRoomDialog({
 
               <input
                 type="text"
+                inputMode="numeric"
                 placeholder="Room discount"
                 name="discount"
                 defaultValue={Number(room.discount)}
@@ -265,6 +267,7 @@ export default function EditRoomDialog({
 
                 <input
                   type="number"
+                  inputMode="numeric"
                   placeholder="Number of guests"
                   name="guests"
                   defaultValue={room.guests}
@@ -284,6 +287,7 @@ export default function EditRoomDialog({
 
                 <input
                   type="number"
+                  inputMode="numeric"
                   placeholder="Number of bedrooms"
                   name="bedrooms"
                   defaultValue={room.bedrooms}
@@ -305,6 +309,7 @@ export default function EditRoomDialog({
 
                 <input
                   type="number"
+                  inputMode="numeric"
                   placeholder="Number of beds"
                   name="beds"
                   defaultValue={room.beds}
@@ -324,6 +329,7 @@ export default function EditRoomDialog({
 
                 <input
                   type="number"
+                  inputMode="numeric"
                   placeholder="Number of baths"
                   name="baths"
                   defaultValue={room.baths}

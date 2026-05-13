@@ -86,9 +86,13 @@ export default async function page({ params }: { params: { roomId: string } }) {
 
             <Separator />
 
-            <p className="text-lg">{description}</p>
+            {description !== "" && (
+              <>
+                <p className="text-lg">{description}</p>
 
-            <Separator />
+                <Separator />
+              </>
+            )}
 
             {/* AMENITIES */}
             <div className="flex flex-col gap-8">
@@ -101,7 +105,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
             {/* LOCATION */}
             <div className="flex flex-col gap-8">
               <h2 className="text-2xl font-semibold">Location</h2>
-              <MapPickerWrapper />
+              <MapPickerWrapper currLocation={location} readOnly={true} />
             </div>
           </div>
 

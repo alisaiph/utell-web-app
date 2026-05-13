@@ -159,9 +159,9 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
 
                 <input
                   type="text"
+                  inputMode="numeric"
                   placeholder="Room price"
                   name="price"
-                  required
                   className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.price ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.price?.[0]}</p>
@@ -178,9 +178,9 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
 
                 <input
                   type="text"
+                  inputMode="numeric"
                   placeholder="Room discount"
                   name="discount"
-                  required
                   className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.discount ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.discount?.[0]}</p>
@@ -257,6 +257,7 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
 
                   <input
                     type="number"
+                    inputMode="numeric"
                     placeholder="Number of guests"
                     name="guests"
                     defaultValue={1}
@@ -276,6 +277,7 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
 
                   <input
                     type="number"
+                    inputMode="numeric"
                     placeholder="Number of bedrooms"
                     name="bedrooms"
                     defaultValue={1}
@@ -297,6 +299,7 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
 
                   <input
                     type="number"
+                    inputMode="numeric"
                     placeholder="Number of beds"
                     name="beds"
                     defaultValue={1}
@@ -316,6 +319,7 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
 
                   <input
                     type="number"
+                    inputMode="numeric"
                     placeholder="Number of baths"
                     name="baths"
                     defaultValue={1}

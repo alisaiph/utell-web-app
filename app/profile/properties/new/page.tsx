@@ -240,9 +240,9 @@ export default function page() {
               <div>
                 <input
                   type="text"
+                  inputMode="numeric"
                   placeholder="Phone"
                   name="contactPhone"
-                  required
                   className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.contactPhone ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.contactPhone?.[0]}</p>
@@ -251,6 +251,7 @@ export default function page() {
               <div>
                 <input
                   type="email"
+                  inputMode="email"
                   placeholder="Email (optional)"
                   name="contactEmail"
                   className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.contactEmail ? "border-red-600" : ""}`}

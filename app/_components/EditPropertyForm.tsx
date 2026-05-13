@@ -250,6 +250,7 @@ export default function EditPropertyForm({
             <div>
               <input
                 type="text"
+                inputMode="numeric"
                 placeholder="Phone"
                 name="contactPhone"
                 defaultValue={property.contactPhone}
@@ -261,6 +262,7 @@ export default function EditPropertyForm({
             <div>
               <input
                 type="email"
+                inputMode="email"
                 placeholder="Email (optional)"
                 name="contactEmail"
                 defaultValue={

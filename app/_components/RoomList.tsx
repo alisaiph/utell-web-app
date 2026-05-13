@@ -31,13 +31,16 @@ export default async function RoomList({
       </Link>
 
       <p className="truncate ml-5">{name}</p>
+
       <div>
         {amenities.map((amenity) => (
           <p key={amenity.amenityId}>{amenity.amenityId}</p>
         ))}
       </div>
+
       <p>{price}</p>
       <p>{guests}</p>
+
       <RoomActionButton
         room={room}
         propertyId={propertyId}

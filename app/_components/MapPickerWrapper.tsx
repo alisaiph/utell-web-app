@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useState } from "react";
 
 const MapPicker = dynamic(() => import("./MapPicker"), {
   ssr: false,
@@ -14,10 +14,15 @@ const MapPicker = dynamic(() => import("./MapPicker"), {
 
 export default function MapPickerWrapper({
   currLocation,
+  readOnly = false,
 }: {
   currLocation?: string;
+  readOnly?: boolean;
 }) {
-  const locationInputRef = useRef<HTMLInputElement>(null);
+  const defaultCoords = "4.174631915331436,73.51031376202452";
+  const [location, setLocation] = useState<string>(
+    currLocation || defaultCoords,
+  );
 
   // Parse saved location into [lat, lng] tuple
   const initialPosition: [number, number] = currLocation
@@ -25,9 +30,7 @@ export default function MapPickerWrapper({
     : [4.174631915331436, 73.51031376202452];
 
   const handleLocationChange = (lat: number, lng: number) => {
-    if (locationInputRef.current) {
-      locationInputRef.current.value = `${lat},${lng}`;
-    }
+    setLocation(`${lat},${lng}`);
   };
 
   return (
@@ -35,14 +38,15 @@ export default function MapPickerWrapper({
       <MapPicker
         onLocationChange={handleLocationChange}
         initialPosition={initialPosition}
+        readOnly={readOnly}
       />
 
       {/* Hidden inputs for coordinates */}
       <input
-        ref={locationInputRef}
         type="hidden"
         name="location"
-        defaultValue={currLocation || "4.174631915331436,73.51031376202452"}
+        value={location}
+        onChange={() => {}} // suppress React controlled input warning
       />
     </>
   );
