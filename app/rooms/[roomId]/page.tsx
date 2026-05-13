@@ -1,20 +1,23 @@
 import BookForm from "@/app/_components/BookForm";
+import MapPickerWrapper from "@/app/_components/MapPickerWrapper";
 import PropertyPics from "@/app/_components/PropertyPics";
 import RoomCard from "@/app/_components/RoomCard";
-import RoomList from "@/app/_components/RoomList";
 import UserCard from "@/app/_components/UserCard";
 import {
-  getImagesByPropertyId,
+  getAmenitiesByRoomId,
   getImagesByRoomId,
   getProperty,
   getRoom,
   getRoomsByPropertyId,
 } from "@/app/_lib/data-service";
-import { Dot, MapPin } from "lucide-react";
+import { Dot, MapPin, Tv, Utensils, WashingMachine, Wifi } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import AmenitiesList from "@/app/_components/AmenitiesList";
 
 export default async function page({ params }: { params: { roomId: string } }) {
   const { roomId } = await params;
   const room = await getRoom(roomId);
+  const amenities = await getAmenitiesByRoomId(roomId);
 
   const {
     name: roomName,
@@ -34,6 +37,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
     area,
     city,
     type,
+    location,
     contactPhone,
     contactEmail,
     ownerId,
@@ -57,7 +61,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
             </h1>
 
             <div className="flex items-center text-lg text-utell-text-lgray gap-1">
-              <MapPin color="#848484" size={22} />
+              <MapPin size={22} />
               <h2 className="flex items-center justify-center">
                 {`${city}, ${area}`}
                 <Dot />
@@ -80,33 +84,45 @@ export default async function page({ params }: { params: { roomId: string } }) {
               contactEmail={contactEmail}
             />
 
+            <Separator />
+
             <p className="text-lg">{description}</p>
+
+            <Separator />
+
+            {/* AMENITIES */}
+            <div className="flex flex-col gap-8">
+              <h2 className="text-2xl font-semibold">Amenities</h2>
+              <AmenitiesList amenities={amenities} />
+            </div>
+
+            <Separator />
+
+            {/* LOCATION */}
+            <div className="flex flex-col gap-8">
+              <h2 className="text-2xl font-semibold">Location</h2>
+              <MapPickerWrapper />
+            </div>
           </div>
+
+          <Separator />
         </section>
 
         <BookForm price={price} />
       </div>
 
-      <div className="flex flex-col gap-5 basis-2/3">
+      <div className="flex flex-col gap-8">
         <h2 className="text-2xl font-semibold">
           More rooms from {propertyName}
         </h2>
 
-        {allRooms.length > 0 ? (
-          allRooms?.map((room) => <RoomCard room={room} key={room.name} />)
-        ) : (
-          <p className="text-text-muted">No rooms in this property yet 🥲</p>
-        )}
-
-        {/* GUESTS */}
-        {/* <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
-                <h2 className="text-xl font-semibold">Guests</h2>
-      
-                <p>
-                  All the bookings for the properties owned by this user here, or
-                  specific property bookings can be displayed here.
-                </p>
-              </div> */}
+        <div className="bg-bg-light p-6 w-full rounded-2xl">
+          {allRooms.length > 0 ? (
+            allRooms?.map((room) => <RoomCard room={room} key={room.name} />)
+          ) : (
+            <p className="text-text-muted">No rooms in this property yet 🥲</p>
+          )}
+        </div>
       </div>
     </div>
   );

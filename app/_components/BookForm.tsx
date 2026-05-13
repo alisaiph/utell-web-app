@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { BookCalendar } from "./BookCalendar";
 import { DateRange } from "react-day-picker";
-import { addDays } from "date-fns";
 
 export default function BookForm({ price }: { price: string }) {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();

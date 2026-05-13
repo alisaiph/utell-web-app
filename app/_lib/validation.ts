@@ -33,7 +33,9 @@ export const roomSchema = z.object({
   description: z
     .string()
     .min(10, "Description must be at least 10 characters")
-    .max(500, "Description must be at most 500 characters"),
+    .max(500, "Description must be at most 500 characters")
+    .optional()
+    .or(z.literal("")),
   price: z.coerce.number().min(1, "Price is required"),
   discount: z.coerce.number().min(0).max(100).optional(),
   type: z.string().min(3).max(30),

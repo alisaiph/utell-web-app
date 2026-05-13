@@ -5,7 +5,9 @@ export interface Property {
   area: string;
   city: string;
   type: string;
+  location: string;
   description: string;
+  address: string;
   contactPhone: number;
   contactEmail: string;
   images: string[];

@@ -11,14 +11,18 @@ import {
 import { EllipsisVertical, HousePlus, SquarePen, Trash } from "lucide-react";
 import Link from "next/link";
 import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
+import DeleteDialog from "./DeleteDialog";
 
 export default function PropertyActionButton({
   propertyId,
 }: {
   propertyId: string;
 }) {
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
   return (
-    <Dialog>
+    <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           render={
@@ -38,7 +42,12 @@ export default function PropertyActionButton({
               </DropdownMenuItem>
             </Link>
 
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                setDeleteOpen(true);
+              }}
+            >
               <Trash />
               Delete
             </DropdownMenuItem>
@@ -55,6 +64,12 @@ export default function PropertyActionButton({
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    </Dialog>
+
+      <DeleteDialog
+        propertyId={propertyId}
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+      />
+    </>
   );
 }

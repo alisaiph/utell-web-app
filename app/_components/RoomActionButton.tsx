@@ -46,7 +46,6 @@ export default function RoomActionButton({
 
             <DropdownMenuItem
               onClick={() => {
-                console.log("edit clicked");
                 setEditOpen(true);
               }}
             >
@@ -57,7 +56,6 @@ export default function RoomActionButton({
             <DropdownMenuItem
               onClick={(e) => {
                 e.preventDefault();
-                console.log("Delete clicked");
                 setDeleteOpen(true);
               }}
             >

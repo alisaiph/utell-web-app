@@ -9,17 +9,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteRoomAction } from "../_lib/actions";
+import { deletePropertyAction, deleteRoomAction } from "../_lib/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";
 
 export default function DeleteDialog({
   roomId,
+  propertyId,
   open,
   onOpenChange,
 }: {
-  roomId: string;
+  roomId?: string;
+  propertyId?: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
@@ -27,12 +29,18 @@ export default function DeleteDialog({
 
   const handleDelete = async () => {
     try {
-      await deleteRoomAction(roomId);
-      toast.success("Room deleted!");
+      if (roomId) {
+        await deleteRoomAction(roomId);
+        toast.success("Room deleted!");
+      } else if (propertyId) {
+        await deletePropertyAction(propertyId);
+        toast.success("Property deleted!");
+      }
+
       router.refresh();
     } catch (err) {
-      console.error("Error deleting room:", err);
-      toast.error("Failed to delete room!");
+      console.error("Error deleting:", err);
+      toast.error("Failed to delete!");
     }
   };
 
@@ -42,7 +50,9 @@ export default function DeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action will delete the room.
+            {roomId
+              ? " This will delete the room."
+              : "This will delete the property and all its rooms."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

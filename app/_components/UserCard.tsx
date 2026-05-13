@@ -16,7 +16,7 @@ export default async function UserCard({
   const { displayUsername, username, image } = user;
 
   return (
-    <div className="flex  gap-5">
+    <div className="flex gap-5">
       <Link href={`/user/${username}`}>
         <div className="flex items-center justify-center gap-4 bg-bg-light rounded-2xl px-6 py-3">
           <div className="relative rounded-xl w-15 aspect-square overflow-hidden">

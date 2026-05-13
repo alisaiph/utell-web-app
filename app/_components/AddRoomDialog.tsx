@@ -14,9 +14,17 @@ import AmenityTypeCard from "./AmenityTypeCard";
 
 export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
   const [open, setOpen] = useState(false);
-  const roomId = useMemo(() => crypto.randomUUID(), []); // creating roomId here, so we can use in r2 url
+  const [roomId, setRoomId] = useState(() => crypto.randomUUID());
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const router = useRouter();
+
+  const handleOpenChange = (next: boolean) => {
+    if (next) {
+      setRoomId(crypto.randomUUID()); // fresh roomId every time dialog opens, need it here so we can use in r2 url
+      setErrors({});
+    }
+    setOpen(next);
+  };
 
   const initialState: ActionResponse = {
     success: false,
@@ -28,7 +36,7 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
   useEffect(() => {
     if (state?.success) {
       toast.success("Room added!");
-      setOpen(false);
+      handleOpenChange(false);
       router.refresh();
     }
 
@@ -38,7 +46,7 @@ export default function AddRoomDialog({ propertyId }: { propertyId: string }) {
   }, [state]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger
         render={
           <button className="flex flex-col gap-1 items-center justify-center border-3 border-dashed border-bg-dark hover:bg-bg transition-colors text-text-muted rounded-xl px-5 py-8 cursor-pointer">
