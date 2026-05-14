@@ -12,6 +12,7 @@ export function useImageUpload(prefix: string) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // UPLOAD
   const upload = async (files: File[]) => {
@@ -79,6 +80,7 @@ export function useImageUpload(prefix: string) {
   // DELETE
   const deleteImage = async (index: number) => {
     const file = uploadedFiles[index];
+    setDeleting(true);
 
     if (file) {
       try {
@@ -91,6 +93,8 @@ export function useImageUpload(prefix: string) {
         });
       } catch (err) {
         console.error("Failed to delete image:", err);
+      } finally {
+        setDeleting(false);
       }
     }
 
@@ -103,6 +107,7 @@ export function useImageUpload(prefix: string) {
     selectedFiles,
     uploadedFiles,
     uploading,
+    deleting,
 
     setSelectedFiles,
     setUploadedFiles,

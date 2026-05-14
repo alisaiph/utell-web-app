@@ -3,6 +3,7 @@
 import { Image, X } from "lucide-react";
 import { useImageUpload } from "../_hooks/useImageUpload";
 import { useEffect } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -18,6 +19,7 @@ export default function PhotoUpload({
     uploadedFiles,
     setUploadedFiles,
     uploading,
+    deleting,
     upload,
     deleteImage,
   } = useImageUpload(prefix);
@@ -34,8 +36,9 @@ export default function PhotoUpload({
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = Array.from(event.target.files || []);
+    const totalAfterUpload = uploadedFiles.length + files.length; // check if combined total exceeds limit
 
-    if (files.length > 3) {
+    if (totalAfterUpload > 3) {
       alert("You can only upload up to 3 photos.");
       return;
     }
@@ -46,7 +49,7 @@ export default function PhotoUpload({
       return;
     }
 
-    if (files.length > 0) {
+    if (totalAfterUpload <= 3) {
       await upload(files);
     }
   };
@@ -63,7 +66,9 @@ export default function PhotoUpload({
         name="photos"
         accept="image/*"
         multiple
-        required
+        disabled={
+          uploadedFiles.length >= 3 || selectedFiles.length >= 3 || uploading
+        }
         onChange={handleFileChange}
         className="hidden"
         id="photo-input"
@@ -71,8 +76,14 @@ export default function PhotoUpload({
 
       <label
         htmlFor="photo-input"
-        className="flex flex-col items-center justify-center gap-2 bg-bg border-3 border-dashed border-bg-dark hover:bg-bg-dark/30 transition-colors rounded-md w-full px-10 py-10 cursor-pointer"
+        className="flex flex-col items-center justify-center gap-2 relative bg-bg border-3 border-dashed border-bg-dark hover:bg-bg-dark/30 transition-colors rounded-md w-full px-10 py-10 cursor-pointer"
       >
+        {/* LOADING SPINNER */}
+        {(uploading || deleting) && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50 rounded-md">
+            <Spinner />
+          </div>
+        )}
         {uploadedFiles.length > 0 || selectedFiles.length > 0 ? (
           <div className="flex gap-4 flex-wrap">
             {/* ALL images — existing and newly uploaded, unified in one list */}
@@ -80,7 +91,7 @@ export default function PhotoUpload({
               <div key={file.key ?? index} className="relative">
                 <img
                   src={file.url}
-                  className="w-full h-32 object-cover rounded-md border-4 border-bg-dark"
+                  className="aspect-square h-24 object-cover rounded-md border-4 border-bg-dark"
                 />
                 <button
                   type="button"
@@ -102,22 +113,15 @@ export default function PhotoUpload({
                 <div key={index} className="relative">
                   <img
                     src={URL.createObjectURL(file)}
-                    className="w-full h-32 object-cover rounded-md border-4 border-bg-dark"
+                    className="aspect-square h-24 object-cover rounded-md border-4 border-bg-dark"
                   />
-                  {uploading && (
-                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50 text-white">
-                      <div className="animate-spin h-8 w-8 border-2 border-white border-t-transparent rounded-full" />
-                    </div>
-                  )}
                 </div>
               ))}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-2">
-            <Image size={50} />
-            <p className="text-text-muted">
-              {uploading ? "Uploading..." : "Click to upload photos"}
-            </p>
+            <Image size={50} color="var(--bg-light)" />
+            <p className="text-text-muted">Click to upload photos</p>
           </div>
         )}
       </label>

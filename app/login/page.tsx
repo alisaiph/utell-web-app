@@ -61,7 +61,7 @@ export default function page() {
         </div>
 
         {/* IMAGE */}
-        <div className="w-full h-150 aspect-3/4 relative overflow-hidden rounded-2xl">
+        <div className="w-full h-150 aspect-5/6 relative overflow-hidden rounded-2xl">
           <Image
             src={"/images/login-img.webp"}
             fill
