@@ -8,12 +8,12 @@ export default async function Home() {
   const rooms = await getRooms();
 
   return (
-    <div className="flex flex-col my-8 gap-10">
+    <div className="my-8 flex flex-col gap-10">
       <PropertyNav />
 
       <PropertyFilter />
 
-      <div className="flex justify-start w-full flex-wrap gap-8">
+      <div className="flex w-full flex-wrap justify-center gap-8">
         {rooms && rooms.length > 0 ? (
           rooms.map((room) => <RoomCard room={room} key={room.id} />)
         ) : (
