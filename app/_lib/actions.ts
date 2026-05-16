@@ -3,7 +3,7 @@
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { redirect } from "next/navigation";
 import getServerSession from "./get-session";
-import { db } from "@/db";
+import { db } from "@/app/_lib/db/db";
 import { user as userTable } from "@/app/_lib/db/auth-schema";
 import { eq } from "drizzle-orm";
 import { propertySchema, roomSchema } from "./validation";

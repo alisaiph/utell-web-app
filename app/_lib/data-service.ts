@@ -1,4 +1,4 @@
-import { db } from "@/db";
+import { db } from "@/app/_lib/db/db";
 import {
   roomsTable,
   propertiesTable,
@@ -6,7 +6,7 @@ import {
   propertyImagesTable,
   roomImagesTable,
   roomAmenitiesTable,
-} from "@/schema";
+} from "@/app/_lib/db/schema";
 import { user as userTable } from "@/app/_lib/db/auth-schema";
 import { and, eq } from "drizzle-orm";
 import { adjectives, animals } from "./defaultUsernames";
