@@ -7,7 +7,7 @@ import {
   roomImagesTable,
   roomAmenitiesTable,
 } from "@/schema";
-import { user as userTable } from "@/auth-schema";
+import { user as userTable } from "@/app/_lib/db/auth-schema";
 import { and, eq } from "drizzle-orm";
 import { adjectives, animals } from "./defaultUsernames";
 

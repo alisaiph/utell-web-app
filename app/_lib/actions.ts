@@ -4,7 +4,7 @@ import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { redirect } from "next/navigation";
 import getServerSession from "./get-session";
 import { db } from "@/db";
-import { user as userTable } from "@/auth-schema";
+import { user as userTable } from "@/app/_lib/db/auth-schema";
 import { eq } from "drizzle-orm";
 import { propertySchema, roomSchema } from "./validation";
 import {
@@ -13,7 +13,7 @@ import {
   roomAmenitiesTable,
   roomImagesTable,
   roomsTable,
-} from "@/src/schema";
+} from "@/app/_lib/db/schema";
 import { r2client } from "./r2-upload";
 import { getImagesByPropertyId, getImagesByRoomId } from "./data-service";
 

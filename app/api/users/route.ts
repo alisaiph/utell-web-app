@@ -1,6 +1,5 @@
-import { db } from "@/db";
-import { usersTable } from "@/schema";
-import { eq } from "drizzle-orm";
+import { db } from "@/app/_lib/db/db";
+import { user as usersTable } from "@/app/_lib/db/auth-schema";
 
 // GET /api/users - List all users
 export async function GET() {

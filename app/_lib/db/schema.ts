@@ -7,7 +7,7 @@ import {
   boolean,
   decimal,
 } from "drizzle-orm/pg-core";
-import { user as userTable } from "@/auth-schema";
+import { user as userTable } from "@/app/_lib/db/auth-schema";
 
 // Properties table
 export const propertiesTable = pgTable("properties", {
