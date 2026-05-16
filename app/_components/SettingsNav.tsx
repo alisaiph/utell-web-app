@@ -13,12 +13,12 @@ export default function SettingsNav() {
     { href: "/profile/settings/theme", label: "Theme", icon: Palette },
   ];
   return (
-    <ul className="flex flex-col gap-2 p-5 bg-bg rounded-tl-lg rounded-bl-lg">
+    <ul className="bg-bg flex flex-row justify-center gap-2 rounded-tl-lg rounded-tr-lg p-2 md:flex-col md:rounded-tr-none md:rounded-bl-lg md:p-5">
       {links.map((link) => (
         <li key={link.label}>
           <Link
             href={link.href}
-            className={`flex gap-2 hover:bg-bg-light cursor-pointer rounded-md transition-colors py-4 px-8 ${
+            className={`hover:bg-bg-light flex cursor-pointer gap-2 rounded-md px-2 py-4 transition-colors md:px-8 ${
               pathName === link.href ? "bg-bg-light" : ""
             }`}
           >

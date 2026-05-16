@@ -44,12 +44,12 @@ export default async function page({
   const allRooms = await getRoomsByPropertyId(propertyId);
 
   return (
-    <div className="flex gap-10">
-      <div className="flex flex-col gap-5 basis-2/3">
+    <div className="flex flex-col gap-10 md:flex-row">
+      <div className="flex basis-2/3 flex-col gap-5">
         <h2 className="text-xl font-semibold">{propertyName} Rooms</h2>
 
-        <div className="bg-bg-light/50 flex flex-col gap-5 px-4 py-2 rounded-2xl">
-          <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center font-semibold">
+        <div className="bg-bg-light/50 flex flex-col gap-5 rounded-2xl px-4 py-2">
+          <div className="grid grid-cols-[80px_1fr_1fr_1fr_1fr_1fr] items-center font-semibold md:grid-cols-[150px_1fr_1fr_1fr_1fr_1fr]">
             <p></p>
             <p className="ml-5">Name</p>
             <p>Amenities</p>
@@ -61,7 +61,7 @@ export default async function page({
         {allRooms.length > 0 ? (
           allRooms?.map((room) => (
             <div
-              className="bg-bg-light border-2 border-bg hover:border-bg-dark transition-colors rounded-2xl p-4"
+              className="bg-bg-light border-bg hover:border-bg-dark rounded-2xl border-2 p-4 transition-colors"
               key={room.name}
             >
               <RoomList room={room} propertyId={propertyId} key={room.name} />
@@ -83,13 +83,13 @@ export default async function page({
       </div>
 
       {/* SIDE MENU */}
-      <aside className="bg-bg-light flex flex-1 flex-col gap-5 p-8 rounded-2xl">
+      <aside className="bg-bg-light flex flex-1 flex-col gap-5 rounded-2xl p-8">
         <h2 className="text-xl font-semibold">Actions</h2>
 
         <div className="flex gap-2">
           <AddRoomDialog propertyId={propertyId} />
 
-          <button className="flex flex-col gap-2 items-center justify-center border-3 border-dashed border-bg-dark hover:bg-bg transition-colors text-text-muted rounded-xl px-5 py-8 cursor-pointer">
+          <button className="border-bg-dark hover:bg-bg text-text-muted flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-3 border-dashed px-5 py-8 transition-colors">
             <span>
               <Plus size={20} />
             </span>

@@ -2,8 +2,8 @@ import { CircleDollarSign, MapPin, UsersRound } from "lucide-react";
 
 export default function PropertyFilter() {
   return (
-    <div className="self-start bg-bg-light rounded-full w-98 h-12 flex items-center justify-center">
-      <ul className="flex justify-around w-full text-md">
+    <div className="bg-bg-light flex h-12 w-98 items-center justify-center self-center rounded-full md:self-start">
+      <ul className="text-md flex w-full justify-around">
         <li className="flex items-center gap-1">
           <MapPin size={18} />
           Location

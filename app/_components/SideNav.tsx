@@ -10,7 +10,7 @@ export default async function SideNav() {
   return (
     <>
       {/* MOBILE */}
-      <nav className="bg-bg-light fixed right-0 bottom-0 left-0 z-50 flex h-16 items-center justify-center gap-15 md:hidden">
+      <nav className="bg-bg-light fixed right-0 bottom-0 left-0 z-50 flex h-16 items-center justify-center gap-15 rounded-tl-4xl rounded-tr-4xl md:hidden">
         <Link href="/">
           <Home color="#FCBF49" size={30} />
         </Link>

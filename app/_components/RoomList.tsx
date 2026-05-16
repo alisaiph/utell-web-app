@@ -18,9 +18,9 @@ export default async function RoomList({
   const imageUrl = currImages?.[0]?.url || "/placeholder.jpg";
 
   return (
-    <div className="grid grid-cols-[150px_1fr_1fr_1fr_1fr_1fr] items-center">
+    <div className="grid grid-cols-[80px_1fr_1fr_1fr_1fr_1fr] items-center md:grid-cols-[150px_1fr_1fr_1fr_1fr_1fr]">
       <Link href={`/rooms/${id}`}>
-        <div className=" relative w-35 h-25 rounded-md overflow-hidden">
+        <div className="relative aspect-5/4 h-15 overflow-hidden rounded-md md:h-25">
           <Image
             src={imageUrl}
             alt="property pic"
@@ -30,7 +30,7 @@ export default async function RoomList({
         </div>
       </Link>
 
-      <p className="truncate ml-5">{name}</p>
+      <p className="ml-5 truncate">{name}</p>
 
       <div>
         {amenities.map((amenity) => (

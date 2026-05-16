@@ -9,52 +9,7 @@ import {
 } from "@/schema";
 import { user as userTable } from "@/auth-schema";
 import { and, eq } from "drizzle-orm";
-
-const adjectives = [
-  "cozy",
-  "brave",
-  "quiet",
-  "sunny",
-  "mellow",
-  "swift",
-  "urban",
-  "rustic",
-  "golden",
-  "cheerful",
-  "adorable",
-  "angry",
-  "annoying",
-  "bright",
-  "calm",
-  "clumsy",
-  "gifted",
-  "gleaming",
-  "foolish",
-  "lucky",
-];
-
-const animals = [
-  "bunny",
-  "rooster",
-  "bird",
-  "deer",
-  "kitty",
-  "goose",
-  "fox",
-  "lion",
-  "rhino",
-  "shark",
-  "tuna",
-  "owl",
-  "duck",
-  "puppy",
-  "chipmunk",
-  "snail",
-  "lizard",
-  "chicken",
-  "crab",
-  "frog",
-];
+import { adjectives, animals } from "./defaultUsernames";
 
 // fn to pick random element from array
 const rand = <T>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
