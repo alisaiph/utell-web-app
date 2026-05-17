@@ -2,7 +2,6 @@ import RoomCard from "./_components/RoomCard";
 import PropertyFilter from "./_components/PropertyFilter";
 import PropertyNav from "./_components/PropertyNav";
 import { getRooms } from "./_lib/data-service";
-import { Divide } from "lucide-react";
 
 export default async function Home() {
   const rooms = await getRooms();

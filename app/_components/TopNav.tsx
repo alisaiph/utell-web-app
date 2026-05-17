@@ -13,7 +13,7 @@ export default async function TopBar() {
       />
       <div className="relative h-9 w-9 overflow-hidden rounded-full">
         <Image
-          src={session?.user.image ?? "avatar-img.png"}
+          src={session?.user.image ?? "/images/avatar-img.png"}
           fill
           alt="avatar"
           className="object-cover"

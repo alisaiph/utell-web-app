@@ -21,7 +21,7 @@ export default async function UserCard({
         <div className="bg-bg-light flex items-center justify-center gap-4 rounded-2xl px-6 py-3">
           <div className="relative aspect-square w-15 overflow-hidden rounded-xl">
             <Image
-              src={image ?? "/avatar-img.png"}
+              src={image ?? "/images/avatar-img.png"}
               fill
               alt="avatar"
               className="object-cover"
