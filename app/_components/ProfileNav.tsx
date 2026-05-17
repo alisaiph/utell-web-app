@@ -11,16 +11,14 @@ export default async function ProfileNav() {
     redirect("/login");
   }
 
-  const userId = parseInt(session.user.id as string);
   const { username, displayUsername, image } = session.user;
-  const properties = await getPropertiesByUserId(userId);
 
   // if default username is not changed, redirect
   if (session?.user.onboardCompleted === false) {
     redirect("/onboarding/username");
   }
   return (
-    <nav className="flex items-center justify-between gap-5 bg-bg-light rounded-xl px-4 py-3">
+    <nav className="bg-bg-light flex items-center justify-between gap-5 rounded-xl px-4 py-3">
       <ul className="flex gap-5 font-semibold">
         <li>
           <Link
@@ -33,16 +31,16 @@ export default async function ProfileNav() {
         <li>
           <Link
             href="/profile/properties"
-            className="bg-utell-yellow text-white hover:bg-bg-dark rounded-md px-3 py-2 transition-colors"
+            className="bg-utell-yellow hover:bg-bg-dark rounded-md px-3 py-2 text-white transition-colors"
           >
             Properties
           </Link>
         </li>
       </ul>
 
-      <div className="flex gap-4 items-center justify-center">
+      <div className="flex items-center justify-center gap-4">
         {image && (
-          <div className="relative rounded-full w-10 aspect-square overflow-hidden">
+          <div className="relative aspect-square w-10 overflow-hidden rounded-full">
             <Image
               src={image}
               fill
@@ -61,7 +59,7 @@ export default async function ProfileNav() {
 
         <Link
           href="/profile/settings"
-          className="cursor-pointer hover:bg-bg-dark rounded-md p-2 transition-colors"
+          className="hover:bg-bg-dark cursor-pointer rounded-md p-2 transition-colors"
         >
           <Settings />
         </Link>

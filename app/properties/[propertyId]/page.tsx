@@ -32,17 +32,17 @@ export default async function page({
   const images = await getImagesByPropertyId(propertyId);
 
   return (
-    <div className="flex w-full gap-15 my-15">
-      <section className="flex items-center justify-center flex-col flex-5 gap-15">
+    <div className="my-15 flex w-full gap-15">
+      <section className="flex flex-5 flex-col items-center justify-center gap-15">
         <div className="w-[70%]">
           <PropertyPics images={images} />
         </div>
 
         {/* PROPERTY DETAILS */}
         <div className="text-center">
-          <h1 className="font-semibold text-3xl mb-3">{name}</h1>
+          <h1 className="mb-3 text-3xl font-semibold">{name}</h1>
 
-          <div className="flex items-center text-xl text-utell-text-lgray gap-1">
+          <div className="text-utell-text-lgray flex items-center gap-1 text-xl">
             <MapPin color="#848484" size={22} />
             <h2>
               {`${city}, ${area} | `}
@@ -52,11 +52,11 @@ export default async function page({
         </div>
 
         {/* CONTACT & DESCRIPTION */}
-        <div className="flex gap-10 w-[70%]">
+        <div className="flex w-[70%] gap-10">
           <UserCard
             owner={ownerId}
             contactPhone={contactPhone}
-            contactEmail={contactEmail}
+            contactEmail={contactEmail ?? undefined}
           />
 
           <p className="text-lg">{description}</p>
@@ -64,8 +64,8 @@ export default async function page({
 
         {/* ALL ROOMS */}
         <div className="w-full">
-          <h2 className="text-2xl font-semibold mb-8">All rooms</h2>
-          <div className="flex flex-wrap gap-8 w-full">
+          <h2 className="mb-8 text-2xl font-semibold">All rooms</h2>
+          <div className="flex w-full flex-wrap gap-8">
             {rooms?.map((room) => (
               <RoomCard room={room} key={room.id} />
             ))}

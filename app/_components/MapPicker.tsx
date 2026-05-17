@@ -8,6 +8,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
+import { LatLngExpression } from "leaflet";
 import { useState } from "react";
 
 // Fix for default markers in react-leaflet
@@ -72,7 +73,7 @@ export default function MapPicker({
   initialPosition = [4.174631915331436, 73.51031376202452],
   readOnly = false,
 }: MapPickerProps) {
-  const [position, setPosition] = useState<[number, number]>(initialPosition);
+  const [position, setPosition] = useState<LatLngExpression>(initialPosition);
 
   // Update hidden inputs when position changes
   const handlePositionChange = (newPosition: [number, number]) => {
@@ -81,7 +82,7 @@ export default function MapPicker({
   };
 
   return (
-    <div className="h-80 w-full rounded-md overflow-hidden">
+    <div className="h-80 w-full overflow-hidden rounded-md">
       <MapContainer
         center={position}
         zoom={15}
@@ -97,7 +98,7 @@ export default function MapPicker({
           </Marker>
         ) : (
           <LocationMarker
-            position={position}
+            position={position as [number, number]}
             setPosition={handlePositionChange}
           />
         )}

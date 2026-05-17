@@ -1,10 +1,14 @@
-const SvgComponent = (props) => (
+import { SVGProps } from "react";
+
+const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
-    style={{
-      enableBackground: "new 0 0 40 40",
-    }}
+    style={
+      {
+        enableBackground: "new 0 0 40 40",
+      } as React.CSSProperties
+    }
     width={30}
     height={30}
     viewBox="0 0 40 40"

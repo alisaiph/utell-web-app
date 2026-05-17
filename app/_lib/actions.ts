@@ -26,7 +26,7 @@ export async function updateUsernameAction(formData: FormData) {
   const session = await getServerSession();
   if (!session) throw new Error("You must be logged in."); // security check
 
-  const username = formData.get("username");
+  const username = formData.get("username") as string;
   const userId = session?.user.id;
 
   try {
@@ -300,8 +300,8 @@ export async function addRoomAction(
           id: roomId,
           name: validated.name,
           description: validated.description,
-          price: validated.price,
-          discount: validated.discount || null,
+          price: String(validated.price),
+          discount: String(validated.discount) || null,
           type: validated.type,
           guests: validated.guests,
           bedrooms: validated.bedrooms,
@@ -407,8 +407,8 @@ export async function updateRoomAction(
         .set({
           name: validated.name,
           description: validated.description,
-          price: validated.price,
-          discount: validated.discount || null,
+          price: String(validated.price),
+          discount: String(validated.discount) || null,
           type: validated.type,
           guests: validated.guests,
           bedrooms: validated.bedrooms,

@@ -10,7 +10,10 @@ import { useRouter } from "next/navigation";
 import { roomSchema } from "../_lib/validation";
 import { updateRoomAction } from "../_lib/actions";
 import AmenityTypeCard from "./AmenityTypeCard";
-import { Room } from "../_types/types";
+import { roomsTable } from "../_lib/db/schema";
+import { InferSelectModel } from "drizzle-orm";
+
+type Room = InferSelectModel<typeof roomsTable>;
 
 export default function EditRoomDialog({
   room,
@@ -29,7 +32,7 @@ export default function EditRoomDialog({
   const router = useRouter();
   const allAmenities = amenities.map((a) => a.amenityId);
 
-  const initialState: ActionResponse = {
+  const initialState = {
     success: false,
     errors: {},
   };
@@ -38,7 +41,7 @@ export default function EditRoomDialog({
   useEffect(() => {
     if (state?.success) {
       toast.success("Room updated!");
-      onSuccess();
+      onSuccess?.();
       router.refresh();
     }
 
@@ -49,7 +52,7 @@ export default function EditRoomDialog({
 
   return (
     <DialogContent className="w-6xl">
-      <div className="bg-bg-light flex flex-col gap-10 p-8 rounded-2xl">
+      <div className="bg-bg-light flex flex-col gap-10 rounded-2xl p-8">
         <h2 className="text-xl font-semibold">Edit Room</h2>
         <form
           action={formAction}
@@ -101,12 +104,12 @@ export default function EditRoomDialog({
             setErrors({});
           }}
         >
-          <div className="flex flex-col gap-5 w-full">
+          <div className="flex w-full flex-col gap-5">
             {/* NAME */}
             <div>
               <label
                 htmlFor="name"
-                className="font-semibold text-lg mb-3 block"
+                className="mb-3 block text-lg font-semibold"
               >
                 Name
               </label>
@@ -116,7 +119,7 @@ export default function EditRoomDialog({
                 placeholder="Room name"
                 name="name"
                 defaultValue={room.name}
-                className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.name ? "border-red-600" : ""}`}
+                className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.name ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.name?.[0]}</p>
             </div>
@@ -125,7 +128,7 @@ export default function EditRoomDialog({
             <div>
               <label
                 htmlFor="description"
-                className="font-semibold text-lg mb-3 block"
+                className="mb-3 block text-lg font-semibold"
               >
                 Description
               </label>
@@ -133,8 +136,8 @@ export default function EditRoomDialog({
               <textarea
                 placeholder="Room description"
                 name="description"
-                defaultValue={room.description}
-                className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.description ? "border-red-600" : ""}`}
+                defaultValue={room.description ?? ""}
+                className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.description ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.description?.[0]}</p>
             </div>
@@ -143,7 +146,7 @@ export default function EditRoomDialog({
             <div>
               <label
                 htmlFor="price"
-                className="font-semibold text-lg mb-3 block"
+                className="mb-3 block text-lg font-semibold"
               >
                 Price
               </label>
@@ -154,7 +157,7 @@ export default function EditRoomDialog({
                 placeholder="Room price"
                 name="price"
                 defaultValue={Number(room.price)}
-                className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.price ? "border-red-600" : ""}`}
+                className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.price ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.price?.[0]}</p>
             </div>
@@ -163,7 +166,7 @@ export default function EditRoomDialog({
             <div>
               <label
                 htmlFor="discount"
-                className="font-semibold text-lg mb-3 block"
+                className="mb-3 block text-lg font-semibold"
               >
                 Discount
               </label>
@@ -174,14 +177,14 @@ export default function EditRoomDialog({
                 placeholder="Room discount"
                 name="discount"
                 defaultValue={Number(room.discount)}
-                className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.discount ? "border-red-600" : ""}`}
+                className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.discount ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.discount?.[0]}</p>
             </div>
 
             {/* AMENITIES */}
             <div>
-              <label htmlFor="" className="font-semibold text-lg mb-3 block">
+              <label htmlFor="" className="mb-3 block text-lg font-semibold">
                 Amenities
               </label>
 
@@ -230,12 +233,12 @@ export default function EditRoomDialog({
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 border-l-2 border-bg pl-10 w-full">
+          <div className="border-bg flex w-full flex-col gap-5 border-l-2 pl-10">
             {/* TYPE */}
             <div>
               <label
                 htmlFor="type"
-                className="font-semibold text-lg mb-3 block"
+                className="mb-3 block text-lg font-semibold"
               >
                 Type
               </label>
@@ -243,7 +246,7 @@ export default function EditRoomDialog({
               <select
                 name="type"
                 defaultValue={room.type}
-                className="border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow"
+                className="border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none"
               >
                 <option value="Single">Single</option>
                 <option value="Double">Double</option>
@@ -260,7 +263,7 @@ export default function EditRoomDialog({
               <div>
                 <label
                   htmlFor="guests"
-                  className="font-semibold text-lg mb-3 block"
+                  className="mb-3 block text-lg font-semibold"
                 >
                   Guests
                 </label>
@@ -270,8 +273,8 @@ export default function EditRoomDialog({
                   inputMode="numeric"
                   placeholder="Number of guests"
                   name="guests"
-                  defaultValue={room.guests}
-                  className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.guests ? "border-red-600" : ""}`}
+                  defaultValue={room.guests ?? 1}
+                  className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.guests ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.guests?.[0]}</p>
               </div>
@@ -280,7 +283,7 @@ export default function EditRoomDialog({
               <div>
                 <label
                   htmlFor="bedrooms"
-                  className="font-semibold text-lg mb-3 block"
+                  className="mb-3 block text-lg font-semibold"
                 >
                   Bedrooms
                 </label>
@@ -290,8 +293,8 @@ export default function EditRoomDialog({
                   inputMode="numeric"
                   placeholder="Number of bedrooms"
                   name="bedrooms"
-                  defaultValue={room.bedrooms}
-                  className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.bedrooms ? "border-red-600" : ""}`}
+                  defaultValue={room.bedrooms ?? 1}
+                  className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.bedrooms ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.bedrooms?.[0]}</p>
               </div>
@@ -302,7 +305,7 @@ export default function EditRoomDialog({
               <div>
                 <label
                   htmlFor="beds"
-                  className="font-semibold text-lg mb-3 block"
+                  className="mb-3 block text-lg font-semibold"
                 >
                   Beds
                 </label>
@@ -312,8 +315,8 @@ export default function EditRoomDialog({
                   inputMode="numeric"
                   placeholder="Number of beds"
                   name="beds"
-                  defaultValue={room.beds}
-                  className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.beds ? "border-red-600" : ""}`}
+                  defaultValue={room.beds ?? 1}
+                  className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.beds ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.beds?.[0]}</p>
               </div>
@@ -322,7 +325,7 @@ export default function EditRoomDialog({
               <div>
                 <label
                   htmlFor="baths"
-                  className="font-semibold text-lg mb-3 block"
+                  className="mb-3 block text-lg font-semibold"
                 >
                   Baths
                 </label>
@@ -332,8 +335,8 @@ export default function EditRoomDialog({
                   inputMode="numeric"
                   placeholder="Number of baths"
                   name="baths"
-                  defaultValue={room.baths}
-                  className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.baths ? "border-red-600" : ""}`}
+                  defaultValue={room.baths ?? 1}
+                  className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.baths ? "border-red-600" : ""}`}
                 />
                 <p className="text-red-600">{errors.baths?.[0]}</p>
               </div>

@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { Property } from "../_types/types";
 import Link from "next/link";
 import { getImagesByPropertyId } from "../_lib/data-service";
 import PropertyActionButton from "./PropertyActionButton";
+import { InferSelectModel } from "drizzle-orm";
+import { propertiesTable } from "../_lib/db/schema";
+
+type Property = InferSelectModel<typeof propertiesTable>;
 
 export default async function PropertyList({
   property,

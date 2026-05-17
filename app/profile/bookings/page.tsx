@@ -12,11 +12,11 @@ export default async function page() {
   const allBookings = await getBookingsByUserId(userId);
 
   return (
-    <div className="bg-bg-light flex flex-col gap-5 p-8 rounded-2xl">
+    <div className="bg-bg-light flex flex-col gap-5 rounded-2xl p-8">
       <h2 className="text-xl font-semibold">Your bookings</h2>
 
       {allBookings.length > 0 ? (
-        <table className="text-left border-collapse">
+        <table className="border-collapse text-left">
           <tbody>
             <tr>
               <th></th>
@@ -29,9 +29,9 @@ export default async function page() {
               <th>Status</th>
             </tr>
 
-            {allBookings?.map((booking) => (
+            {/* {allBookings?.map((booking) => (
               <BookingList booking={booking} key={booking.id} />
-            ))}
+            ))} */}
           </tbody>
         </table>
       ) : (

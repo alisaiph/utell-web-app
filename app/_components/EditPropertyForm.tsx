@@ -8,13 +8,11 @@ import PropertyTypeCard from "./PropertyTypeCard";
 import MapPickerWrapper from "./MapPickerWrapper";
 import PhotoUpload from "./PhotoUpload";
 import FormSubmitButton from "./FormSubmitButton";
-import { Property } from "../_types/types";
 import { updatePropertyAction } from "../_lib/actions";
+import { InferSelectModel } from "drizzle-orm";
+import { propertiesTable } from "../_lib/db/schema";
 
-type ActionResponse = {
-  success?: boolean;
-  errors?: Record<string, string[]>;
-};
+type Property = InferSelectModel<typeof propertiesTable>;
 
 export default function EditPropertyForm({
   property,
@@ -28,13 +26,13 @@ export default function EditPropertyForm({
   const [category, setCategory] = useState(property.city || "");
   const [subCategory, setSubCategory] = useState(property.area || "");
 
-  const subOptions = {
+  const subOptions: Record<string, string[]> = {
     Male: ["Henveyru", "Galolhu", "Mahchangoalhi", "Maafannu"],
     Hulhumale: ["Phase 1", "Phase 2"],
     Vilimale: ["Vilimale"],
   };
 
-  const initialState: ActionResponse = {
+  const initialState = {
     success: false,
     errors: {},
   };
@@ -109,7 +107,7 @@ export default function EditPropertyForm({
       <div className="flex flex-col gap-10">
         {/* TYPE */}
         <div>
-          <label htmlFor="" className="font-semibold text-lg mb-3 block">
+          <label htmlFor="" className="mb-3 block text-lg font-semibold">
             Type
           </label>
 
@@ -143,7 +141,7 @@ export default function EditPropertyForm({
 
         {/* NAME */}
         <div>
-          <label htmlFor="name" className="font-semibold text-lg mb-3 block">
+          <label htmlFor="name" className="mb-3 block text-lg font-semibold">
             Name
           </label>
 
@@ -152,7 +150,7 @@ export default function EditPropertyForm({
             placeholder="Property name"
             name="name"
             defaultValue={property.name}
-            className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.name ? "border-red-600" : ""}`}
+            className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.name ? "border-red-600" : ""}`}
           />
           <p className="text-red-600">{errors.name?.[0]}</p>
         </div>
@@ -161,7 +159,7 @@ export default function EditPropertyForm({
         <div>
           <label
             htmlFor="description"
-            className="font-semibold text-lg mb-3 block"
+            className="mb-3 block text-lg font-semibold"
           >
             Description
           </label>
@@ -170,14 +168,14 @@ export default function EditPropertyForm({
             placeholder="Property description"
             name="description"
             defaultValue={property.description}
-            className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.description ? "border-red-600" : ""}`}
+            className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.description ? "border-red-600" : ""}`}
           />
           <p className="text-red-600">{errors.description?.[0]}</p>
         </div>
 
         {/* ADDRESS */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="address" className="font-semibold text-lg mb-3 block">
+          <label htmlFor="address" className="mb-3 block text-lg font-semibold">
             Address
           </label>
 
@@ -186,7 +184,7 @@ export default function EditPropertyForm({
             placeholder="Property address"
             name="address"
             defaultValue={property.address}
-            className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.address ? "border-red-600" : ""}`}
+            className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.address ? "border-red-600" : ""}`}
           />
           <p className="text-red-600">{errors.address?.[0]}</p>
 
@@ -198,7 +196,7 @@ export default function EditPropertyForm({
                 setCategory(e.target.value);
                 setSubCategory("");
               }}
-              className="border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow"
+              className="border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none"
             >
               <option value="">City</option>
               <option value="Male">Male</option>
@@ -213,7 +211,7 @@ export default function EditPropertyForm({
                 setSubCategory(e.target.value);
               }}
               disabled={!category}
-              className="border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow"
+              className="border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none"
             >
               <option value="">Area</option>
               {category &&
@@ -227,12 +225,12 @@ export default function EditPropertyForm({
         </div>
       </div>
 
-      <div className="flex flex-col gap-10 border-l-2 border-bg pl-10 w-full">
+      <div className="border-bg flex w-full flex-col gap-10 border-l-2 pl-10">
         {/* LOCATION */}
         <div>
           <label
             htmlFor="location"
-            className="font-semibold text-lg mb-3 block"
+            className="mb-3 block text-lg font-semibold"
           >
             Select Location
           </label>
@@ -242,7 +240,7 @@ export default function EditPropertyForm({
 
         {/* CONTACT */}
         <div>
-          <label htmlFor="contact" className="font-semibold text-lg mb-3 block">
+          <label htmlFor="contact" className="mb-3 block text-lg font-semibold">
             Contact
           </label>
 
@@ -254,7 +252,7 @@ export default function EditPropertyForm({
                 placeholder="Phone"
                 name="contactPhone"
                 defaultValue={property.contactPhone}
-                className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.contactPhone ? "border-red-600" : ""}`}
+                className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.contactPhone ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.contactPhone?.[0]}</p>
             </div>
@@ -268,7 +266,7 @@ export default function EditPropertyForm({
                 defaultValue={
                   property?.contactEmail ? property.contactEmail : ""
                 }
-                className={`border-2 border-bg rounded-md w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-utell-yellow ${errors.contactEmail ? "border-red-600" : ""}`}
+                className={`border-bg focus:ring-utell-yellow w-full rounded-md border-2 px-4 py-2 focus:ring-2 focus:outline-none ${errors.contactEmail ? "border-red-600" : ""}`}
               />
               <p className="text-red-600">{errors.contactEmail?.[0]}</p>
             </div>
@@ -278,7 +276,7 @@ export default function EditPropertyForm({
         </div>
       </div>
 
-      <div className="flex flex-col gap-10 border-l-2 border-bg pl-10 w-full">
+      <div className="border-bg flex w-full flex-col gap-10 border-l-2 pl-10">
         {/* PHOTOS */}
         <PhotoUpload
           prefix={`property-images/${property.id}`}

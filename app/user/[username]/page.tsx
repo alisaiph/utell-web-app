@@ -18,31 +18,31 @@ export default async function page({
   const properties = await getPropertiesByUserId(id);
 
   return (
-    <div className="flex flex-col gap-15 my-15">
-      <header className="flex flex-col w-full items-center gap-15">
-        <UserCard owner={id} />
+    <div className="my-15 flex flex-col gap-15">
+      <header className="flex w-full flex-col items-center gap-15">
+        {/* <UserCard owner={id} /> */}
 
         {/* STATS */}
-        <div className="flex ">
-          <div className="text-center border-r-2 border-utell-daccent px-12">
-            <h2 className="font-bold text-5xl">11</h2>
+        <div className="flex">
+          <div className="border-utell-daccent border-r-2 px-12 text-center">
+            <h2 className="text-5xl font-bold">11</h2>
             <p className="text-lg">Reviews</p>
           </div>
 
-          <div className="text-center border-r-2 border-utell-daccent px-12">
-            <h2 className="font-bold text-5xl">3.95</h2>
+          <div className="border-utell-daccent border-r-2 px-12 text-center">
+            <h2 className="text-5xl font-bold">3.95</h2>
             <p className="text-lg">Rating</p>
           </div>
 
-          <div className="text-center px-12">
-            <h2 className="font-bold text-5xl">5</h2>
+          <div className="px-12 text-center">
+            <h2 className="text-5xl font-bold">5</h2>
             <p className="text-lg">Listings</p>
           </div>
         </div>
       </header>
 
       {/* REVIEWS */}
-      <section className="flex flex-col gap-8 w-fullrounded-lg">
+      <section className="w-fullrounded-lg flex flex-col gap-8">
         <h2 className="text-2xl font-semibold">Reviews</h2>
 
         <div className="flex gap-8">
@@ -51,9 +51,9 @@ export default async function page({
           <ReviewCard />
         </div>
 
-        <h2 className="text-2xl font-semibold mt-20">Properties</h2>
+        <h2 className="mt-20 text-2xl font-semibold">Properties</h2>
 
-        <div className="flex justify-start w-full flex-wrap gap-8">
+        <div className="flex w-full flex-wrap justify-start gap-8">
           {properties?.map((property) => (
             <PropertyCard property={property} key={property.id} />
           ))}

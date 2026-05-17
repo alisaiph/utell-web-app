@@ -60,7 +60,7 @@ export default async function SideNav() {
                 <li className="mb-4">
                   <div className="relative aspect-square w-13 overflow-hidden rounded-full">
                     <Image
-                      src={session?.user.image}
+                      src={session?.user.image ?? "/avatar-img.png"}
                       fill
                       alt="avatar"
                       className="object-cover"

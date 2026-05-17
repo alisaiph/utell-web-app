@@ -27,6 +27,7 @@ export async function POST(request: Request) {
     const user = await db
       .insert(usersTable)
       .values({
+        id: crypto.randomUUID(),
         username,
         email,
         name,

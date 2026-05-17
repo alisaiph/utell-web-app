@@ -48,19 +48,19 @@ export default async function page({ params }: { params: { roomId: string } }) {
   const images = await getImagesByRoomId(roomId);
 
   return (
-    <div className="flex flex-col gap-10 my-15">
+    <div className="my-15 flex flex-col gap-10">
       <div className="flex w-full gap-15">
-        <section className="flex flex-col flex-5 gap-15">
+        <section className="flex flex-5 flex-col gap-15">
           <PropertyPics images={images} />
 
           {/* ROOM DETAILS */}
           <div>
-            <h1 className="font-semibold text-2xl mb-3">
+            <h1 className="mb-3 text-2xl font-semibold">
               {`${propertyName} | `}
               <span className="font-normal">{roomName}</span>
             </h1>
 
-            <div className="flex items-center text-lg text-text-muted gap-1">
+            <div className="text-text-muted flex items-center gap-1 text-lg">
               <MapPin size={22} />
               <h2 className="flex items-center justify-center">
                 {`${city}, ${area}`}
@@ -116,7 +116,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
           <Separator />
         </section>
 
-        <BookForm price={price} />
+        <BookForm price={price ?? ""} />
       </div>
 
       <div className="flex flex-col gap-8">
@@ -124,7 +124,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
           More rooms from {propertyName}
         </h2>
 
-        <div className="flex gap-4 flex-wrap bg-bg-light p-6 w-full rounded-2xl">
+        <div className="bg-bg-light flex w-full flex-wrap gap-4 rounded-2xl p-6">
           {allRooms.length > 0 ? (
             allRooms?.map((room) => <RoomCard room={room} key={room.name} />)
           ) : (

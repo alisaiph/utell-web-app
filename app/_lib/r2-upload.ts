@@ -22,7 +22,7 @@ export async function generatePresignedUrl(filename: string) {
 
 // This function is not currently used, but can be used for server-side uploads if needed
 export async function uploadToR2(file: File, path: string) {
-  const buffer = await file.arrayBuffer();
+  const buffer = Buffer.from(await file.arrayBuffer());
 
   const command = new PutObjectCommand({
     Bucket: process.env.R2_BUCKET_NAME!,

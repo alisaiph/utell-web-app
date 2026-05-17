@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { Room } from "../_types/types";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { getImagesByRoomId, getProperty } from "../_lib/data-service";
+import { InferSelectModel } from "drizzle-orm";
+import { roomsTable } from "../_lib/db/schema";
+
+type Room = InferSelectModel<typeof roomsTable>;
 
 export default async function RoomCard({ room }: { room: Room }) {
   const { id, type, price, propertyId } = room;

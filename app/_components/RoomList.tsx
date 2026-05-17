@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { Room } from "../_types/types";
 import Link from "next/link";
 import { getAmenitiesByRoomId, getImagesByRoomId } from "../_lib/data-service";
 import RoomActionButton from "./RoomActionButton";
+import { InferSelectModel } from "drizzle-orm";
+import { roomsTable } from "../_lib/db/schema";
+
+type Room = InferSelectModel<typeof roomsTable>;
 
 export default async function RoomList({
   room,

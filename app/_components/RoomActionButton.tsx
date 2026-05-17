@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, SquarePen, Trash } from "lucide-react";
 import EditRoomDialog from "./EditRoomDialog";
-import { Room } from "../_types/types";
 import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
-
 import DeleteDialog from "./DeleteDialog";
+import { InferSelectModel } from "drizzle-orm";
+import { roomsTable } from "../_lib/db/schema";
+
+type Room = InferSelectModel<typeof roomsTable>;
 
 export default function RoomActionButton({
   propertyId,
@@ -35,7 +37,7 @@ export default function RoomActionButton({
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           render={
-            <button className="p-2 rounded-md w-10 hover:bg-bg cursor-pointer transition-colors">
+            <button className="hover:bg-bg w-10 cursor-pointer rounded-md p-2 transition-colors">
               <EllipsisVertical />
             </button>
           }
