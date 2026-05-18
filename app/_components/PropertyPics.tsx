@@ -19,7 +19,7 @@ export default function PropertyPics({
       <CarouselContent>
         {images.map((img) => (
           <CarouselItem key={img.key} className="basis-full">
-            <div className="relative h-100 w-full rounded-lg overflow-hidden">
+            <div className="relative h-100 w-full overflow-hidden rounded-lg">
               <Image
                 src={img.url || "/images/placeholder.webp"}
                 fill
@@ -30,8 +30,8 @@ export default function PropertyPics({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className={"hidden md:flex"} />
+      <CarouselNext className={"hidden md:flex"} />
     </Carousel>
   );
 }

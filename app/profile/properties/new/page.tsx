@@ -9,6 +9,7 @@ import { useActionState, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import FormSubmitButton from "@/app/_components/FormSubmitButton";
+import { Separator } from "@/components/ui/separator";
 
 type ActionResponse = {
   success?: boolean;
@@ -98,7 +99,7 @@ export default function page() {
 
           setErrors({});
         }}
-        className="flex gap-10"
+        className="flex flex-col gap-10 md:flex-row"
       >
         <div className="flex flex-col gap-10">
           {/* TYPE */}
@@ -107,7 +108,7 @@ export default function page() {
               Type
             </label>
 
-            <div className="flex gap-3">
+            <div className="flex justify-center gap-3">
               <PropertyTypeCard
                 icon="House"
                 name="type"
@@ -214,7 +215,9 @@ export default function page() {
           </div>
         </div>
 
-        <div className="border-bg flex w-full flex-col gap-10 border-l-2 pl-10">
+        <Separator className="md:hidden" />
+
+        <div className="border-bg flex w-full flex-col gap-10 md:border-l-2 md:pl-10">
           {/* LOCATION */}
           <div>
             <label
@@ -264,7 +267,9 @@ export default function page() {
           </div>
         </div>
 
-        <div className="border-bg flex w-full flex-col gap-10 border-l-2 pl-10">
+        <Separator className="md:hidden" />
+
+        <div className="border-bg flex w-full flex-col gap-10 md:border-l-2 md:pl-10">
           {/* PHOTOS */}
           <PhotoUpload prefix={`property-images/${propertyId}`} />
           <p className="text-red-600">{errors.images?.[0]}</p>

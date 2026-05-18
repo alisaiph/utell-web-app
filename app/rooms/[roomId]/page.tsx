@@ -60,7 +60,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
               <span className="font-normal">{roomName}</span>
             </h1>
 
-            <div className="text-text-muted flex items-center gap-1 text-lg">
+            <div className="text-text-muted flex items-center gap-1 text-sm md:text-lg">
               <MapPin size={22} />
               <h2 className="flex items-center justify-center">
                 {`${city}, ${area}`}
@@ -88,7 +88,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
 
             {description !== "" && (
               <>
-                <p className="text-lg">{description}</p>
+                <p className="text-base md:text-lg">{description}</p>
 
                 <Separator />
               </>
@@ -124,7 +124,7 @@ export default async function page({ params }: { params: { roomId: string } }) {
           More rooms from {propertyName}
         </h2>
 
-        <div className="bg-bg-light flex w-full flex-wrap gap-4 rounded-2xl p-6">
+        <div className="bg-bg-light flex w-full flex-wrap items-center justify-center gap-4 rounded-2xl p-6">
           {allRooms.length > 0 ? (
             allRooms?.map((room) => <RoomCard room={room} key={room.name} />)
           ) : (

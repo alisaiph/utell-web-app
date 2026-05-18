@@ -11,6 +11,7 @@ import FormSubmitButton from "./FormSubmitButton";
 import { updatePropertyAction } from "../_lib/actions";
 import { InferSelectModel } from "drizzle-orm";
 import { propertiesTable } from "../_lib/db/schema";
+import { Separator } from "@/components/ui/separator";
 
 type Property = InferSelectModel<typeof propertiesTable>;
 
@@ -102,7 +103,7 @@ export default function EditPropertyForm({
 
         setErrors({});
       }}
-      className="flex gap-10"
+      className="flex flex-col gap-10 md:flex-row"
     >
       <div className="flex flex-col gap-10">
         {/* TYPE */}
@@ -111,7 +112,7 @@ export default function EditPropertyForm({
             Type
           </label>
 
-          <div className="flex gap-3">
+          <div className="flex justify-center gap-3">
             <PropertyTypeCard
               icon="House"
               name="type"
@@ -225,7 +226,9 @@ export default function EditPropertyForm({
         </div>
       </div>
 
-      <div className="border-bg flex w-full flex-col gap-10 border-l-2 pl-10">
+      <Separator className="md:hidden" />
+
+      <div className="border-bg flex w-full flex-col gap-10 md:border-l-2 md:pl-10">
         {/* LOCATION */}
         <div>
           <label
@@ -276,7 +279,9 @@ export default function EditPropertyForm({
         </div>
       </div>
 
-      <div className="border-bg flex w-full flex-col gap-10 border-l-2 pl-10">
+      <Separator className="md:hidden" />
+
+      <div className="border-bg flex w-full flex-col gap-10 md:border-l-2 md:pl-10">
         {/* PHOTOS */}
         <PhotoUpload
           prefix={`property-images/${property.id}`}

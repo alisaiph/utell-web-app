@@ -11,14 +11,14 @@ export default function BookForm({ price }: { price: string }) {
     date ? date.toLocaleDateString("en-GB").replace(/\//g, ".") : "-";
 
   return (
-    <aside className="flex flex-col bg-bg-light rounded-2xl flex-2 min-w-90 px-15 pt-15 pb-10 gap-3">
+    <aside className="bg-bg-light hidden min-w-90 flex-2 flex-col gap-3 rounded-2xl px-15 pt-15 pb-10 md:flex">
       <h2 className="text-2xl font-semibold">
         <span className="font-normal">MVR</span>
         {` ${price}`}
-        <span className="font-normal text-xl">/night</span>
+        <span className="text-xl font-normal">/night</span>
       </h2>
 
-      <hr className="border border-bg w-full" />
+      <hr className="border-bg w-full border" />
 
       <div className="flex justify-between text-lg">
         <p>Check In</p>
@@ -35,28 +35,28 @@ export default function BookForm({ price }: { price: string }) {
         <p>03</p>
       </div>
 
-      <hr className="border border-bg w-full" />
+      <hr className="border-bg w-full border" />
 
-      <h2 className="font-semibold text-lg">Extra Service</h2>
+      <h2 className="text-lg font-semibold">Extra Service</h2>
       <div className="flex justify-between text-lg">
         <p>Breakfast</p>
         <p>MVR 200</p>
       </div>
 
-      <hr className="border border-bg w-full" />
+      <hr className="border-bg w-full border" />
 
-      <div className="flex justify-between font-semibold text-lg">
+      <div className="flex justify-between text-lg font-semibold">
         <p>Total cost:</p>
         <p>MVR 200.00</p>
       </div>
 
-      <hr className="border border-bg w-full" />
+      <hr className="border-bg w-full border" />
 
-      <div className="flex justify-center my-5 w-full">
+      <div className="my-5 flex w-full justify-center">
         <BookCalendar dateRange={dateRange} onDateRangeChange={setDateRange} />
       </div>
 
-      <button className="bg-utell-yellow rounded-lg p-5 cursor-pointer font-semibold text-xl text-white hover:bg-utell-yellow/80 transition-colors">
+      <button className="bg-utell-yellow hover:bg-utell-yellow/80 cursor-pointer rounded-lg p-5 text-xl font-semibold text-white transition-colors">
         Book Now
       </button>
     </aside>

@@ -20,13 +20,13 @@ export default function PropertyTypeCard({
         name={name}
         value={value}
         defaultChecked={defaultChecked}
-        className="sr-only peer"
+        className="peer sr-only"
       />
-      <div className="flex flex-col gap-1 items-center justify-center p-5 w-35 h-25 border-2 border-bg rounded-md hover:border-utell-yellow transition-colors text-text-muted peer-checked:text-utell-yellow peer-checked:border-utell-yellow peer-checked:bg-utell-yellow/10">
+      <div className="border-bg hover:border-utell-yellow text-text-muted peer-checked:text-utell-yellow peer-checked:border-utell-yellow peer-checked:bg-utell-yellow/10 flex h-20 w-30 flex-col items-center justify-center gap-1 rounded-md border-2 transition-colors md:h-25 md:w-35 md:p-5">
         {icon === "House" && <House size={30} />}
         {icon === "Building" && <Building size={30} />}
         {icon === "Hotel" && <Hotel size={30} />}
-        <p className="font-semibold text-sm">{children}</p>
+        <p className="text-sm font-semibold">{children}</p>
       </div>
     </label>
   );
